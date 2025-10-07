@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا - وريث</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="contact.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <div class="logo-container">
+                        <div class="logo-icon">📖🌳</div>
+                        <h2>وريث</h2>
+                        <p class="logo-subtitle">إرث باقٍ وتاريخ حي</p>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#about" class="nav-link">من نحن</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#services" class="nav-link">الخدمات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#achievements" class="nav-link">التكريمات والجوائز</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#content" class="nav-link">المحتوى المقروء</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link active">تواصل معنا</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="contact-main">
+        <!-- Hero Section -->
+        <section class="contact-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>تواصل معنا</h1>
+                    <p>نحن هنا للاستماع إليكم والإجابة على جميع استفساراتكم</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information Section -->
+        <section class="contact-info">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>البريد الإلكتروني</h3>
+                        <p>info@warith.com</p>
+                        <p>contact@warith.com</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>الهاتف</h3>
+                        <p>+966 50 123 4567</p>
+                        <p>+966 11 234 5678</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>العنوان</h3>
+                        <p>الرياض، المملكة العربية السعودية</p>
+                        <p>طريق الملك فهد، حي العليا</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>أوقات العمل</h3>
+                        <p>الأحد - الخميس</p>
+                        <p>8:00 ص - 6:00 م</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-form-section">
+            <div class="container">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2>أرسل لنا رسالة</h2>
+                        <p>سنكون سعداء للتواصل معك والإجابة على جميع استفساراتك</p>
+                    </div>
+                    
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">الاسم الأول *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">الاسم الأخير *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">البريد الإلكتروني *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">رقم الهاتف</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">الموضوع *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">اختر الموضوع</option>
+                                <option value="general">استفسار عام</option>
+                                <option value="services">الخدمات</option>
+                                <option value="partnership">شراكة</option>
+                                <option value="support">الدعم الفني</option>
+                                <option value="other">أخرى</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">الرسالة *</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="اكتب رسالتك هنا..."></textarea>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="privacy" name="privacy" required>
+                                <span class="checkmark"></span>
+                                أوافق على <a href="#" class="privacy-link">سياسة الخصوصية</a> و <a href="#" class="terms-link">شروط الاستخدام</a>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Media Section -->
+        <section class="social-section">
+            <div class="container">
+                <h2>تابعنا على وسائل التواصل الاجتماعي</h2>
+                <div class="social-links">
+                    <a href="#" class="social-link twitter">
+                        <i class="fab fa-twitter"></i>
+                        <span>تويتر</span>
+                    </a>
+                    <a href="#" class="social-link instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>إنستغرام</span>
+                    </a>
+                    <a href="#" class="social-link linkedin">
+                        <i class="fab fa-linkedin"></i>
+                        <span>لينكد إن</span>
+                    </a>
+                    <a href="#" class="social-link youtube">
+                        <i class="fab fa-youtube"></i>
+                        <span>يوتيوب</span>
+                    </a>
+                    <a href="#" class="social-link whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>واتساب</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <h2>الأسئلة الشائعة</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>ما هي الخدمات التي تقدمونها؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>نقدم مجموعة شاملة من الخدمات التقنية والاستشارية، بما في ذلك تطوير المواقع والتطبيقات، والاستشارات التقنية، وحلول الأعمال الرقمية.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>كم يستغرق الرد على الاستفسارات؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>نحرص على الرد على جميع الاستفسارات خلال 24-48 ساعة من تاريخ الاستلام. في حالة الاستفسارات العاجلة، يمكنكم التواصل معنا هاتفياً.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>هل تقدمون استشارات مجانية؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>نعم، نقدم استشارة أولية مجانية لجميع العملاء الجدد لفهم احتياجاتهم وتقديم أفضل الحلول المناسبة.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>أين يقع مقركم الرئيسي؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>مقرنا الرئيسي يقع في الرياض، المملكة العربية السعودية، ونقدم خدماتنا لجميع أنحاء المنطقة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>معلومات الاتصال</h3>
+                    <p>📧 info@warith.com</p>
+                    <p>📞 +966 50 123 4567</p>
+                    <p>📍 الرياض، المملكة العربية السعودية</p>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط مفيدة</h3>
+                    <ul>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                        <li><a href="#">الدعم الفني</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>تابعنا</h3>
+                    <div class="social-links">
+                        <a href="#">فيسبوك</a>
+                        <a href="#">تويتر</a>
+                        <a href="#">لينكد إن</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 جميع الحقوق محفوظة - وريث</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="contact.js"></script>
+</body>
+</html>
