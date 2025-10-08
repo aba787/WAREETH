@@ -7,12 +7,16 @@
   <title>الموقع الرئيسي</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Avenir:wght@300;400;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <header class="header">
     <nav class="navbar">
       <div class="nav-container">
+        <button class="language-toggle" id="languageToggle">English</button>
         <div class="logo">
           <div class="logo-container">
 
@@ -410,6 +414,13 @@
 
       document.getElementById('form-message').innerText = 'تم إرسال طلبك بنجاح. سيتم التواصل معك قريباً.';
       form.reset(); // Clear the form
+    });
+
+    // Language Toggle Functionality (placeholder)
+    document.getElementById('languageToggle').addEventListener('click', function() {
+      // This is where you would implement the logic to switch between Arabic and English content.
+      // For now, it's a placeholder.
+      alert('Language toggle clicked! Implement translation logic here.');
     });
   </script>
 </body>

@@ -1,4 +1,3 @@
-
 /* Articles Page Styles */
 .articles-main {
     margin-top: 70px;
@@ -13,7 +12,7 @@
 
 /* Articles Hero Section */
 .articles-hero {
-    background: linear-gradient(135deg, var(--black) 0%, var(--dark-brown) 50%, var(--brick-red) 100%);
+    background: linear-gradient(135deg, var(--black) 0%, var(--dark-brown) 50%, var(--light-brown) 100%);
     color: white;
     padding: 100px 0;
     text-align: center;
@@ -386,43 +385,43 @@
     .articles-hero h1 {
         font-size: 2.2rem;
     }
-    
+
     .articles-hero p {
         font-size: 1.1rem;
         padding: 0 1rem;
     }
-    
+
     .form-container {
         padding: 0 1rem;
     }
-    
+
     .article-form {
         padding: 2rem 1.5rem;
     }
-    
+
     .form-row {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     .form-header h2 {
         font-size: 2rem;
     }
-    
+
     .articles-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .filter-options {
         gap: 0.5rem;
     }
-    
+
     .filter-btn {
         padding: 0.6rem 1rem;
         font-size: 0.9rem;
     }
-    
+
     .article-footer {
         flex-direction: column;
         align-items: flex-start;
@@ -434,35 +433,35 @@
     .articles-hero {
         padding: 60px 0;
     }
-    
+
     .articles-hero h1 {
         font-size: 1.8rem;
     }
-    
+
     .articles-hero p {
         font-size: 1rem;
         padding: 0 1rem;
     }
-    
+
     .article-form-section,
     .articles-display {
         padding: 60px 0;
     }
-    
+
     .article-form {
         padding: 2rem 1rem;
     }
-    
+
     .submit-btn {
         padding: 1rem 2rem;
         font-size: 1.1rem;
         min-width: 180px;
     }
-    
+
     .article-card {
         padding: 1.5rem;
     }
-    
+
     .article-card h3 {
         font-size: 1.3rem;
     }

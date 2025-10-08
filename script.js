@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Language toggle functionality
+    initializeLanguageToggle();
+    
     // Mobile menu toggle
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
@@ -136,6 +139,114 @@ function createNewsItem(news) {
         </div>
     `;
     return newsItem;
+}
+
+// Language toggle functions
+function initializeLanguageToggle() {
+    const languageToggle = document.getElementById('languageToggle');
+    if (!languageToggle) return;
+    
+    // Check saved language preference
+    const savedLanguage = localStorage.getItem('siteLanguage') || 'ar';
+    setLanguage(savedLanguage);
+    
+    languageToggle.addEventListener('click', function() {
+        const currentLang = document.body.classList.contains('english') ? 'en' : 'ar';
+        const newLang = currentLang === 'ar' ? 'en' : 'ar';
+        setLanguage(newLang);
+        localStorage.setItem('siteLanguage', newLang);
+    });
+}
+
+function setLanguage(language) {
+    const body = document.body;
+    const languageToggle = document.getElementById('languageToggle');
+    
+    if (language === 'en') {
+        body.classList.add('english');
+        body.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+        if (languageToggle) languageToggle.textContent = 'العربية';
+        translateContent('en');
+    } else {
+        body.classList.remove('english');
+        body.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+        if (languageToggle) languageToggle.textContent = 'English';
+        translateContent('ar');
+    }
+}
+
+function translateContent(language) {
+    const translations = {
+        ar: {
+            // Navigation
+            'الرئيسية': 'الرئيسية',
+            'من نحن': 'من نحن',
+            'البرامج': 'البرامج',
+            'التكريمات والجوائز': 'التكريمات والجوائز',
+            'شركاؤنا': 'شركاؤنا',
+            'المقالات': 'المقالات',
+            'الأعضاء': 'الأعضاء',
+            'تواصل معنا': 'تواصل معنا',
+            'انضم إلينا': 'انضم إلينا',
+            
+            // Hero section
+            'حياكم الله في وريث': 'حياكم الله في وريث',
+            'إرثٌ باقٍ و تقاليدُ حية': 'إرثٌ باقٍ و تقاليدُ حية',
+            'ابدأ الآن': 'ابدأ الآن'
+        },
+        en: {
+            // Navigation
+            'الرئيسية': 'Home',
+            'من نحن': 'About Us',
+            'البرامج': 'Programs',
+            'التكريمات والجوائز': 'Awards & Recognition',
+            'شركاؤنا': 'Our Partners',
+            'المقالات': 'Articles',
+            'الأعضاء': 'Members',
+            'تواصل معنا': 'Contact Us',
+            'انضم إلينا': 'Join Us',
+            
+            // Hero section
+            'حياكم الله في وريث': 'Welcome to Wareeth',
+            'إرثٌ باقٍ و تقاليدُ حية': 'Living Heritage & Lasting Traditions',
+            'ابدأ الآن': 'Get Started'
+        }
+    };
+    
+    // Apply translations
+    const elementsToTranslate = document.querySelectorAll('[data-translate]');
+    elementsToTranslate.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[language] && translations[language][key]) {
+            element.textContent = translations[language][key];
+        }
+    });
+    
+    // Auto-translate common elements
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        const text = link.textContent.trim();
+        if (translations[language] && translations[language][text]) {
+            link.textContent = translations[language][text];
+        }
+    });
+    
+    // Hero content
+    const heroTitle = document.querySelector('.hero-content h1');
+    const heroSubtitle = document.querySelector('.hero-content p');
+    const ctaButton = document.querySelector('.cta-button');
+    
+    if (heroTitle && translations[language][heroTitle.textContent.trim()]) {
+        heroTitle.textContent = translations[language][heroTitle.textContent.trim()];
+    }
+    if (heroSubtitle && translations[language][heroSubtitle.textContent.trim()]) {
+        heroSubtitle.textContent = translations[language][heroSubtitle.textContent.trim()];
+    }
+    if (ctaButton && translations[language][ctaButton.textContent.trim()]) {
+        ctaButton.textContent = translations[language][ctaButton.textContent.trim()];
+    }
 }
 
 // Initialize news loading when page loads
