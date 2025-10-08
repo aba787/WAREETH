@@ -1,3 +1,6 @@
+/* استيراد الخطوط من Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;600&family=El+Messiri:wght@400;600&family=Scheherazade+New:wght@400;600&family=Markazi+Text:wght@400;600&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +15,7 @@ html {
 }
 
 body {
-  font-family: 'Cairo', 'Tahoma', sans-serif;
+  font-family: 'Markazi Text', serif;
   line-height: 1.6;
   color: #333;
   direction: rtl;
@@ -493,6 +496,51 @@ section {
   line-height: 1.7;
   font-size: 1.1rem;
   font-weight: 500;
+}
+
+/* البرنامج 1: المحتوى الرقمي والمسموع - خط عصري */
+.program-digital .program-title {
+  font-family: 'Reem Kufi', sans-serif;
+  font-size: 1.6em;
+  color: #2C5530;
+  font-weight: 600;
+}
+
+.program-digital .program-description {
+  font-family: 'El Messiri', sans-serif;
+  font-size: 1.15em;
+  color: #4A7C59;
+  line-height: 1.7;
+}
+
+/* البرنامج 2: جلسة وريث - خط تراثي أصيل */
+.program-session .program-title {
+  font-family: 'Scheherazade New', serif;
+  font-size: 1.8em;
+  color: #8B4513;
+  font-weight: 600;
+}
+
+.program-session .program-description {
+  font-family: 'Scheherazade New', serif;
+  font-size: 1.2em;
+  color: #A52A2A;
+  line-height: 1.8;
+}
+
+/* البرنامج 3: رعاية التكنولوجيا - خط تقني معاصر */
+.program-technology .program-title {
+  font-family: 'El Messiri', sans-serif;
+  font-size: 1.5em;
+  color: #2F4F4F;
+  font-weight: 600;
+}
+
+.program-technology .program-description {
+  font-family: 'Markazi Text', serif;
+  font-size: 1.15em;
+  color: #4682B4;
+  line-height: 1.7;
 }
 
 /* Content Section */
