@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const credentials = {
         'admin': 'password123',
         'warith_admin': 'warith2023',
-        'manager': 'manager123'
+        'manager': 'manager123',
+        'Wareeth_Team@gmail.com': 'W4r3th#private'
     };
 
     if (loginForm) {
