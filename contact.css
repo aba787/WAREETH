@@ -338,17 +338,18 @@
 
 .social-link {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 1.5rem;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
+    border-radius: 50%;
     text-decoration: none;
     color: white;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    min-width: 120px;
+    width: 80px;
+    height: 80px;
 }
 
 .social-link:hover {
@@ -359,12 +360,6 @@
 
 .social-link i {
     font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.social-link span {
-    font-weight: 600;
-    font-size: 1rem;
 }
 
 .social-link.twitter:hover { background: rgba(29, 161, 242, 0.2); }

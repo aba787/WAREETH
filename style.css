@@ -1274,6 +1274,28 @@ body.english .footer-section h3 {
 .social-links {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-links .social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: var(--light-brown);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-links .social-link:hover {
+  background: var(--light-brown);
+  color: var(--dark-brown);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(210, 180, 140, 0.3);
 }
 
 .footer-bottom {
