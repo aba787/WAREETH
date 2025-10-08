@@ -75,4 +75,40 @@ document.addEventListener('DOMContentLoaded', function() {
             header.style.backdropFilter = 'none';
         }
     });
+
+    // Partners slider functionality
+    let slideIndex = 1;
+    showSlide(slideIndex);
+
+    // Auto-advance slides every 4 seconds
+    setInterval(() => {
+        slideIndex++;
+        if (slideIndex > 3) slideIndex = 1;
+        showSlide(slideIndex);
+    }, 4000);
 });
+
+// Partners slider functions
+function currentSlide(n) {
+    showSlide(slideIndex = n);
+}
+
+function showSlide(n) {
+    const slides = document.querySelectorAll('.partner-slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (n > slides.length) slideIndex = 1;
+    if (n < 1) slideIndex = slides.length;
+    
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Show current slide
+    if (slides[slideIndex - 1]) {
+        slides[slideIndex - 1].classList.add('active');
+    }
+    if (dots[slideIndex - 1]) {
+        dots[slideIndex - 1].classList.add('active');
+    }
+}
