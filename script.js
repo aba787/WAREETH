@@ -1,34 +1,69 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-    
-    hamburger.addEventListener('click', function() {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
     });
-    
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    }));
-    
+
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
         });
+      });
     });
-    
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+    }));
+
+    // Statistics Animation
+    function animateNumbers() {
+      const numberElements = document.querySelectorAll('.stat-number');
+
+      numberElements.forEach(element => {
+        const target = parseInt(element.getAttribute('data-target'));
+        const duration = 2000; // Count duration in milliseconds
+        const steps = 60; // Number of steps
+        const stepValue = target / steps;
+        let current = 0;
+
+        const timer = setInterval(() => {
+          current += stepValue;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          element.textContent = Math.floor(current) + '+';
+        }, duration / steps);
+
+        element.classList.add('animated');
+      });
+    }
+
+    // Intersection Observer for statistics animation
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateNumbers();
+            observer.unobserve(entry.target); // Run animation only once
+          }
+        });
+      }, { threshold: 0.5 });
+
+      observer.observe(statsSection);
+    }
+
+
     // Add scroll effect to header
     window.addEventListener('scroll', function() {
         const header = document.querySelector('.header');
