@@ -4,27 +4,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginSection = document.getElementById('loginSection');
     const adminDashboard = document.getElementById('adminDashboard');
     const logoutBtn = document.getElementById('logoutBtn');
-    
+
     // Sample credentials (in real app, this would be server-side)
     const credentials = {
         'admin': 'password123',
         'warith_admin': 'warith2023',
         'manager': 'manager123'
     };
-    
+
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            
+
             if (credentials[username] && credentials[username] === password) {
                 // Successful login
                 loginSection.style.display = 'none';
                 adminDashboard.style.display = 'block';
                 document.getElementById('adminName').textContent = username;
-                
+
                 // Show success message
                 showNotification('تم تسجيل الدخول بنجاح!', 'success');
             } else {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Logout functionality
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
@@ -43,27 +43,27 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification('تم تسجيل الخروج بنجاح', 'info');
         });
     }
-    
+
     // Modal functionality
     const addMemberBtn = document.getElementById('addMemberBtn');
     const addMemberModal = document.getElementById('addMemberModal');
     const closeModal = document.getElementById('closeModal');
     const cancelAdd = document.getElementById('cancelAdd');
     const addMemberForm = document.getElementById('addMemberForm');
-    
+
     if (addMemberBtn && addMemberModal) {
         addMemberBtn.addEventListener('click', function() {
             addMemberModal.style.display = 'block';
         });
-        
+
         closeModal.addEventListener('click', function() {
             addMemberModal.style.display = 'none';
         });
-        
+
         cancelAdd.addEventListener('click', function() {
             addMemberModal.style.display = 'none';
         });
-        
+
         // Close modal on outside click
         window.addEventListener('click', function(event) {
             if (event.target === addMemberModal) {
@@ -71,12 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Add member form submission
     if (addMemberForm) {
         addMemberForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const formData = new FormData(addMemberForm);
             const memberData = {
                 name: formData.get('memberName'),
@@ -86,27 +86,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 joinDate: new Date().toLocaleDateString('ar-SA'),
                 status: 'active'
             };
-            
+
             // Add member to table
             addMemberToTable(memberData);
-            
+
             // Update stats
             updateStats();
-            
+
             // Close modal and reset form
             addMemberModal.style.display = 'none';
             addMemberForm.reset();
-            
+
             showNotification('تم إضافة العضو بنجاح!', 'success');
         });
     }
-    
+
     // Articles management
     const manageArticlesBtn = document.getElementById('manageArticlesBtn');
     const articlesManagement = document.getElementById('articlesManagement');
     const backToMembers = document.getElementById('backToMembers');
     const membersSection = document.querySelector('.members-section');
-    
+
     if (manageArticlesBtn) {
         manageArticlesBtn.addEventListener('click', function() {
             membersSection.style.display = 'none';
@@ -114,14 +114,14 @@ document.addEventListener('DOMContentLoaded', function() {
             loadArticles('published');
         });
     }
-    
+
     if (backToMembers) {
         backToMembers.addEventListener('click', function() {
             articlesManagement.style.display = 'none';
             membersSection.style.display = 'block';
         });
     }
-    
+
     // Article tabs
     const tabButtons = document.querySelectorAll('.tab-btn');
     tabButtons.forEach(btn => {
@@ -130,12 +130,12 @@ document.addEventListener('DOMContentLoaded', function() {
             tabButtons.forEach(tab => tab.classList.remove('active'));
             // Add active class to clicked tab
             this.classList.add('active');
-            
+
             const tabType = this.getAttribute('data-tab');
             loadArticles(tabType);
         });
     });
-    
+
     // Export data functionality
     const exportDataBtn = document.getElementById('exportDataBtn');
     if (exportDataBtn) {
@@ -143,48 +143,120 @@ document.addEventListener('DOMContentLoaded', function() {
             exportMembersData();
         });
     }
-    
+
     // Search and filter functionality
     const memberSearch = document.getElementById('memberSearch');
     const roleFilter = document.getElementById('roleFilter');
-    
+
     if (memberSearch) {
         memberSearch.addEventListener('input', function() {
             filterMembers();
         });
     }
-    
+
     if (roleFilter) {
         roleFilter.addEventListener('change', function() {
             filterMembers();
         });
     }
-    
+
     // Member action buttons
     document.addEventListener('click', function(e) {
         if (e.target.closest('.btn-icon.edit')) {
             const row = e.target.closest('tr');
             editMember(row);
         }
-        
+
         if (e.target.closest('.btn-icon.delete')) {
             const row = e.target.closest('tr');
             deleteMember(row);
         }
     });
+
+    // Image preview handling
+    const imageInput = document.getElementById('newsImage');
+    const imagePreview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+
+    if (imageInput) {
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+    }
+
+    // News form handling
+    const newsForm = document.getElementById('newsForm');
+    if (newsForm) {
+        newsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const imageFile = formData.get('newsImage');
+
+            const processNewsData = (imageDataUrl = null) => {
+                const newsData = {
+                    id: Date.now(),
+                    title: formData.get('newsTitle'),
+                    summary: formData.get('newsSummary'),
+                    content: formData.get('newsContent'),
+                    category: formData.get('newsCategory'),
+                    date: new Date().toLocaleDateString('ar-SA'),
+                    author: 'إدارة الموقع',
+                    status: 'published',
+                    image: imageDataUrl
+                };
+
+                // Save to localStorage
+                const existingNews = JSON.parse(localStorage.getItem('warithNews') || '[]');
+                existingNews.unshift(newsData);
+                localStorage.setItem('warithNews', JSON.stringify(existingNews));
+
+                // Reset form
+                e.target.reset();
+                imagePreview.style.display = 'none';
+
+                // Show success message
+                showMessage('تم نشر الخبر بنجاح!', 'success');
+
+                // Refresh published news display
+                displayPublishedNews();
+            };
+
+            // Handle image upload
+            if (imageFile && imageFile.size > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    processNewsData(e.target.result);
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                processNewsData();
+            }
+        });
+    }
 });
 
 // Function to add member to table
 function addMemberToTable(memberData) {
     const tableBody = document.getElementById('membersTableBody');
     const row = document.createElement('tr');
-    
+
     const roleNames = {
         'admin': 'مدير',
         'member': 'عضو',
         'writer': 'كاتب'
     };
-    
+
     row.innerHTML = `
         <td>${memberData.name}</td>
         <td>${memberData.email}</td>
@@ -200,7 +272,7 @@ function addMemberToTable(memberData) {
             </button>
         </td>
     `;
-    
+
     tableBody.appendChild(row);
 }
 
@@ -208,10 +280,10 @@ function addMemberToTable(memberData) {
 function updateStats() {
     const totalMembers = document.getElementById('totalMembers');
     const activeMembers = document.getElementById('activeMembers');
-    
+
     const currentTotal = parseInt(totalMembers.textContent);
     const currentActive = parseInt(activeMembers.textContent);
-    
+
     totalMembers.textContent = currentTotal + 1;
     activeMembers.textContent = currentActive + 1;
 }
@@ -219,7 +291,7 @@ function updateStats() {
 // Function to load articles
 function loadArticles(type) {
     const articlesList = document.getElementById('articlesList');
-    
+
     const sampleArticles = {
         published: [
             { title: 'التراث السعودي في العصر الحديث', author: 'أحمد محمد', date: '2023-12-15', status: 'منشور' },
@@ -234,9 +306,9 @@ function loadArticles(type) {
             { title: 'مقال غير مناسب', author: 'مجهول', date: '2023-12-10', status: 'مرفوض' }
         ]
     };
-    
+
     const articles = sampleArticles[type] || [];
-    
+
     articlesList.innerHTML = articles.map(article => `
         <div class="article-item">
             <div class="article-info">
@@ -269,15 +341,15 @@ function filterMembers() {
     const searchTerm = document.getElementById('memberSearch').value.toLowerCase();
     const roleFilter = document.getElementById('roleFilter').value;
     const rows = document.querySelectorAll('#membersTableBody tr');
-    
+
     rows.forEach(row => {
         const name = row.cells[0].textContent.toLowerCase();
         const email = row.cells[1].textContent.toLowerCase();
         const role = row.cells[2].textContent.toLowerCase();
-        
+
         const matchesSearch = name.includes(searchTerm) || email.includes(searchTerm);
         const matchesRole = roleFilter === 'all' || role.includes(roleFilter);
-        
+
         if (matchesSearch && matchesRole) {
             row.style.display = '';
         } else {
@@ -290,7 +362,7 @@ function filterMembers() {
 function editMember(row) {
     const name = row.cells[0].textContent;
     const email = row.cells[1].textContent;
-    
+
     showNotification(`تحرير العضو: ${name} (${email})`, 'info');
     // Here you would open an edit modal with the member's data
 }
@@ -298,7 +370,7 @@ function editMember(row) {
 // Function to delete member
 function deleteMember(row) {
     const name = row.cells[0].textContent;
-    
+
     if (confirm(`هل أنت متأكد من حذف العضو: ${name}؟`)) {
         row.remove();
         updateStatsAfterDelete();
@@ -310,10 +382,10 @@ function deleteMember(row) {
 function updateStatsAfterDelete() {
     const totalMembers = document.getElementById('totalMembers');
     const activeMembers = document.getElementById('activeMembers');
-    
+
     const currentTotal = parseInt(totalMembers.textContent);
     const currentActive = parseInt(activeMembers.textContent);
-    
+
     totalMembers.textContent = Math.max(0, currentTotal - 1);
     activeMembers.textContent = Math.max(0, currentActive - 1);
 }
@@ -322,7 +394,7 @@ function updateStatsAfterDelete() {
 function exportMembersData() {
     const rows = document.querySelectorAll('#membersTableBody tr');
     let csvContent = "الاسم,البريد الإلكتروني,الدور,تاريخ الانضمام,الحالة\n";
-    
+
     rows.forEach(row => {
         const cells = row.querySelectorAll('td');
         const rowData = [
@@ -334,7 +406,7 @@ function exportMembersData() {
         ].join(',');
         csvContent += rowData + '\n';
     });
-    
+
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
@@ -344,7 +416,7 @@ function exportMembersData() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    
+
     showNotification('تم تصدير البيانات بنجاح', 'success');
 }
 
@@ -353,7 +425,7 @@ function showNotification(message, type) {
     // Remove existing notifications
     const existingNotifications = document.querySelectorAll('.notification');
     existingNotifications.forEach(notification => notification.remove());
-    
+
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.innerHTML = `
@@ -362,7 +434,7 @@ function showNotification(message, type) {
             <span>${message}</span>
         </div>
     `;
-    
+
     // Add notification styles
     const style = document.createElement('style');
     style.textContent = `
@@ -377,25 +449,25 @@ function showNotification(message, type) {
             animation: slideIn 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         .notification.success {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         }
-        
+
         .notification.error {
             background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
         }
-        
+
         .notification.info {
             background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
         }
-        
+
         .notification-content {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        
+
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -407,12 +479,22 @@ function showNotification(message, type) {
             }
         }
     `;
-    
+
     document.head.appendChild(style);
     document.body.appendChild(notification);
-    
+
     // Auto remove after 3 seconds
     setTimeout(() => {
         notification.remove();
     }, 3000);
+}
+
+// Dummy functions to avoid errors if they are not defined elsewhere
+function displayPublishedNews() {
+    console.log("displayPublishedNews called");
+}
+
+function showMessage(message, type) {
+    console.log(`showMessage called: ${message}, ${type}`);
+    showNotification(message, type);
 }

@@ -372,6 +372,31 @@
     direction: rtl;
 }
 
+/* Image upload styling */
+input[type="file"] {
+    padding: 0.8rem;
+    border: 2px dashed rgba(218, 165, 32, 0.5);
+    border-radius: 10px;
+    background: rgba(245, 245, 220, 0.3);
+    transition: all 0.3s ease;
+    font-family: 'Cairo', sans-serif;
+}
+
+input[type="file"]:hover {
+    border-color: #DAA520;
+    background: rgba(245, 245, 220, 0.5);
+}
+
+.image-preview {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.image-preview img {
+    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.2);
+    border: 2px solid rgba(218, 165, 32, 0.3);
+}
+
 .search-filter input:focus,
 .search-filter select:focus {
     outline: none;

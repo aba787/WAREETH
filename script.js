@@ -117,11 +117,23 @@ function loadNews() {
 function createNewsItem(news) {
     const newsItem = document.createElement('div');
     newsItem.className = 'news-item';
+    
+    const imageSection = news.image ? 
+        `<div class="news-image">
+            <img src="${news.image}" alt="${news.title}" loading="lazy">
+         </div>` : 
+        `<div class="news-image">
+            <img src="https://via.placeholder.com/400x250/8B4513/F5F5DC?text=${encodeURIComponent(news.title)}" alt="${news.title}" loading="lazy">
+         </div>`;
+    
     newsItem.innerHTML = `
-        <div class="news-date">${news.date}</div>
-        <h3>${news.title}</h3>
-        <p>${news.summary}</p>
-        <a href="#" class="read-more">اقرأ المزيد</a>
+        ${imageSection}
+        <div class="news-content">
+            <div class="news-date">${news.date}</div>
+            <h3>${news.title}</h3>
+            <p>${news.summary}</p>
+            <a href="#" class="read-more">اقرأ المزيد</a>
+        </div>
     `;
     return newsItem;
 }
