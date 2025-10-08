@@ -1310,6 +1310,140 @@ body.english .footer-bottom {
   font-family: 'Inter', sans-serif;
 }
 
+/* Mission Section */
+.mission-section {
+  background: linear-gradient(135deg, var(--brick-red) 0%, rgba(178, 34, 34, 0.9) 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.mission-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+}
+
+.mission-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mission-section h2 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.mission-text {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Organization Structure Section */
+.organization-section {
+  background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.9) 100%);
+  padding: 80px 0;
+  position: relative;
+}
+
+.organization-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 70%, rgba(218, 165, 32, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 70% 30%, rgba(139, 69, 19, 0.05) 0%, transparent 50%);
+}
+
+.organization-section h2 {
+  text-align: center;
+  font-size: 2.8rem;
+  color: var(--dark-brown);
+  margin-bottom: 3rem;
+  font-weight: 700;
+  position: relative;
+}
+
+.organization-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--dark-brown) 0%, var(--brick-red) 100%);
+  border-radius: 2px;
+}
+
+.organization-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.department-card {
+  background: linear-gradient(135deg, #fff 0%, #F5F5DC 100%);
+  padding: 2.5rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(139, 69, 19, 0.1);
+  border: 1px solid rgba(218, 165, 32, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.department-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--dark-brown) 0%, var(--brick-red) 100%);
+}
+
+.department-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(139, 69, 19, 0.15);
+}
+
+.department-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  filter: sepia(100%) saturate(200%) hue-rotate(25deg);
+}
+
+.department-card h3 {
+  font-size: 1.5rem;
+  color: var(--dark-brown);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.department-card p {
+  color: #666;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
 /* Join Section */
 .join-section {
   background: linear-gradient(135deg, var(--light-brown) 0%, rgba(245, 245, 220, 0.9) 100%);
