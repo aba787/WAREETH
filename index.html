@@ -145,52 +145,33 @@
       </div>
     </section>
 
-    <!-- News/Announcements Section -->
-    <section id="news" class="news-section">
+    <!-- Section for Joining -->
+    <section id="join-form-section" class="join-form-section">
       <div class="container">
-        <h2>الأخبار والإعلانات</h2>
-        <div class="news-grid" id="newsGrid">
-          <!-- News items will be loaded dynamically -->
-          <div class="news-item">
-            <div class="news-image">
-              <img src="https://via.placeholder.com/400x250/8B4513/F5F5DC?text=مبادرة+حفظ+التراث" alt="مبادرة حفظ التراث" loading="lazy">
-            </div>
-            <div class="news-content">
-              <div class="news-date">15 ديسمبر 2023</div>
-              <h3>إطلاق مبادرة جديدة لحفظ التراث</h3>
-              <p>أعلن فريق وريث التطوعي عن إطلاق مبادرة جديدة تهدف إلى جمع وتوثيق التراث الشعبي السعودي...</p>
-              <a href="#" class="read-more">اقرأ المزيد</a>
-            </div>
+        <h2>انضم إلى فريق وريث التطوعي</h2>
+        <p>يرجى تسجيل معلوماتك لتقديم طلب الانضمام. سيتم مراجعة طلبك من قبل الفريق.</p>
+        <form id="joinForm" action="submit_join_request.php" method="POST">
+          <div class="form-group">
+            <label for="name">الاسم الكامل:</label>
+            <input type="text" id="name" name="name" required>
           </div>
-          <div class="news-item">
-            <div class="news-image">
-              <img src="https://via.placeholder.com/400x250/DAA520/2F4F4F?text=ورشة+الحرف+اليدوية" alt="ورشة الحرف اليدوية" loading="lazy">
-            </div>
-            <div class="news-content">
-              <div class="news-date">12 ديسمبر 2023</div>
-              <h3>ورشة عمل الحرف اليدوية التقليدية</h3>
-              <p>تدعو الجمعية جميع المهتمين للمشاركة في ورشة عمل تفاعلية حول الحرف اليدوية...</p>
-              <a href="#" class="read-more">اقرأ المزيد</a>
-            </div>
+          <div class="form-group">
+            <label for="email">البريد الإلكتروني:</label>
+            <input type="email" id="email" name="email" required>
           </div>
-          <div class="news-item">
-            <div class="news-image">
-              <img src="https://via.placeholder.com/400x250/2F4F4F/DAA520?text=تكريم+المتطوعين" alt="تكريم المتطوعين" loading="lazy">
-            </div>
-            <div class="news-content">
-              <div class="news-date">10 ديسمبر 2023</div>
-              <h3>تكريم المتطوعين المميزين</h3>
-              <p>احتفل الفريق بتكريم المتطوعين المميزين الذين ساهموا في إنجاح فعاليات الفريق...</p>
-              <a href="#" class="read-more">اقرأ المزيد</a>
-            </div>
+          <div class="form-group">
+            <label for="phone">رقم الهاتف:</label>
+            <input type="tel" id="phone" name="phone" required>
           </div>
-        </div>
-        <div class="view-all-news">
-          <button class="view-all-btn" onclick="loadMoreNews()">عرض جميع الأخبار</button>
-        </div>
+          <div class="form-group">
+            <label for="message">رسالة مختصرة (اختياري):</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+          <button type="submit" class="submit-btn">إرسال الطلب</button>
+        </form>
+        <div id="form-message" class="form-message"></div>
       </div>
     </section>
-
 
 
     <section id="programs" class="programs">
@@ -367,7 +348,7 @@
         <div class="join-content">
           <h2>انضم إلى فريق وريث التطوعي</h2>
           <p>كن جزءاً من رحلتنا في حفظ التراث ونشر الثقافة العربية الأصيلة</p>
-          <a href="join.html" class="join-btn">
+          <a href="#join-form-section" class="join-btn">
             <i class="fas fa-user-plus"></i>
             الانضمام للفريق
           </a>
@@ -418,50 +399,13 @@
     </div>
   </footer>
 
-  <!-- New Section for Joining -->
-  <section id="join-form-section" class="join-form-section" style="display: none;">
-    <div class="container">
-      <h2>الانضمام إلى الفريق التطوعي</h2>
-      <p>يرجى تسجيل معلوماتك لتقديم طلب الانضمام. سيتم مراجعة طلبك من قبل الفريق.</p>
-      <form id="joinForm" action="submit_join_request.php" method="POST">
-        <div class="form-group">
-          <label for="name">الاسم الكامل:</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">البريد الإلكتروني:</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">رقم الهاتف:</label>
-          <input type="tel" id="phone" name="phone" required>
-        </div>
-        <div class="form-group">
-          <label for="message">رسالة مختصرة (اختياري):</label>
-          <textarea id="message" name="message" rows="4"></textarea>
-        </div>
-        <button type="submit" class="submit-btn">إرسال الطلب</button>
-      </form>
-      <div id="form-message" class="form-message"></div>
-    </div>
-  </section>
-
-
   <script src="script.js"></script>
   <script>
     // Script to handle the join button click and form display
     document.querySelector('.join-btn').addEventListener('click', function(event) {
       event.preventDefault(); // Prevent default link behavior
-      document.getElementById('home').style.display = 'none';
-      document.getElementById('news').style.display = 'none';
-      document.getElementById('about').style.display = 'none';
-      document.getElementById('programs').style.display = 'none';
-      document.getElementById('statistics').style.display = 'none';
-      document.getElementById('achievements').style.display = 'none';
-      document.getElementById('content').style.display = 'none';
-      document.getElementById('partners').style.display = 'none';
-      document.querySelector('footer').style.display = 'none';
-      document.getElementById('join-form-section').style.display = 'block';
+      // Scroll to the join form section
+      document.getElementById('join-form-section').scrollIntoView({ behavior: 'smooth' });
     });
 
     // Basic form submission handling (replace with actual AJAX or form submission logic)
