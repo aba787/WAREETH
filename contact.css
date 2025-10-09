@@ -4,10 +4,20 @@
 }
 
 :root {
-  --light-brown: #D2B48C;     /* اللون البني الفاتح للعناوين */
-  --black: #000000;           /* اللون الأسود للخلفيات */
-  --dark-brown: #8B4513;      /* اللون البني الغامق للعناصر الداعمة */
-  --brick-red: #B22222;       /* اللون الأحمر القرميدي للزخارف والإبراز */
+  /* ألوان وريث الرسمية */
+  --wareeth-primary: #8B4513;
+  --wareeth-secondary: #D2B48C;
+  --wareeth-accent: #B8860B;
+  --wareeth-dark: #654321;
+  --wareeth-light: #F5DEB3;
+  --wareeth-white: #FFFEF7;
+  --wareeth-text: #2F2F2F;
+  --wareeth-text-light: #666666;
+
+  /* الخطوط الرسمية */
+  --wareeth-font-primary: 'Tajawal', sans-serif;
+  --wareeth-font-secondary: 'Cairo', sans-serif;
+  --wareeth-font-decorative: 'Amiri', serif;
 }
 
 /* Contact Hero Section */

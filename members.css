@@ -4,10 +4,20 @@
 }
 
 :root {
-  --light-brown: #D2B48C;     /* اللون البني الفاتح للعناوين */
-  --black: #000000;           /* اللون الأسود للخلفيات */
-  --dark-brown: #8B4513;      /* اللون البني الغامق للعناصر الداعمة */
-  --brick-red: #B22222;       /* اللون الأحمر القرميدي للزخارف والإبراز */
+  /* ألوان وريث الرسمية */
+  --wareeth-primary: #8B4513;     /* البني الداكن الرئيسي */
+  --wareeth-secondary: #D2B48C;   /* البني الفاتح الثانوي */
+  --wareeth-accent: #B8860B;      /* الذهبي للتمييز */
+  --wareeth-dark: #654321;        /* البني الداكن جداً */
+  --wareeth-light: #F5DEB3;       /* البيج الفاتح */
+  --wareeth-white: #FFFEF7;       /* الأبيض المكسور */
+  --wareeth-text: #2F2F2F;        /* لون النص الرئيسي */
+  --wareeth-text-light: #666666;  /* لون النص الثانوي */
+
+  /* الخطوط الرسمية */
+  --wareeth-font-primary: 'Tajawal', sans-serif;
+  --wareeth-font-secondary: 'Cairo', sans-serif;
+  --wareeth-font-decorative: 'Amiri', serif;
 }
 
 /* Login Section */
@@ -50,7 +60,8 @@
 
 .login-header h2 {
     font-size: 2rem;
-    color: #2F4F4F;
+    color: var(--wareeth-primary);
+    font-family: var(--wareeth-font-primary);
     margin-bottom: 0.5rem;
     font-weight: 700;
 }
@@ -98,8 +109,9 @@
 
 .login-btn {
     width: 100%;
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--wareeth-accent) 0%, var(--wareeth-primary) 100%);
+    color: var(--wareeth-white);
+    font-family: var(--wareeth-font-primary);
     padding: 1rem;
     border: none;
     border-radius: 10px;
