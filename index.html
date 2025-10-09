@@ -145,6 +145,87 @@
       </div>
     </section>
 
+    <!-- News/Announcements Section -->
+    <section id="news" class="news-section">
+      <div class="container">
+        <h2>الأخبار والإعلانات</h2>
+        <div class="news-grid" id="newsGrid">
+          <!-- News items will be loaded dynamically -->
+          <div class="news-item">
+            <div class="news-image">
+              <img src="https://via.placeholder.com/400x250/8B4513/F5F5DC?text=مبادرة+حفظ+التراث" alt="مبادرة حفظ التراث" loading="lazy">
+            </div>
+            <div class="news-content">
+              <div class="news-date">15 ديسمبر 2023</div>
+              <h3>إطلاق مبادرة جديدة لحفظ التراث</h3>
+              <p>أعلن فريق وريث التطوعي عن إطلاق مبادرة جديدة تهدف إلى جمع وتوثيق التراث الشعبي السعودي...</p>
+              <a href="#" class="read-more">اقرأ المزيد</a>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-image">
+              <img src="https://via.placeholder.com/400x250/DAA520/2F4F4F?text=ورشة+الحرف+اليدوية" alt="ورشة الحرف اليدوية" loading="lazy">
+            </div>
+            <div class="news-content">
+              <div class="news-date">12 ديسمبر 2023</div>
+              <h3>ورشة عمل الحرف اليدوية التقليدية</h3>
+              <p>تدعو الجمعية جميع المهتمين للمشاركة في ورشة عمل تفاعلية حول الحرف اليدوية...</p>
+              <a href="#" class="read-more">اقرأ المزيد</a>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-image">
+              <img src="https://via.placeholder.com/400x250/2F4F4F/DAA520?text=تكريم+المتطوعين" alt="تكريم المتطوعين" loading="lazy">
+            </div>
+            <div class="news-content">
+              <div class="news-date">10 ديسمبر 2023</div>
+              <h3>تكريم المتطوعين المميزين</h3>
+              <p>احتفل الفريق بتكريم المتطوعين المميزين الذين ساهموا في إنجاح فعاليات الفريق...</p>
+              <a href="#" class="read-more">اقرأ المزيد</a>
+            </div>
+          </div>
+        </div>
+        <div class="view-all-news">
+          <button class="view-all-btn" onclick="loadMoreNews()">عرض جميع الأخبار</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="statistics" class="stats-section">
+      <div class="container">
+        <h2>إحصائيات فريق وريث</h2>
+        <div class="stats-grid">
+          <!-- ساعات التطوع -->
+          <div class="stat-card">
+            <span class="stat-icon"><i class="fas fa-clock"></i></span>
+            <span class="stat-number" data-target="3200">0</span>
+            <div class="stat-label">إجمالي ساعات التطوع</div>
+          </div>
+
+          <!-- عدد المتطوعين -->
+          <div class="stat-card">
+            <span class="stat-icon"><i class="fas fa-users"></i></span>
+            <span class="stat-number" data-target="200">0</span>
+            <div class="stat-label">عدد المتطوعين</div>
+          </div>
+
+          <!-- عدد الأماكن -->
+          <div class="stat-card">
+            <span class="stat-icon"><i class="fas fa-landmark"></i></span>
+            <span class="stat-number" data-target="600">0</span>
+            <div class="stat-label">عدد الأماكن</div>
+          </div>
+
+          <!-- المستفيدون من البرامج -->
+          <div class="stat-card">
+            <span class="stat-icon"><i class="fas fa-chart-line"></i></span>
+            <span class="stat-number" data-target="8040">0</span>
+            <div class="stat-label">المستفيدون من البرامج والمساهمات</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Section for Joining -->
     <section id="join-form-section" class="join-form-section">
       <div class="container">
@@ -201,41 +282,6 @@
               <h3 class="program-title">رعاية التكنولوجيا</h3>
               <p class="program-description">نوظف أحدث التقنيات لحفظ التراث ونشره، مبتكرين حلولاً digital تحمي هويتنا</p>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="statistics" class="stats-section">
-      <div class="container">
-        <h2>إحصائيات فريق وريث</h2>
-        <div class="stats-grid">
-          <!-- ساعات التطوع -->
-          <div class="stat-card">
-            <span class="stat-icon"><i class="fas fa-clock"></i></span>
-            <span class="stat-number" data-target="3200">0</span>
-            <div class="stat-label">إجمالي ساعات التطوع</div>
-          </div>
-
-          <!-- عدد المتطوعين -->
-          <div class="stat-card">
-            <span class="stat-icon"><i class="fas fa-users"></i></span>
-            <span class="stat-number" data-target="200">0</span>
-            <div class="stat-label">عدد المتطوعين</div>
-          </div>
-
-          <!-- عدد الأماكن -->
-          <div class="stat-card">
-            <span class="stat-icon"><i class="fas fa-landmark"></i></span>
-            <span class="stat-number" data-target="600">0</span>
-            <div class="stat-label">عدد الأماكن</div>
-          </div>
-
-          <!-- المستفيدون من البرامج -->
-          <div class="stat-card">
-            <span class="stat-icon"><i class="fas fa-chart-line"></i></span>
-            <span class="stat-number" data-target="8040">0</span>
-            <div class="stat-label">المستفيدون من البرامج والمساهمات</div>
           </div>
         </div>
       </div>
