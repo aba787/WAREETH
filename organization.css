@@ -1,0 +1,627 @@
+
+/* Organization Page Styles */
+.organization-main {
+    margin-top: 80px;
+}
+
+/* Hero Section */
+.organization-hero {
+    background: linear-gradient(135deg, #8B4513 0%, #2F4F4F 50%, #DAA520 100%);
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.organization-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.organization-hero .hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.organization-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.organization-hero p {
+    font-size: 1.3rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Introduction Section */
+.intro-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.8) 100%);
+    text-align: center;
+}
+
+.intro-content h2 {
+    font-size: 2.5rem;
+    color: #2F4F4F;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.intro-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #8B4513 0%, #DAA520 100%);
+    border-radius: 2px;
+}
+
+.intro-content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #666;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Departments Section */
+.departments-section {
+    padding: 80px 0;
+    background: #fff;
+}
+
+.departments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.department-card {
+    background: linear-gradient(135deg, #fff 0%, #F5F5DC 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 15px 35px rgba(139, 69, 19, 0.1);
+    border: 1px solid rgba(218, 165, 32, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.department-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 20px 20px 0 0;
+}
+
+.department-card.documentation::before {
+    background: linear-gradient(90deg, #8B4513 0%, #DAA520 100%);
+}
+
+.department-card.research::before {
+    background: linear-gradient(90deg, #2F4F4F 0%, #8B4513 100%);
+}
+
+.department-card.events::before {
+    background: linear-gradient(90deg, #DAA520 0%, #2F4F4F 100%);
+}
+
+.department-card.volunteer::before {
+    background: linear-gradient(90deg, #8B4513 0%, #2F4F4F 100%);
+}
+
+.department-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(139, 69, 19, 0.15);
+}
+
+.department-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.department-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.department-card.documentation .department-icon {
+    background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+}
+
+.department-card.research .department-icon {
+    background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 100%);
+}
+
+.department-card.events .department-icon {
+    background: linear-gradient(135deg, #DAA520 0%, #2F4F4F 100%);
+}
+
+.department-card.volunteer .department-icon {
+    background: linear-gradient(135deg, #8B4513 0%, #2F4F4F 100%);
+}
+
+.department-header h3 {
+    font-size: 2rem;
+    color: #2F4F4F;
+    margin: 0;
+    font-weight: 700;
+}
+
+.department-description {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.department-tasks {
+    margin-bottom: 2rem;
+}
+
+.department-tasks h4 {
+    font-size: 1.3rem;
+    color: #8B4513;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.department-tasks ul {
+    list-style: none;
+    padding: 0;
+}
+
+.department-tasks li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+    color: #666;
+    font-size: 1.05rem;
+    position: relative;
+    padding-right: 2rem;
+}
+
+.department-tasks li::before {
+    content: '✓';
+    position: absolute;
+    right: 0;
+    top: 0.8rem;
+    color: #DAA520;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.department-tasks li:last-child {
+    border-bottom: none;
+}
+
+.department-tools h4 {
+    font-size: 1.3rem;
+    color: #8B4513;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.tools-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.tool {
+    background: rgba(218, 165, 32, 0.1);
+    color: #8B4513;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid rgba(218, 165, 32, 0.3);
+    transition: all 0.3s ease;
+}
+
+.tool:hover {
+    background: #DAA520;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Cooperation Section */
+.cooperation-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.8) 100%);
+}
+
+.cooperation-section h2 {
+    font-size: 2.5rem;
+    color: #2F4F4F;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.cooperation-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #8B4513 0%, #DAA520 100%);
+    border-radius: 2px;
+}
+
+.cooperation-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.cooperation-text p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.cooperation-examples {
+    list-style: none;
+    padding: 0;
+}
+
+.cooperation-examples li {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+    color: #666;
+    font-size: 1.05rem;
+    position: relative;
+    padding-right: 2.5rem;
+}
+
+.cooperation-examples li::before {
+    content: '🤝';
+    position: absolute;
+    right: 0;
+    top: 1rem;
+    font-size: 1.2rem;
+}
+
+.cooperation-examples li:last-child {
+    border-bottom: none;
+}
+
+.cooperation-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cooperation-diagram {
+    position: relative;
+    width: 350px;
+    height: 350px;
+}
+
+.center-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+}
+
+.center-circle i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.center-circle span {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.department-circle {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.department-circle:hover {
+    transform: scale(1.1);
+}
+
+.department-circle i {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.department-circle span {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.department-circle.doc {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+}
+
+.department-circle.res {
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 100%);
+}
+
+.department-circle.eve {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #DAA520 0%, #2F4F4F 100%);
+}
+
+.department-circle.vol {
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #8B4513 0%, #2F4F4F 100%);
+}
+
+/* Join Department Section */
+.join-department-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 100%);
+    text-align: center;
+    color: white;
+}
+
+.join-department-section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.join-department-section p {
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+}
+
+.join-buttons {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.join-btn {
+    padding: 1.2rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.join-btn.primary {
+    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    color: white;
+}
+
+.join-btn.secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.join-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+}
+
+.join-btn.primary:hover {
+    background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+}
+
+.join-btn.secondary:hover {
+    background: white;
+    color: #2F4F4F;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .organization-hero {
+        padding: 80px 0;
+    }
+    
+    .organization-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .organization-hero p {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+    
+    .departments-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .department-card {
+        padding: 2rem;
+    }
+    
+    .department-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .department-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .cooperation-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .cooperation-diagram {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .center-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .department-circle {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .department-circle i {
+        font-size: 1.2rem;
+    }
+    
+    .department-circle span {
+        font-size: 0.7rem;
+    }
+    
+    .join-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .join-btn {
+        width: 250px;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .intro-section,
+    .departments-section,
+    .cooperation-section,
+    .join-department-section {
+        padding: 60px 0;
+    }
+    
+    .intro-content h2,
+    .cooperation-section h2 {
+        font-size: 2rem;
+    }
+    
+    .department-card {
+        padding: 1.5rem;
+    }
+    
+    .department-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .department-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .cooperation-diagram {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .center-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .center-circle i {
+        font-size: 1.5rem;
+    }
+    
+    .center-circle span {
+        font-size: 0.8rem;
+    }
+    
+    .department-circle {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .department-circle i {
+        font-size: 1rem;
+    }
+    
+    .department-circle span {
+        font-size: 0.6rem;
+    }
+    
+    .join-department-section h2 {
+        font-size: 2.2rem;
+    }
+    
+    .join-btn {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}
