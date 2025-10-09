@@ -365,8 +365,7 @@
 .social-link.twitter:hover { background: rgba(29, 161, 242, 0.2); }
 .social-link.instagram:hover { background: rgba(225, 48, 108, 0.2); }
 .social-link.linkedin:hover { background: rgba(0, 119, 181, 0.2); }
-.social-link.youtube:hover { background: rgba(255, 0, 0, 0.2); }
-.social-link.whatsapp:hover { background: rgba(37, 211, 102, 0.2); }
+.social-link.tiktok:hover { background: rgba(255, 0, 80, 0.2); }
 
 /* FAQ Section */
 .faq-section {
