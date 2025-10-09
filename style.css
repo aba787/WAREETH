@@ -1324,7 +1324,7 @@ body.english .program-technology .program-description {
 .stats-section {
   text-align: center;
   padding: 80px 0;
-  background: linear-gradient(135deg, var(--dark-brown) 0%, var(--black) 100%);
+  background: linear-gradient(135deg, #FF8C00 0%, var(--dark-brown) 50%, #D2691E 100%);
   color: white;
   position: relative;
   overflow: hidden;
