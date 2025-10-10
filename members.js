@@ -2180,6 +2180,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }));
     }
     
+    // Function to sync articles with main articles page
+    function syncArticlesWithMainPage(articles) {
+        // Save articles for articles.html page
+        localStorage.setItem('publishedArticles', JSON.stringify(articles));
+        
+        // Trigger storage event to update articles page if open
+        window.dispatchEvent(new StorageEvent('storage', {
+            key: 'publishedArticles',
+            newValue: JSON.stringify(articles),
+            url: window.location.href
+        }));
+        
+        console.log('Articles synced with main articles page');
+    }
+    
     // Dummy function for syncWithServer (to be implemented if needed)
     function syncWithServer() {
         console.log("syncWithServer called - implementation needed.");
@@ -2414,8 +2429,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         partnersList.innerHTML = partners.map((partner, index) => `
             <div class="partner-card">
-                <div class="partner-icon">${partner.icon}</div>
-                <div class="partner-name">${partner.name}</div>
+                <div class="partner-visual">
+                    ${partner.logo ? 
+                        `<img src="${partner.logo}" alt="${partner.name}" class="partner-logo-img">` :
+                        `<div class="partner-icon">${partner.icon}</div>`
+                    }
+                </div>
+                <div class="partner-info">
+                    <div class="partner-name">${partner.name}</div>
+                    ${partner.website ? `<div class="partner-website"><a href="${partner.website}" target="_blank" title="زيارة الموقع"><i class="fas fa-external-link-alt"></i></a></div>` : ''}
+                </div>
                 <div class="partner-actions">
                     <button class="btn-icon edit" onclick="editPartner(${index})" title="تعديل">
                         <i class="fas fa-edit"></i>
@@ -2428,19 +2451,77 @@ document.addEventListener('DOMContentLoaded', function() {
         `).join('');
     }
 
+    // Partner logo preview handling
+    const partnerLogoInput = document.getElementById('partnerLogo');
+    const partnerLogoPreview = document.getElementById('partnerLogoPreview');
+    const previewPartnerLogo = document.getElementById('previewPartnerLogo');
+    const resetPartnerForm = document.getElementById('resetPartnerForm');
+
+    if (partnerLogoInput && partnerLogoPreview && previewPartnerLogo) {
+        partnerLogoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Check file size (max 2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    showNotification('حجم الصورة كبير جداً. الحد الأقصى 2 ميجابايت', 'error');
+                    this.value = '';
+                    partnerLogoPreview.style.display = 'none';
+                    return;
+                }
+
+                // Check file type
+                if (!file.type.startsWith('image/')) {
+                    showNotification('يرجى اختيار ملف صورة صحيح', 'error');
+                    this.value = '';
+                    partnerLogoPreview.style.display = 'none';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewPartnerLogo.src = e.target.result;
+                    partnerLogoPreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                partnerLogoPreview.style.display = 'none';
+            }
+        });
+    }
+
+    if (resetPartnerForm) {
+        resetPartnerForm.addEventListener('click', function() {
+            if (confirm('هل أنت متأكد من إعادة تعيين النموذج؟')) {
+                const partnersForm = document.getElementById('partnersForm');
+                if (partnersForm) partnersForm.reset();
+                if (partnerLogoPreview) partnerLogoPreview.style.display = 'none';
+                
+                // Reset submit button if in edit mode
+                const submitBtn = partnersForm.querySelector('[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-plus"></i> إضافة شريك';
+                    submitBtn.removeAttribute('data-partner-index');
+                }
+            }
+        });
+    }
+
     // Partners form handler
     document.getElementById('partnersForm')?.addEventListener('submit', function(e) {
         e.preventDefault();
 
         const partnerNameField = document.getElementById('partnerName');
         const partnerIconField = document.getElementById('partnerIcon');
+        const partnerWebsiteField = document.getElementById('partnerWebsite');
+        const partnerLogoField = document.getElementById('partnerLogo');
         const submitButton = this.querySelector('[type="submit"]');
 
         const partnerName = partnerNameField ? partnerNameField.value.trim() : '';
         const partnerIcon = partnerIconField ? partnerIconField.value : '';
+        const partnerWebsite = partnerWebsiteField ? partnerWebsiteField.value.trim() : '';
 
         if (!partnerName || !partnerIcon) {
-            showNotification('يرجى ملء جميع الحقول', 'error');
+            showNotification('يرجى ملء الحقول المطلوبة', 'error');
             return;
         }
 
@@ -2448,31 +2529,40 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
         submitButton.disabled = true;
 
-        setTimeout(() => {
+        const logoFile = partnerLogoField ? partnerLogoField.files[0] : null;
+
+        const processPartnerData = (logoDataUrl = null) => {
             const savedPartners = JSON.parse(localStorage.getItem('warithPartners') || '[]');
             const editIndex = submitButton ? parseInt(submitButton.getAttribute('data-partner-index')) : NaN;
+
+            const partnerData = {
+                id: Date.now(),
+                name: partnerName,
+                icon: partnerIcon,
+                website: partnerWebsite,
+                logo: logoDataUrl,
+                createdAt: new Date().toISOString(),
+                createdBy: currentSession ? currentSession.fullName : 'مدير النظام'
+            };
 
             if (!isNaN(editIndex) && editIndex >= 0 && editIndex < savedPartners.length) {
                 // Update existing partner
                 const oldName = savedPartners[editIndex].name;
-                savedPartners[editIndex] = {
-                    ...savedPartners[editIndex],
-                    name: partnerName,
-                    icon: partnerIcon,
-                    updatedAt: new Date().toISOString()
-                };
+                partnerData.id = savedPartners[editIndex].id;
+                partnerData.createdAt = savedPartners[editIndex].createdAt;
+                partnerData.updatedAt = new Date().toISOString();
+                
+                // Keep existing logo if no new logo uploaded
+                if (!logoDataUrl && savedPartners[editIndex].logo) {
+                    partnerData.logo = savedPartners[editIndex].logo;
+                }
+                
+                savedPartners[editIndex] = partnerData;
                 logActivity('partner_updated', `تم تحديث الشريك: ${oldName} إلى ${partnerName}`);
                 showNotification('تم تحديث الشريك بنجاح!', 'success');
             } else {
                 // Add new partner
-                const newPartner = { 
-                    id: Date.now(),
-                    name: partnerName, 
-                    icon: partnerIcon,
-                    createdAt: new Date().toISOString(),
-                    createdBy: currentSession ? currentSession.fullName : 'مدير النظام'
-                };
-                savedPartners.push(newPartner);
+                savedPartners.push(partnerData);
                 logActivity('partner_added', `تم إضافة شريك جديد: ${partnerName}`);
                 showNotification('تم إضافة الشريك بنجاح!', 'success');
             }
@@ -2484,12 +2574,29 @@ document.addEventListener('DOMContentLoaded', function() {
             
             displayPartnersList(savedPartners);
             this.reset();
+            if (partnerLogoPreview) partnerLogoPreview.style.display = 'none';
 
             // Reset submit button text and remove edit index attribute
             submitButton.innerHTML = '<i class="fas fa-plus"></i> إضافة شريك';
             submitButton.removeAttribute('data-partner-index');
             submitButton.disabled = false;
-        }, 1000);
+        };
+
+        // Handle logo upload
+        if (logoFile) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                processPartnerData(e.target.result);
+            };
+            reader.onerror = function() {
+                showNotification('حدث خطأ في قراءة الصورة', 'error');
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            };
+            reader.readAsDataURL(logoFile);
+        } else {
+            processPartnerData();
+        }
     });
 
     window.deletePartner = function(index) {
@@ -2516,9 +2623,17 @@ document.addEventListener('DOMContentLoaded', function() {
         if (partner) {
             const partnerNameField = document.getElementById('partnerName');
             const partnerIconField = document.getElementById('partnerIcon');
+            const partnerWebsiteField = document.getElementById('partnerWebsite');
 
             if (partnerNameField) partnerNameField.value = partner.name;
             if (partnerIconField) partnerIconField.value = partner.icon;
+            if (partnerWebsiteField) partnerWebsiteField.value = partner.website || '';
+
+            // Show logo preview if exists
+            if (partner.logo && partnerLogoPreview && previewPartnerLogo) {
+                previewPartnerLogo.src = partner.logo;
+                partnerLogoPreview.style.display = 'block';
+            }
 
             // Change form behavior to update instead of add
             const partnersForm = document.getElementById('partnersForm');
@@ -2823,6 +2938,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 localStorage.setItem('warithArticles', JSON.stringify(existingArticles));
+
+                // Sync with articles.html page
+                syncArticlesWithMainPage(existingArticles);
 
                 // Reset form
                 e.target.reset();

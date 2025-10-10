@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize CTA and other buttons
     initializeCTAButtons();
-    
+
     // Listen for localStorage changes (news updates from admin page)
     window.addEventListener('storage', function(e) {
         if (e.key === 'warithNews') {
@@ -230,18 +230,23 @@ function updateStatsDisplay(stats) {
 }
 
 function updatePartnersDisplay(partners) {
-    const marqueeTrack = document.getElementById('marqueeTrack');
-    if (marqueeTrack && partners.length > 0) {
-        const partnersHTML = partners.map(partner => `
-            <div class="partner-item">
-                <div class="partner-logo">${partner.icon}</div>
-                <div class="partner-name">${partner.name}</div>
-            </div>
-        `).join('');
+        const marqueeTrack = document.getElementById('marqueeTrack');
+        if (marqueeTrack && partners.length > 0) {
+            const partnersHTML = partners.map(partner => `
+                <div class="partner-item" ${partner.website ? `onclick="window.open('${partner.website}', '_blank')"` : ''} style="${partner.website ? 'cursor: pointer;' : ''}">
+                    <div class="partner-logo">
+                        ${partner.logo ? 
+                            `<img src="${partner.logo}" alt="${partner.name}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">` :
+                            partner.icon
+                        }
+                    </div>
+                    <div class="partner-name">${partner.name}</div>
+                </div>
+            `).join('');
 
-        marqueeTrack.innerHTML = partnersHTML + partnersHTML; // Duplicate for smooth scrolling
+            marqueeTrack.innerHTML = partnersHTML + partnersHTML; // Duplicate for smooth scrolling
+        }
     }
-}
 
 function updateContentDisplay(content) {
     // Update hero text
@@ -359,12 +364,12 @@ function loadNews() {
     if (savedNews.length > 0) {
         // Clear existing news slides and replace with dynamic content
         newsTrack.innerHTML = '';
-        
+
         savedNews.slice(0, 5).forEach(news => { // Show only first 5 news items
             const newsSlide = createNewsSlide(news);
             newsTrack.appendChild(newsSlide);
         });
-        
+
         // Re-initialize slider after loading new content
         currentNewsSlide = 0;
         totalNewsSlides = savedNews.slice(0, 5).length;
