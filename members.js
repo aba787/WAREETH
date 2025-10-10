@@ -624,11 +624,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Articles publishing
+    const manageArticlesBtn = document.getElementById('manageArticlesBtn');
+    const articlesPublishing = document.getElementById('articlesPublishing');
+
+    if (manageArticlesBtn && articlesPublishing) {
+        manageArticlesBtn.addEventListener('click', function() {
+            hideAllSections();
+            articlesPublishing.style.display = 'block';
+            loadPublishedArticles();
+        });
+    }
+
     // Back buttons
     document.getElementById('backFromStats')?.addEventListener('click', () => showMainDashboard());
     document.getElementById('backFromPartners')?.addEventListener('click', () => showMainDashboard());
     document.getElementById('backFromContent')?.addEventListener('click', () => showMainDashboard());
     document.getElementById('backFromSettings')?.addEventListener('click', () => showMainDashboard());
+    document.getElementById('backFromArticles')?.addEventListener('click', () => showMainDashboard());
 
     function showExportOptions() {
         const exportModal = document.createElement('div');
@@ -2289,6 +2302,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const partnersManagement = document.getElementById('partnersManagement');
         const contentManagement = document.getElementById('contentManagement');
         const siteSettings = document.getElementById('siteSettings');
+        const articlesPublishing = document.getElementById('articlesPublishing');
 
         if (membersSection) membersSection.style.display = 'none';
         if (articlesManagement) articlesManagement.style.display = 'none';
@@ -2296,6 +2310,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (partnersManagement) partnersManagement.style.display = 'none';
         if (contentManagement) contentManagement.style.display = 'none';
         if (siteSettings) siteSettings.style.display = 'none';
+        if (articlesPublishing) articlesPublishing.style.display = 'none';
     }
 
     function showMainDashboard() {
@@ -2590,6 +2605,297 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update settings on main page (if exists)
         console.log("Updating main page settings:", settings);
     }
+
+    // Articles Publishing Functions
+    function loadPublishedArticles() {
+        const publishedArticlesList = document.getElementById('publishedArticlesList');
+        if (!publishedArticlesList) return;
+
+        const savedArticles = JSON.parse(localStorage.getItem('warithArticles') || '[]');
+
+        publishedArticlesList.innerHTML = savedArticles.map(article => `
+            <div class="article-admin-item" data-article-id="${article.id}">
+                <div class="article-admin-header">
+                    <h4>${article.title}</h4>
+                    <div class="article-admin-actions">
+                        <button class="btn-icon edit" onclick="editArticle(${article.id})" title="تعديل">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon delete" onclick="deleteArticle(${article.id})" title="حذف">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="article-admin-meta">
+                    <span class="article-admin-author">بقلم: ${article.author}</span>
+                    <span class="article-admin-date">${article.date}</span>
+                    <span class="category">${getCategoryName(article.category)}</span>
+                </div>
+                <p class="article-admin-summary">${article.summary}</p>
+                ${article.tags ? `<div class="article-tags">الكلمات المفتاحية: ${article.tags}</div>` : ''}
+            </div>
+        `).join('');
+    }
+
+    function getCategoryName(category) {
+        const categories = {
+            'heritage': 'تراث',
+            'culture': 'ثقافة',
+            'history': 'تاريخ',
+            'arts': 'فنون',
+            'literature': 'أدب',
+            'general': 'عام'
+        };
+        return categories[category] || category;
+    }
+
+    // Article form handling
+    const articleForm = document.getElementById('articleForm');
+    const articleImageInput = document.getElementById('articleImage');
+    const articleImagePreview = document.getElementById('articleImagePreview');
+    const previewArticleImg = document.getElementById('previewArticleImg');
+    const resetArticleForm = document.getElementById('resetArticleForm');
+
+    if (articleImageInput && articleImagePreview && previewArticleImg) {
+        articleImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewArticleImg.src = e.target.result;
+                    articleImagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                articleImagePreview.style.display = 'none';
+            }
+        });
+    }
+
+    if (resetArticleForm) {
+        resetArticleForm.addEventListener('click', function() {
+            if (confirm('هل أنت متأكد من إعادة تعيين النموذج؟ ستفقد جميع البيانات المدخلة.')) {
+                articleForm.reset();
+                if (articleImagePreview) articleImagePreview.style.display = 'none';
+                
+                // Reset submit button if in edit mode
+                const submitBtn = articleForm.querySelector('[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> نشر المقال';
+                    submitBtn.removeAttribute('data-edit-id');
+                }
+            }
+        });
+    }
+
+    if (articleForm) {
+        articleForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+
+            // Validate form data
+            if (!validateArticleForm(formData)) {
+                return;
+            }
+
+            const submitBtn = articleForm.querySelector('[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
+            submitBtn.disabled = true;
+
+            const imageFile = formData.get('articleImage');
+
+            const processArticleData = (imageDataUrl = null) => {
+                const articleData = {
+                    id: Date.now(),
+                    title: formData.get('articleTitle'),
+                    author: formData.get('articleAuthor'),
+                    category: formData.get('articleCategory'),
+                    summary: formData.get('articleSummary'),
+                    content: formData.get('articleContent'),
+                    tags: formData.get('articleTags'),
+                    date: new Date().toLocaleDateString('ar-SA'),
+                    status: 'published',
+                    image: imageDataUrl,
+                    createdAt: new Date().toISOString(),
+                    publishedBy: currentSession ? currentSession.fullName : 'إدارة الموقع'
+                };
+
+                // Save to localStorage
+                const existingArticles = JSON.parse(localStorage.getItem('warithArticles') || '[]');
+
+                // Check if we are editing an existing article
+                const editId = submitBtn.getAttribute('data-edit-id');
+                if (editId) {
+                    const articleIndex = existingArticles.findIndex(article => article.id == editId);
+                    if (articleIndex !== -1) {
+                        // Update existing article
+                        articleData.id = parseInt(editId);
+                        articleData.createdAt = existingArticles[articleIndex].createdAt;
+                        articleData.updatedAt = new Date().toISOString();
+                        existingArticles[articleIndex] = articleData;
+                        logActivity('article_updated', `تم تحديث المقال: ${articleData.title}`);
+                    } else {
+                        existingArticles.unshift(articleData);
+                        logActivity('article_published', `تم نشر مقال جديد: ${articleData.title}`);
+                    }
+                    submitBtn.removeAttribute('data-edit-id');
+                } else {
+                    // Add as new article
+                    existingArticles.unshift(articleData);
+                    logActivity('article_published', `تم نشر مقال جديد: ${articleData.title}`);
+                }
+
+                localStorage.setItem('warithArticles', JSON.stringify(existingArticles));
+
+                // Reset form
+                e.target.reset();
+                if (articleImagePreview) articleImagePreview.style.display = 'none';
+
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+
+                // Show success message
+                showNotification(`تم ${editId ? 'تحديث' : 'نشر'} المقال بنجاح!`, 'success');
+
+                // Refresh published articles display
+                loadPublishedArticles();
+
+                // Update articles stats
+                updateArticleStats(existingArticles);
+            };
+
+            // Handle image upload
+            if (imageFile && imageFile.size > 0) {
+                if (imageFile.size > 5 * 1024 * 1024) {
+                    showNotification('حجم الصورة كبير جداً. الحد الأقصى 5 ميجابايت', 'error');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                if (!imageFile.type.startsWith('image/')) {
+                    showNotification('يرجى اختيار ملف صورة صحيح', 'error');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    processArticleData(e.target.result);
+                };
+                reader.onerror = function() {
+                    showNotification('حدث خطأ في قراءة الصورة', 'error');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                const editId = submitBtn.getAttribute('data-edit-id');
+                if (editId) {
+                    const existingArticles = JSON.parse(localStorage.getItem('warithArticles') || '[]');
+                    const articleToEdit = existingArticles.find(a => a.id == editId);
+                    if (articleToEdit && articleToEdit.image) {
+                        processArticleData(articleToEdit.image);
+                    } else {
+                        processArticleData();
+                    }
+                } else {
+                    processArticleData();
+                }
+            }
+        });
+    }
+
+    function validateArticleForm(formData) {
+        let isValid = true;
+        document.querySelectorAll('.error-message').forEach(msg => msg.remove());
+
+        const requiredFields = {
+            'articleAuthor': 'اسم الكاتب مطلوب',
+            'articleTitle': 'عنوان المقال مطلوب',
+            'articleCategory': 'التصنيف مطلوب',
+            'articleSummary': 'ملخص المقال مطلوب',
+            'articleContent': 'محتوى المقال مطلوب'
+        };
+
+        for (const [fieldName, errorMessage] of Object.entries(requiredFields)) {
+            if (!formData.get(fieldName) || formData.get(fieldName).trim() === '') {
+                showFieldError(fieldName, errorMessage);
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+    // Global functions for article management
+    window.editArticle = function(articleId) {
+        const savedArticles = JSON.parse(localStorage.getItem('warithArticles') || '[]');
+        const article = savedArticles.find(a => a.id == articleId);
+
+        if (article) {
+            // Fill form with article data
+            const articleAuthorField = document.getElementById('articleAuthor');
+            const articleTitleField = document.getElementById('articleTitle');
+            const articleCategoryField = document.getElementById('articleCategory');
+            const articleSummaryField = document.getElementById('articleSummary');
+            const articleContentField = document.getElementById('articleContent');
+            const articleTagsField = document.getElementById('articleTags');
+
+            if (articleAuthorField) articleAuthorField.value = article.author;
+            if (articleTitleField) articleTitleField.value = article.title;
+            if (articleCategoryField) articleCategoryField.value = article.category;
+            if (articleSummaryField) articleSummaryField.value = article.summary;
+            if (articleContentField) articleContentField.value = article.content;
+            if (articleTagsField) articleTagsField.value = article.tags || '';
+
+            // Show image preview if exists
+            if (article.image && articleImagePreview && previewArticleImg) {
+                previewArticleImg.src = article.image;
+                articleImagePreview.style.display = 'block';
+            }
+
+            // Change form to edit mode
+            const submitBtn = articleForm.querySelector('[type="submit"]');
+            if (submitBtn) {
+                submitBtn.innerHTML = '<i class="fas fa-save"></i> تحديث المقال';
+                submitBtn.setAttribute('data-edit-id', articleId);
+            }
+
+            // Scroll to form
+            document.getElementById('articleForm').scrollIntoView({ behavior: 'smooth' });
+
+            showNotification('تم تحميل بيانات المقال للتعديل', 'info');
+        }
+    };
+
+    window.deleteArticle = function(articleId) {
+        if (!confirm('هل أنت متأكد من حذف هذا المقال؟')) return;
+
+        const savedArticles = JSON.parse(localStorage.getItem('warithArticles') || '[]');
+        const articleIndex = savedArticles.findIndex(article => article.id == articleId);
+
+        if (articleIndex !== -1) {
+            const deletedArticle = savedArticles[articleIndex];
+            savedArticles.splice(articleIndex, 1);
+            localStorage.setItem('warithArticles', JSON.stringify(savedArticles));
+
+            // Log activity
+            logActivity('article_deleted', `تم حذف المقال: ${deletedArticle.title}`);
+
+            // Refresh display
+            loadPublishedArticles();
+
+            // Update stats
+            updateArticleStats(savedArticles);
+
+            showNotification('تم حذف المقال بنجاح', 'success');
+        }
+    };
 
     function updateArticleStats(articles) {
         // Update article statistics (placeholder)

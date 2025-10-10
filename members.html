@@ -184,9 +184,13 @@
                         <i class="fas fa-file-alt"></i>
                         إدارة المحتوى
                     </button>
-                    <button class="action-btn settings-btn" id="manageSettingsBtn">
+                    <button class="action-btn settings-btn" id="siteSettingsBtn">
                         <i class="fas fa-cog"></i>
                         إعدادات الموقع
+                    </button>
+                    <button class="action-btn articles-btn" id="manageArticlesBtn">
+                        <i class="fas fa-newspaper"></i>
+                        نشر المقالات
                     </button>
                 </div>
 
@@ -453,6 +457,93 @@
                                 <button type="submit" class="btn primary">حفظ التغييرات</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Articles Publishing Section -->
+            <div class="articles-publishing" id="articlesPublishing" style="display: none;">
+                <div class="section-header">
+                    <h2>نشر المقالات</h2>
+                    <button class="back-btn" id="backFromArticles">
+                        <i class="fas fa-arrow-right"></i>
+                        العودة للوحة الرئيسية
+                    </button>
+                </div>
+
+                <div class="articles-content">
+                    <!-- Article Publishing Form -->
+                    <div class="article-form-container">
+                        <h3>نشر مقال جديد</h3>
+                        <form id="articleForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="articleAuthor">اسم الكاتب</label>
+                                    <input type="text" id="articleAuthor" name="articleAuthor" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="articleCategory">التصنيف</label>
+                                    <select id="articleCategory" name="articleCategory" required>
+                                        <option value="">اختر التصنيف</option>
+                                        <option value="heritage">تراث</option>
+                                        <option value="culture">ثقافة</option>
+                                        <option value="history">تاريخ</option>
+                                        <option value="arts">فنون</option>
+                                        <option value="literature">أدب</option>
+                                        <option value="general">عام</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="articleTitle">عنوان المقال</label>
+                                <input type="text" id="articleTitle" name="articleTitle" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="articleSummary">ملخص المقال</label>
+                                <textarea id="articleSummary" name="articleSummary" rows="3" required placeholder="اكتب ملخصاً موجزاً عن المقال..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="articleContent">محتوى المقال</label>
+                                <textarea id="articleContent" name="articleContent" rows="12" required placeholder="اكتب محتوى المقال كاملاً..."></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="articleTags">الكلمات المفتاحية</label>
+                                    <input type="text" id="articleTags" name="articleTags" placeholder="مثال: تراث، ثقافة، تاريخ (افصل بالفاصلة)">
+                                </div>
+                                <div class="form-group">
+                                    <label for="articleImage">صورة المقال</label>
+                                    <input type="file" id="articleImage" name="articleImage" accept="image/*">
+                                </div>
+                            </div>
+
+                            <div class="article-image-preview" id="articleImagePreview" style="display: none;">
+                                <img id="previewArticleImg" src="" alt="معاينة صورة المقال" style="max-width: 300px; height: auto; border-radius: 8px; margin-top: 10px;">
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                    نشر المقال
+                                </button>
+                                <button type="button" class="btn secondary" id="resetArticleForm">
+                                    <i class="fas fa-undo"></i>
+                                    إعادة تعيين
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Published Articles List -->
+                    <div class="published-articles">
+                        <h3>المقالات المنشورة</h3>
+                        <div class="articles-list" id="publishedArticlesList">
+                            <!-- Articles will be populated here -->
+                        </div>
                     </div>
                 </div>
             </div>
