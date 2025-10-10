@@ -1,7 +1,39 @@
+/* Join Button in Header */
+.join-header-btn {
+    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(218, 165, 32, 0.3);
+    position: absolute;
+    right: 10rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001;
+    white-space: nowrap;
+}
+
+.join-header-btn:hover {
+    background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+    transform: translateY(-50%) translateY(-2px);
+    box-shadow: 0 5px 15px rgba(218, 165, 32, 0.4);
+}
+
+.join-header-btn i {
+    font-size: 0.85rem;
+}
 
 /* Members Page Styles */
 .members-main {
     margin-top: 70px;
+    padding-bottom: 80px;
 }
 
 :root {
@@ -931,81 +963,45 @@
     box-shadow: 0 5px 15px rgba(139, 69, 19, 0.1);
 }
 
-/* Responsive Design */
+/* User Menu Dropdown */
+.user-menu {
+    position: absolute;
+    right: 15rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001;
+}
+
+.language-toggle {
+    position: absolute;
+    right: 19rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(218, 165, 32, 0.3);
+    z-index: 1001;
+}
+
+/* Mobile Responsive */
 @media screen and (max-width: 768px) {
-    .members-main {
-        margin-top: 70px;
+    .join-header-btn {
+        display: none; /* إخفاء الزر في الموبايل لتوفير مساحة */
     }
 
-    .login-container {
-        margin: 2rem 1rem;
-        padding: 2.5rem 2rem;
-        max-width: 100%;
+    .user-menu {
+        right: 6rem;
     }
 
-    .dashboard-header {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
-
-    .dashboard-header h1 {
-        font-size: 2rem;
-    }
-
-    .dashboard-stats {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .action-buttons {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .search-filter {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .search-filter input,
-    .search-filter select {
-        width: 100%;
-    }
-
-    .table-container {
-        overflow-x: scroll;
-    }
-
-    .members-table {
-        min-width: 600px;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-
-    .form-actions {
-        flex-direction: column;
-    }
-
-    .articles-tabs {
-        flex-wrap: wrap;
-    }
-
-    .modal-content {
-        margin: 10% auto;
-        width: 95%;
-    }
-
-    .modal-header,
-    .modal-body {
-        padding: 1.5rem;
+    .language-toggle {
+        right: 10rem;
     }
 }
 
