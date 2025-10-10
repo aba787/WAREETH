@@ -54,22 +54,36 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScrollY = currentScrollY;
     });
 
-    // Smooth scroll for navigation links
-    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+    // Smooth scroll for navigation links and handle external pages
+    const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
+            const href = this.getAttribute('href');
+            
+            // Handle internal anchors
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const targetSection = document.querySelector(href);
 
-            if (targetSection) {
-                const headerHeight = header ? header.offsetHeight : 80;
-                const targetPosition = targetSection.offsetTop - headerHeight;
+                if (targetSection) {
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const targetPosition = targetSection.offsetTop - headerHeight;
 
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            // Handle external pages - let them navigate normally
+            else if (href && href.endsWith('.html')) {
+                // Allow normal navigation to external pages
+                return true;
+            }
+            // Handle missing pages
+            else if (href && !href.startsWith('#')) {
+                e.preventDefault();
+                showNotification('هذه الصفحة قيد الإنشاء وستكون متاحة قريباً', 'info');
             }
         });
     });
@@ -167,6 +181,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load and display saved content on initial load
     loadSavedContent();
+    
+    // Initialize CTA and other buttons
+    initializeCTAButtons();
 });
 
 // Dynamic content update functions
@@ -590,6 +607,53 @@ function addSwipeSupport(element) {
     }
 }
 
+// Initialize CTA and join buttons
+function initializeCTAButtons() {
+    // Handle CTA buttons
+    const ctaButtons = document.querySelectorAll('.cta-button, .join-btn, .join-hero-btn');
+    ctaButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (!href || href === '#') {
+                e.preventDefault();
+                window.location.href = 'join.html';
+            }
+        });
+    });
+    
+    // Handle view all news button
+    const viewAllBtn = document.querySelector('.view-all-btn');
+    if (viewAllBtn) {
+        viewAllBtn.addEventListener('click', function() {
+            window.location.href = 'articles.html';
+        });
+    }
+    
+    // Handle read more links
+    const readMoreLinks = document.querySelectorAll('.read-more');
+    readMoreLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            showNotification('ستتم إضافة تفاصيل المقال قريباً', 'info');
+        });
+    });
+    
+    // Handle social links
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('http')) {
+                // Allow external links to work normally
+                return true;
+            } else {
+                e.preventDefault();
+                showNotification('رابط وسائل التواصل قيد التحديث', 'info');
+            }
+        });
+    });
+}
+
 // User Menu Functionality
 function initializeUserMenu() {
     const userMenu = document.getElementById('userMenu');
@@ -644,7 +708,83 @@ function initializeUserMenu() {
 }
 
 // Function to show notifications
-function showNotification(message, type) {
+function showNotification(message, type = 'info') {
     // Remove existing notifications
     const existingNotifications = document.querySelectorAll('.notification');
     existingNotifications.forEach(notification => notification.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-message">${message}</span>
+            <button class="notification-close">&times;</button>
+        </div>
+    `;
+    
+    // Style the notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        max-width: 300px;
+        animation: slideInRight 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Close button functionality
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => notification.remove());
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, 5000);
+}
+
+// Add CSS for notifications
+const notificationStyle = document.createElement('style');
+notificationStyle.textContent = `
+    @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOutRight {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+    
+    .notification-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .notification-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+`;
+document.head.appendChild(notificationStyle);
