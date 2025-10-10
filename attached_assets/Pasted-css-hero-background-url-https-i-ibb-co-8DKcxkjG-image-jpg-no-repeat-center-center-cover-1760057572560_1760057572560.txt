@@ -1,0 +1,133 @@
+css
+.hero {
+  background: url('https://i.ibb.co/8DKcxkjG/image.jpg') no-repeat center center/cover;
+  background-color: #2F4F4F;
+  color: white;
+  padding: 200px 0 150px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background-attachment: fixed;
+  min-height: 100vh;
+  /* تم إزالة background-size و background-repeat لإنهم موجودين في shorthand */
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* خففنا الشفافية عشان الصورة تبان أوضح */
+  z-index: 1;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.2; /* خففنا تأثير الحبوب */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 0;
+  font-weight: 700;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
+  line-height: 1.3;
+  color: white;
+  position: relative;
+  z-index: 2;
+  font-family: var(--wareeth-font-decorative);
+  background: rgba(0,0,0,0.3);
+  padding: 2rem 3rem;
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+}
+
+/* النص المركزي */
+.hero-content .centered-text {
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
+  line-height: 1.3;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  font-family: 'Scheherazade New', serif;
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    background-size: cover;
+    background-position: center center;
+    min-height: 80vh;
+    padding: 120px 0 80px;
+    background-attachment: scroll; /* أزلنا fixed عشان الموبايل */
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    padding: 1.5rem 2rem;
+    margin: 0 1rem;
+  }
+  
+  .hero-content .centered-text {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero {
+    min-height: 70vh;
+    padding: 100px 0 60px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+    line-height: 1.1;
+    padding: 1rem 1.5rem;
+    margin: 0 0.5rem;
+  }
+  
+  .hero-content .centered-text {
+    font-size: 1.8rem;
+  }
+}
+🎯 التغييرات الرئيسية:
+background-size: contain → cover
+
+contain: تصغر الصورة عشان ما تتقطع
+
+cover: تكبر الصورة عشان تملأ الخلفية كلها
+
+خففنا opacity الطبقات
+
+الشفافية من 0.5 إلى 0.4
+
+تأثير الحبوب من 0.3 إلى 0.2
+
+أزلنا background-attachment: fixed للموبايل
+
+عشان ما يعطل الأداء
