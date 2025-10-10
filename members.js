@@ -158,37 +158,96 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enhanced logout functionality
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            performLogout();
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showLogoutConfirmation();
         });
     }
 
     // Header logout button functionality
     const logoutHeaderBtn = document.getElementById('logoutHeaderBtn');
     if (logoutHeaderBtn) {
-        logoutHeaderBtn.addEventListener('click', function() {
-            if (confirm('هل تريد تسجيل الخروج؟')) {
-                performLogout();
-            }
+        logoutHeaderBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showLogoutConfirmation();
         });
     }
 
+    // Show logout confirmation modal
+    function showLogoutConfirmation() {
+        const confirmModal = document.createElement('div');
+        confirmModal.className = 'modal logout-confirm-modal';
+        confirmModal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>تأكيد تسجيل الخروج</h3>
+                </div>
+                <div class="modal-body">
+                    <p>هل أنت متأكد من تسجيل الخروج؟</p>
+                    <p class="logout-warning">سيتم إنهاء الجلسة الحالية وإعادتك إلى صفحة تسجيل الدخول.</p>
+                    <div class="confirm-actions">
+                        <button class="btn danger logout-confirm" onclick="confirmLogout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            نعم، سجل الخروج
+                        </button>
+                        <button class="btn secondary logout-cancel" onclick="this.closest('.modal').remove()">
+                            <i class="fas fa-times"></i>
+                            إلغاء
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(confirmModal);
+        confirmModal.style.display = 'block';
+        
+        // Add event listener for confirm button
+        window.confirmLogout = function() {
+            performLogout();
+            confirmModal.remove();
+        };
+    }
+
     function performLogout() {
-        if (currentSession) {
-            logActivity('logout', `تسجيل خروج المستخدم: ${currentSession.fullName}`);
-        }
+        // Show loading state
+        const loadingNotification = showNotification('جاري تسجيل الخروج...', 'info');
         
-        currentSession = null;
-        localStorage.removeItem('warithSession');
-        
-        loginSection.style.display = 'block';
-        adminDashboard.style.display = 'none';
-        loginForm.reset();
-        
-        // Clear sensitive data
-        clearDashboardData();
-        
-        showNotification('تم تسجيل الخروج بنجاح', 'info');
+        setTimeout(() => {
+            if (currentSession) {
+                // Log activity only if db is available
+                if (typeof db !== 'undefined' && db) {
+                    logActivity('logout', `تسجيل خروج المستخدم: ${currentSession.fullName}`);
+                }
+            }
+            
+            // Clear session data
+            const userName = currentSession ? currentSession.fullName : 'المستخدم';
+            currentSession = null;
+            localStorage.removeItem('warithSession');
+            
+            // Reset UI
+            if (loginSection && adminDashboard && loginForm) {
+                loginSection.style.display = 'block';
+                adminDashboard.style.display = 'none';
+                loginForm.reset();
+            }
+            
+            // Clear sensitive data
+            clearDashboardData();
+            
+            // Remove loading notification
+            if (loadingNotification && loadingNotification.parentNode) {
+                loadingNotification.remove();
+            }
+            
+            // Show success message
+            showNotification(`وداعاً ${userName}! تم تسجيل الخروج بنجاح`, 'success');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+        }, 1000); // Small delay for better UX
     }
 
     // Activity logging function
@@ -529,13 +588,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enhanced search functionality
     let searchTimeout;
-    if (memberSearch) {
-        memberSearch.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                performAdvancedSearch();
-            }, 300);
-        });
+    
+    function initializeSearchAndFilter() {
+        const memberSearch = document.getElementById('memberSearch');
+        const roleFilter = document.getElementById('roleFilter');
+
+        if (memberSearch) {
+            memberSearch.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    performAdvancedSearch();
+                }, 300);
+                filterMembers();
+            });
+        }
+
+        if (roleFilter) {
+            roleFilter.addEventListener('change', function() {
+                filterMembers();
+            });
+        }
     }
 
     function performAdvancedSearch() {
@@ -625,21 +697,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Search and filter functionality
-    const memberSearch = document.getElementById('memberSearch');
-    const roleFilter = document.getElementById('roleFilter');
-
-    if (memberSearch) {
-        memberSearch.addEventListener('input', function() {
-            filterMembers();
-        });
-    }
-
-    if (roleFilter) {
-        roleFilter.addEventListener('change', function() {
-            filterMembers();
-        });
-    }
+    // Initialize search and filter after DOM is ready
+    initializeSearchAndFilter();
 
     // Member action buttons
     document.addEventListener('click', function(e) {
@@ -828,7 +887,12 @@ function saveMemberToDB(memberData) {
 }
 
 function loadMembersFromDB() {
-    if (!db) return;
+    // Check if db is available
+    if (typeof db === 'undefined' || !db) {
+        console.log('Database not available, loading sample data');
+        loadSampleMembers();
+        return;
+    }
     
     const transaction = db.transaction(['members'], 'readonly');
     const store = transaction.objectStore('members');
@@ -839,6 +903,56 @@ function loadMembersFromDB() {
         displayMembersInTable(members);
         updateMemberStats(members);
     };
+    
+    request.onerror = function() {
+        console.error('Error loading members from database');
+        loadSampleMembers();
+    };
+}
+
+function loadSampleMembers() {
+    // Load sample data when database is not available
+    const sampleMembers = [
+        {
+            id: 1,
+            name: 'أحمد محمد',
+            email: 'ahmed@example.com',
+            role: 'admin',
+            phone: '+966 50 123 4567',
+            createdAt: '2023-01-15T00:00:00.000Z',
+            status: 'active',
+            loginCount: 15,
+            lastLogin: '2023-12-01T00:00:00.000Z',
+            createdBy: 'النظام'
+        },
+        {
+            id: 2,
+            name: 'فاطمة علي',
+            email: 'fatima@example.com',
+            role: 'writer',
+            phone: '+966 50 234 5678',
+            createdAt: '2023-03-20T00:00:00.000Z',
+            status: 'active',
+            loginCount: 8,
+            lastLogin: '2023-11-28T00:00:00.000Z',
+            createdBy: 'النظام'
+        },
+        {
+            id: 3,
+            name: 'خالد الأحمد',
+            email: 'khalid@example.com',
+            role: 'member',
+            phone: '+966 50 345 6789',
+            createdAt: '2023-06-10T00:00:00.000Z',
+            status: 'inactive',
+            loginCount: 3,
+            lastLogin: '2023-10-15T00:00:00.000Z',
+            createdBy: 'النظام'
+        }
+    ];
+    
+    displayMembersInTable(sampleMembers);
+    updateMemberStats(sampleMembers);
 }
 
 function displayMembersInTable(members) {
@@ -1587,6 +1701,7 @@ function showNotification(message, type) {
             z-index: 10000;
             animation: slideIn 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            min-width: 300px;
         }
 
         .notification.success {
@@ -1607,6 +1722,51 @@ function showNotification(message, type) {
             gap: 0.5rem;
         }
 
+        .logout-warning {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .btn.danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn.danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn.secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+        }
+
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -1619,13 +1779,23 @@ function showNotification(message, type) {
         }
     `;
 
-    document.head.appendChild(style);
+    if (!document.querySelector('#notification-styles')) {
+        style.id = 'notification-styles';
+        document.head.appendChild(style);
+    }
+    
     document.body.appendChild(notification);
 
-    // Auto remove after 3 seconds
-    setTimeout(() => {
-        notification.remove();
-    }, 3000);
+    // Auto remove after 3 seconds (except for loading notifications)
+    if (type !== 'info' || !message.includes('جاري')) {
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 3000);
+    }
+
+    return notification; // Return notification element for manual removal
 }
 
 // Management functions
