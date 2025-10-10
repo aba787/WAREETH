@@ -722,13 +722,17 @@ body.english {
 
 /* Hero Section */
 .hero {
-  background: url('https://i.ibb.co/8DKcxkjG/image.jpg') no-repeat center center/cover;
+  background: url('https://i.ibb.co/8DKcxkjG/image.jpg') no-repeat center center/contain;
+  background-color: #2F4F4F;
   color: white;
-  padding: 180px 0 120px;
+  padding: 200px 0 150px;
   text-align: center;
   position: relative;
   overflow: hidden;
   background-attachment: fixed;
+  min-height: 100vh;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .hero::before {
@@ -767,7 +771,7 @@ body.english {
 }
 
 .hero-content h1 {
-  font-size: 5rem;
+  font-size: 3.5rem;
   margin-bottom: 0;
   font-weight: 700;
   text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
@@ -776,6 +780,10 @@ body.english {
   position: relative;
   z-index: 2;
   font-family: var(--wareeth-font-decorative);
+  background: rgba(0,0,0,0.3);
+  padding: 2rem 3rem;
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
 }
 
 body.english .hero-content h1 {
@@ -819,10 +827,33 @@ body.english .hero-content h1 {
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
+  .hero {
+    background-size: cover;
+    background-position: center center;
+    min-height: 80vh;
+    padding: 120px 0 80px;
+  }
+  
   .hero-content h1 {
     font-size: 2.5rem;
+    line-height: 1.2;
+    padding: 1.5rem 2rem;
+    margin: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero {
+    min-height: 70vh;
+    padding: 100px 0 60px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
     line-height: 1.1;
+    padding: 1rem 1.5rem;
+    margin: 0 0.5rem;
   }
 }
 
