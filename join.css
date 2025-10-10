@@ -505,12 +505,33 @@
 .success-message {
     background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
     color: white;
-    padding: 2rem;
-    border-radius: 15px;
+    padding: 3rem 2rem;
+    border-radius: 20px;
     text-align: center;
     margin: 2rem 0;
-    box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+    box-shadow: 0 15px 35px rgba(40, 167, 69, 0.3);
     display: none;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.success-message i {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.success-message h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.success-message p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.95;
 }
 
 .success-message.show {

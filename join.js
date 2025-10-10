@@ -41,14 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(joinForm);
             const data = Object.fromEntries(formData);
             
-            // Get selected interests
-            const interests = [];
-            const interestCheckboxes = document.querySelectorAll('input[name="interests[]"]:checked');
-            interestCheckboxes.forEach(checkbox => {
-                interests.push(checkbox.value);
-            });
-            data.interests = interests;
-            
             // Simple validation
             if (!validateJoinForm(data)) {
                 return;
@@ -92,16 +84,9 @@ function validateJoinForm(data) {
     
     // Check required fields
     const requiredFields = [
-        { field: 'firstName', message: 'الاسم الأول مطلوب' },
-        { field: 'lastName', message: 'الاسم الأخير مطلوب' },
+        { field: 'fullName', message: 'الاسم الكامل مطلوب' },
         { field: 'email', message: 'البريد الإلكتروني مطلوب' },
-        { field: 'phone', message: 'رقم الجوال مطلوب' },
-        { field: 'age', message: 'العمر مطلوب' },
-        { field: 'city', message: 'المدينة مطلوبة' },
-        { field: 'education', message: 'المؤهل العلمي مطلوب' },
-        { field: 'profession', message: 'المهنة مطلوبة' },
-        { field: 'motivation', message: 'دافع الانضمام مطلوب' },
-        { field: 'availability', message: 'مدى التوفر مطلوب' }
+        { field: 'phone', message: 'رقم الهاتف مطلوب' }
     ];
     
     requiredFields.forEach(item => {
@@ -119,25 +104,7 @@ function validateJoinForm(data) {
     
     // Validate phone
     if (data.phone && !isValidPhone(data.phone)) {
-        showError('phone', 'رقم الجوال غير صحيح');
-        isValid = false;
-    }
-    
-    // Validate age
-    if (data.age && (data.age < 18 || data.age > 80)) {
-        showError('age', 'العمر يجب أن يكون بين 18 و 80 سنة');
-        isValid = false;
-    }
-    
-    // Check if at least one interest is selected
-    if (!data.interests || data.interests.length === 0) {
-        showError('interests', 'يجب اختيار مجال واحد على الأقل من مجالات الاهتمام');
-        isValid = false;
-    }
-    
-    // Check terms agreement
-    if (!data.terms) {
-        showError('terms', 'يجب الموافقة على شروط وأحكام الانضمام');
+        showError('phone', 'رقم الهاتف غير صحيح');
         isValid = false;
     }
     
@@ -265,34 +232,21 @@ function sendEmailNotification(application) {
 
 // Show success message
 function showSuccessMessage() {
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message show';
-    successDiv.innerHTML = `
-        <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-        <h3 style="margin-bottom: 1rem;">تم إرسال طلب الانضمام بنجاح!</h3>
-        <p style="margin: 0; font-size: 1.1rem; line-height: 1.6;">
-            شكراً لك على اهتمامك بالانضمام لجمعية وريث.<br>
-            سيتم مراجعة طلبك من قبل لجنة العضوية وسنتواصل معك خلال 5-7 أيام عمل.<br>
-            تحقق من بريدك الإلكتروني للحصول على تأكيد الاستلام.
-        </p>
-    `;
+    const successMessage = document.getElementById('successMessage');
+    const joinForm = document.getElementById('joinForm');
     
-    // Insert before the form
-    const formContainer = document.querySelector('.form-container');
-    formContainer.insertBefore(successDiv, formContainer.firstChild);
+    // Hide form and show success message
+    joinForm.style.display = 'none';
+    successMessage.style.display = 'block';
     
-    // Auto scroll to success message
-    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Scroll to success message
+    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     
-    // Auto remove after 10 seconds
+    // Auto hide after 10 seconds and show form again
     setTimeout(() => {
-        successDiv.style.opacity = '0';
-        successDiv.style.transform = 'translateY(-20px)';
-        successDiv.style.transition = 'all 0.5s ease';
-        
-        setTimeout(() => {
-            successDiv.remove();
-        }, 500);
+        successMessage.style.display = 'none';
+        joinForm.style.display = 'block';
+        joinForm.reset();
     }, 10000);
 }
 
