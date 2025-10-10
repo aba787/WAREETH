@@ -1,9 +1,8 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize storage system with fallback
     let db = null;
     let useLocalStorage = false;
-    
+
     // Try to initialize IndexedDB
     if (typeof indexedDB !== 'undefined') {
         const dbRequest = indexedDB.open('WarithMembersDB', 1);
@@ -308,8 +307,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Activity logging function
     function logActivity(type, description) {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             console.log('Database not available, activity not logged:', type, description);
+            return;
+        }
+
+        if (useLocalStorage || !db) {
+            const activities = JSON.parse(localStorage.getItem('warithActivities') || '[]');
+            const activity = {
+                type: type,
+                description: description,
+                timestamp: new Date().toISOString(),
+                user: currentSession ? currentSession.fullName : 'غير معروف',
+                sessionId: currentSession ? currentSession.sessionId : null
+            };
+            activities.push(activity);
+            localStorage.setItem('warithActivities', JSON.stringify(activities));
             return;
         }
 
@@ -685,9 +698,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function performAdvancedSearch() {
         const memberSearch = document.getElementById('memberSearch');
         const roleFilter = document.getElementById('roleFilter');
-        
+
         if (!memberSearch || !roleFilter) return;
-        
+
         const searchTerm = memberSearch.value.toLowerCase();
         const roleFilterValue = roleFilter.value;
         const rows = document.querySelectorAll('#membersTableBody tr');
@@ -740,13 +753,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateSearchResultsCount(count) {
         let counter = document.querySelector('.search-results-count');
         const searchFilter = document.querySelector('.search-filter');
-        
+
         if (!counter && searchFilter) {
             counter = document.createElement('div');
             counter.className = 'search-results-count';
             searchFilter.appendChild(counter);
         }
-        
+
         if (counter) {
             counter.textContent = `عُثر على ${count} نتيجة`;
         }
@@ -755,7 +768,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadPublishedNews() {
         const publishedNewsList = document.getElementById('publishedNewsList');
         if (!publishedNewsList) return;
-        
+
         const savedNews = JSON.parse(localStorage.getItem('warithNews') || '[]');
 
         publishedNewsList.innerHTML = savedNews.map(news => `
@@ -863,7 +876,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Save to localStorage
                 const existingNews = JSON.parse(localStorage.getItem('warithNews') || '[]');
-                
+
                 // Check if we are editing an existing news item
                 const editId = submitBtn.getAttribute('data-edit-id');
                 if (editId) {
@@ -885,7 +898,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     existingNews.unshift(newsData);
                     logActivity('news_published', `تم نشر خبر جديد: ${newsData.title}`);
                 }
-                
+
                 localStorage.setItem('warithNews', JSON.stringify(existingNews));
 
                 // Save to IndexedDB
@@ -1000,84 +1013,102 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhanced database functions
     function saveMemberToDB(memberData) {
         return new Promise((resolve, reject) => {
-            // Add timestamps and additional data
-            memberData.createdAt = new Date().toISOString();
-            memberData.updatedAt = new Date().toISOString();
-            memberData.createdBy = currentSession ? currentSession.fullName : 'النظام';
-            memberData.status = 'active';
-            memberData.loginCount = 0;
-            memberData.lastLogin = null;
-            memberData.id = Date.now(); // Generate unique ID
-
-            // Try IndexedDB first
-            if (db && db.objectStoreNames && db.objectStoreNames.contains('members')) {
-                try {
-                    const transaction = db.transaction(['members'], 'readwrite');
-                    const store = transaction.objectStore('members');
-                    const request = store.add(memberData);
-
-                    request.onsuccess = function() {
-                        // Also save to localStorage as backup
-                        saveMemberToLocalStorage(memberData);
-                        logActivity('member_added', `تم إضافة عضو جديد: ${memberData.name}`);
-                        resolve(memberData);
-                    };
-
-                    request.onerror = function(event) {
-                        console.log('IndexedDB member add failed:', event);
-                        // Fallback to localStorage
-                        saveMemberToLocalStorage(memberData);
-                        resolve(memberData);
-                    };
-                    return;
-                } catch (error) {
-                    console.warn('IndexedDB error, using localStorage:', error);
-                }
+            if (!db && !useLocalStorage) {
+                reject('Database not available');
+                return;
             }
 
-            // Fallback to localStorage
-            saveMemberToLocalStorage(memberData);
-            resolve(memberData);
+            if (useLocalStorage || !db) {
+                // Use localStorage
+                const members = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+
+                // Check for duplicate email
+                if (members.find(m => m.email === memberData.email)) {
+                    reject('email already exists');
+                    return;
+                }
+
+                const member = {
+                    ...memberData,
+                    id: Date.now(),
+                    joinDate: new Date().toLocaleDateString('ar-SA'),
+                    status: 'active'
+                };
+
+                members.push(member);
+                localStorage.setItem('warithMembers', JSON.stringify(members));
+                resolve(member);
+                return;
+            }
+
+            const transaction = db.transaction(['members'], 'readwrite');
+            const store = transaction.objectStore('members');
+
+            // Add timestamp and status
+            const member = {
+                ...memberData,
+                joinDate: new Date().toLocaleDateString('ar-SA'),
+                status: 'active',
+                id: Date.now() // Fallback ID
+            };
+
+            const request = store.add(member);
+
+            request.onsuccess = function(event) {
+                resolve({
+                    ...member,
+                    id: event.target.result
+                });
+            };
+
+            request.onerror = function(event) {
+                const error = event.target.error;
+                if (error.name === 'ConstraintError') {
+                    reject('email already exists');
+                } else {
+                    reject(error.message || 'Unknown error occurred');
+                }
+            };
         });
     }
 
-    function saveMemberToLocalStorage(memberData) {
-        const existingMembers = JSON.parse(localStorage.getItem('warithMembers') || '[]');
-        existingMembers.push(memberData);
-        localStorage.setItem('warithMembers', JSON.stringify(existingMembers));
-        logActivity('member_added', `تم إضافة عضو جديد: ${memberData.name}`);
-    }
-
     function loadMembersFromDB() {
-        // Check if IndexedDB is available and initialized
-        if (db && db.objectStoreNames && db.objectStoreNames.contains('members')) {
-            try {
-                const transaction = db.transaction(['members'], 'readonly');
-                const store = transaction.objectStore('members');
-                const request = store.getAll();
-
-                request.onsuccess = function() {
-                    const members = request.result || [];
-                    if (members.length === 0) {
-                        loadMembersFromLocalStorage();
-                    } else {
-                        displayMembersInTable(members);
-                        updateMemberStats(members);
-                    }
-                };
-
-                request.onerror = function() {
-                    console.warn('Error loading members from IndexedDB, using localStorage');
-                    loadMembersFromLocalStorage();
-                };
-                return;
-            } catch (error) {
-                console.warn('IndexedDB error:', error);
-            }
+        if (!db && !useLocalStorage) {
+            console.log('Database not available, loading sample data');
+            loadSampleMembers();
+            return;
         }
-        
-        // Fallback to localStorage or sample data
-        loadMembersFromLocalStorage();
+
+        if (useLocalStorage || !db) {
+            // Use localStorage
+            const members = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+            if (members.length === 0) {
+                loadSampleMembers();
+            } else {
+                displayMembers(members);
+                updateMemberStats(members);
+            }
+            return;
+        }
+
+        const transaction = db.transaction(['members'], 'readonly');
+        const store = transaction.objectStore('members');
+        const request = store.getAll();
+
+        request.onsuccess = function() {
+            const members = request.result || [];
+            if (members.length === 0) {
+                loadMembersFromLocalStorage();
+            } else {
+                displayMembersInTable(members);
+                updateMemberStats(members);
+            }
+        };
+
+        request.onerror = function() {
+            console.warn('Error loading members from IndexedDB, using localStorage');
+            loadMembersFromLocalStorage();
+        };
     }
 
     function loadMembersFromLocalStorage() {
@@ -1192,8 +1223,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enhanced member management functions
     window.viewMemberDetails = function(memberId) {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             showNotification('قاعدة البيانات غير متاحة', 'error');
+            return;
+        }
+        if (useLocalStorage || !db) {
+            const members = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+            const member = members.find(m => m.id === memberId);
+            if (member) {
+                showMemberDetailsModal(member);
+            }
             return;
         }
 
@@ -1240,7 +1279,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="detail-item">
                             <label>تاريخ الانضمام:</label>
-                            <span>${new Date(member.createdAt).toLocaleDateString('ar-SA')}</span>
+                            <span>${member.createdAt ? new Date(member.createdAt).toLocaleDateString('ar-SA') : 'غير محدد'}</span>
                         </div>
                         <div class="detail-item">
                             <label>عدد مرات الدخول:</label>
@@ -1268,8 +1307,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     window.toggleMemberStatus = function(memberId) {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             showNotification('قاعدة البيانات غير متاحة', 'error');
+            return;
+        }
+
+        if (useLocalStorage || !db) {
+            const members = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+            const memberIndex = members.findIndex(m => m.id === memberId);
+            if (memberIndex !== -1) {
+                members[memberIndex].status = members[memberIndex].status === 'active' ? 'inactive' : 'active';
+                members[memberIndex].updatedAt = new Date().toISOString();
+                localStorage.setItem('warithMembers', JSON.stringify(members));
+                logActivity('member_status_changed', `تم ${members[memberIndex].status === 'active' ? 'تفعيل' : 'إلغاء تفعيل'} العضو: ${members[memberIndex].name}`);
+                loadMembersFromDB();
+                showNotification(`تم ${members[memberIndex].status === 'active' ? 'تفعيل' : 'إلغاء تفعيل'} العضو بنجاح`, 'success');
+            }
             return;
         }
 
@@ -1313,8 +1366,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadStatisticsFromDB() {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             console.log('Database not available for statistics');
+            return;
+        }
+
+        if (useLocalStorage || !db) {
+            // Use localStorage
+            const articles = JSON.parse(localStorage.getItem('warithArticles') || '[]');
+            updateArticleStats(articles);
             return;
         }
 
@@ -1442,7 +1502,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadRecentActivities() {
-        if (!db) return;
+        if (!db && !useLocalStorage) {
+            console.log('Database not available for activities');
+            return;
+        }
+
+        if (useLocalStorage || !db) {
+            const activities = JSON.parse(localStorage.getItem('warithActivities') || '[]');
+            displayRecentActivities(activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 10));
+            return;
+        }
 
         try {
             const transaction = db.transaction(['activities'], 'readonly');
@@ -1575,9 +1644,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function filterMembers() {
         const memberSearch = document.getElementById('memberSearch');
         const roleFilter = document.getElementById('roleFilter');
-        
+
         if (!memberSearch || !roleFilter) return;
-        
+
         const searchTerm = memberSearch.value.toLowerCase();
         const roleFilterValue = roleFilter.value;
         const rows = document.querySelectorAll('#membersTableBody tr');
@@ -1600,8 +1669,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to edit member
     window.editMember = function(memberId) {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             showNotification('قاعدة البيانات غير متاحة', 'error');
+            return;
+        }
+
+        if (useLocalStorage || !db) {
+            const members = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+            const member = members.find(m => m.id === memberId);
+            if (member) {
+                fillMemberFormForEdit(member);
+            }
             return;
         }
 
@@ -1612,30 +1690,7 @@ document.addEventListener('DOMContentLoaded', function() {
         request.onsuccess = function() {
             const member = request.result;
             if (member) {
-                // Fill the add member form with member data for editing
-                const memberNameField = document.getElementById('memberName');
-                const memberEmailField = document.getElementById('memberEmail');
-                const memberRoleField = document.getElementById('memberRole');
-                const memberPhoneField = document.getElementById('memberPhone');
-
-                if (memberNameField) memberNameField.value = member.name;
-                if (memberEmailField) memberEmailField.value = member.email;
-                if (memberRoleField) memberRoleField.value = member.role;
-                if (memberPhoneField) memberPhoneField.value = member.phone || '';
-
-                // Change form title and submit button text/action
-                const modalTitle = document.querySelector('#addMemberModal .modal-header h3');
-                if (modalTitle) modalTitle.textContent = 'تعديل بيانات العضو';
-                const submitButton = document.querySelector('#addMemberForm [type="submit"]');
-                if (submitButton) {
-                    submitButton.innerHTML = '<i class="fas fa-save"></i> تحديث العضو';
-                    submitButton.setAttribute('data-member-id', memberId); // Store member ID for update
-                }
-
-                // Show the modal
-                const addMemberModal = document.getElementById('addMemberModal');
-                if (addMemberModal) addMemberModal.style.display = 'block';
-                showNotification('تم تحميل بيانات العضو للتعديل', 'info');
+                fillMemberFormForEdit(member);
             }
         };
         request.onerror = function(event) {
@@ -1644,47 +1699,102 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     };
 
+    function fillMemberFormForEdit(member) {
+        const memberNameField = document.getElementById('memberName');
+        const memberEmailField = document.getElementById('memberEmail');
+        const memberRoleField = document.getElementById('memberRole');
+        const memberPhoneField = document.getElementById('memberPhone');
+
+        if (memberNameField) memberNameField.value = member.name;
+        if (memberEmailField) memberEmailField.value = member.email;
+        if (memberRoleField) memberRoleField.value = member.role;
+        if (memberPhoneField) memberPhoneField.value = member.phone || '';
+
+        // Change form title and submit button text/action
+        const modalTitle = document.querySelector('#addMemberModal .modal-header h3');
+        if (modalTitle) modalTitle.textContent = 'تعديل بيانات العضو';
+        const submitButton = document.querySelector('#addMemberForm [type="submit"]');
+        if (submitButton) {
+            submitButton.innerHTML = '<i class="fas fa-save"></i> تحديث العضو';
+            submitButton.setAttribute('data-member-id', member.id); // Store member ID for update
+        }
+
+        // Show the modal
+        const addMemberModal = document.getElementById('addMemberModal');
+        if (addMemberModal) addMemberModal.style.display = 'block';
+        showNotification('تم تحميل بيانات العضو للتعديل', 'info');
+    }
+
     // Enhanced member deletion with confirmation
     window.deleteMember = function(memberId) {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             showNotification('قاعدة البيانات غير متاحة', 'error');
             return;
         }
 
-        const transaction = db.transaction(['members'], 'readonly');
-        const store = transaction.objectStore('members');
-        const request = store.get(memberId);
+        let memberNameToConfirm = 'العضو';
+        if (useLocalStorage || !db) {
+            const members = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+            const member = members.find(m => m.id === memberId);
+            if (member) {
+                memberNameToConfirm = member.name;
+            }
+        } else {
+            const transaction = db.transaction(['members'], 'readonly');
+            const store = transaction.objectStore('members');
+            const request = store.get(memberId);
 
-        request.onsuccess = function() {
-            const member = request.result;
-            if (!member) return;
+            request.onsuccess = function() {
+                const member = request.result;
+                if (member) {
+                    memberNameToConfirm = member.name;
+                }
+            };
+        }
 
-            const confirmModal = document.createElement('div');
-            confirmModal.className = 'modal confirm-modal';
-            confirmModal.innerHTML = `
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>تأكيد الحذف</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>هل أنت متأكد من حذف العضو <strong>${member.name}</strong>؟</p>
-                        <p class="text-danger">هذا الإجراء لا يمكن التراجع عنه!</p>
-                        <div class="confirm-actions">
-                            <button class="btn danger" onclick="confirmDelete(${memberId})">نعم، احذف</button>
-                            <button class="btn secondary" onclick="this.closest('.modal').remove()">إلغاء</button>
-                        </div>
+        const confirmModal = document.createElement('div');
+        confirmModal.className = 'modal confirm-modal';
+        confirmModal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>تأكيد الحذف</h3>
+                </div>
+                <div class="modal-body">
+                    <p>هل أنت متأكد من حذف العضو <strong>${memberNameToConfirm}</strong>؟</p>
+                    <p class="text-danger">هذا الإجراء لا يمكن التراجع عنه!</p>
+                    <div class="confirm-actions">
+                        <button class="btn danger" onclick="confirmDelete(${memberId})">نعم، احذف</button>
+                        <button class="btn secondary" onclick="this.closest('.modal').remove()">إلغاء</button>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
 
-            document.body.appendChild(confirmModal);
-            confirmModal.style.display = 'block';
-        };
+        document.body.appendChild(confirmModal);
+        confirmModal.style.display = 'block';
     };
 
     window.confirmDelete = function(memberId) {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             showNotification('قاعدة البيانات غير متاحة', 'error');
+            return;
+        }
+
+        if (useLocalStorage || !db) {
+            const members = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+            const initialCount = members.length;
+            const updatedMembers = members.filter(m => m.id !== memberId);
+            localStorage.setItem('warithMembers', JSON.stringify(updatedMembers));
+
+            if (updatedMembers.length < initialCount) {
+                logActivity('member_deleted', `تم حذف العضو (ID: ${memberId})`);
+                loadMembersFromDB();
+                showNotification('تم حذف العضو بنجاح', 'success');
+                const confirmModal = document.querySelector('.confirm-modal');
+                if (confirmModal) confirmModal.remove();
+            } else {
+                showNotification('لم يتم العثور على العضو للحذف', 'error');
+            }
             return;
         }
 
@@ -1716,8 +1826,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enhanced export functions
     window.exportMembersData = function(format = 'csv') {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             showNotification('قاعدة البيانات غير متاحة', 'error');
+            return;
+        }
+
+        if (useLocalStorage || !db) {
+            const members = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+            if (format === 'csv') {
+                exportToCSV(members);
+            } else if (format === 'json') {
+                exportToJSON(members);
+            }
+            logActivity('data_export', `تم تصدير بيانات الأعضاء بصيغة ${format.toUpperCase()} (localStorage)`);
             return;
         }
 
@@ -1751,7 +1872,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 member.email,
                 member.role,
                 member.phone || '',
-                new Date(member.createdAt).toLocaleDateString('ar-SA'),
+                member.createdAt ? new Date(member.createdAt).toLocaleDateString('ar-SA') : '',
                 member.status,
                 member.loginCount || 0,
                 member.lastLogin ? new Date(member.lastLogin).toLocaleDateString('ar-SA') : 'لم يسجل دخول',
@@ -1780,8 +1901,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     window.exportActivitiesData = function() {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             showNotification('قاعدة البيانات غير متاحة', 'error');
+            return;
+        }
+
+        if (useLocalStorage || !db) {
+            const activities = JSON.parse(localStorage.getItem('warithActivities') || '[]');
+            const csvContent = [
+                'النوع,الوصف,التاريخ والوقت,المستخدم,معرف الجلسة',
+                ...activities.map(activity => [
+                    activity.type,
+                    `"${activity.description.replace(/"/g, '""')}"`, // Escape quotes in description
+                    new Date(activity.timestamp).toLocaleString('ar-SA'),
+                    activity.user,
+                    activity.sessionId || ''
+                ].join(','))
+            ].join('\n');
+
+            downloadFile(csvContent, 'warith_activities.csv', 'text/csv;charset=utf-8;');
+            showNotification('تم تصدير سجل الأنشطة (localStorage)', 'success');
+            logActivity('data_export', 'تم تصدير سجل الأنشطة (localStorage)');
             return;
         }
 
@@ -1813,8 +1953,17 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     window.exportStatisticsReport = function() {
-        if (!db) {
+        if (!db && !useLocalStorage) {
             showNotification('قاعدة البيانات غير متاحة', 'error');
+            return;
+        }
+
+        if (useLocalStorage || !db) {
+            const members = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+            const report = generateStatisticsReport(members);
+            downloadFile(report, 'warith_statistics_report.html', 'text/html;charset=utf-8;');
+            showNotification('تم إنشاء التقرير الإحصائي (localStorage)', 'success');
+            logActivity('data_export', 'تم إنشاء التقرير الإحصائي (localStorage)');
             return;
         }
 
@@ -1849,7 +1998,7 @@ document.addEventListener('DOMContentLoaded', function() {
             statusStats[member.status] = (statusStats[member.status] || 0) + 1;
 
             // Monthly joins
-            const joinMonth = new Date(member.createdAt).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' });
+            const joinMonth = member.createdAt ? new Date(member.createdAt).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' }) : 'غير محدد';
             monthlyJoins[joinMonth] = (monthlyJoins[joinMonth] || 0) + 1;
         });
 
@@ -2296,7 +2445,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (partner) {
             const partnerNameField = document.getElementById('partnerName');
             const partnerIconField = document.getElementById('partnerIcon');
-            
+
             if (partnerNameField) partnerNameField.value = partner.name;
             if (partnerIconField) partnerIconField.value = partner.icon;
 
@@ -2445,5 +2594,210 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateArticleStats(articles) {
         // Update article statistics (placeholder)
         console.log("Updating article stats:", articles);
+        const totalArticles = articles.length;
+        const pendingArticles = articles.filter(a => a.status === 'pending').length;
+
+        const totalArticlesElement = document.getElementById('totalArticles');
+        const pendingArticlesElement = document.getElementById('pendingArticles');
+
+        if (totalArticlesElement) totalArticlesElement.textContent = totalArticles;
+        if (pendingArticlesElement) pendingArticlesElement.textContent = pendingArticles;
     }
+
+    // Add CSS for animations
+    const style = document.createElement('style');
+    style.textContent = `
+        .error-message {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .submit-btn .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Helper functions
+    function loadSampleMembers() {
+        const sampleMembers = [
+            {
+                id: 1,
+                name: 'أحمد محمد',
+                email: 'ahmed@example.com',
+                role: 'admin',
+                joinDate: '2023-01-15',
+                status: 'active',
+                phone: '+966501234567'
+            },
+            {
+                id: 2,
+                name: 'فاطمة علي',
+                email: 'fatima@example.com',
+                role: 'writer',
+                joinDate: '2023-03-20',
+                status: 'active',
+                phone: '+966507654321'
+            },
+            {
+                id: 3,
+                name: 'خالد الأحمد',
+                email: 'khalid@example.com',
+                role: 'member',
+                joinDate: '2023-06-10',
+                status: 'inactive',
+                phone: '+966509876543'
+            }
+        ];
+
+        displayMembers(sampleMembers);
+        updateMembersStats(sampleMembers);
+    }
+
+    function displayMembers(members) {
+        const tableBody = document.getElementById('membersTableBody');
+        if (!tableBody) return;
+
+        if (members.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="6">لا يوجد أعضاء مسجلين</td></tr>';
+            return;
+        }
+
+        tableBody.innerHTML = '';
+        members.forEach(member => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${member.name}</td>
+                <td>${member.email}</td>
+                <td><span class="role ${member.role}">${getRoleText(member.role)}</span></td>
+                <td>${member.joinDate}</td>
+                <td><span class="status ${member.status}">${getStatusText(member.status)}</span></td>
+                <td class="actions">
+                    <button class="btn-icon edit" title="تعديل" onclick="editMember(${member.id})">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn-icon delete" title="حذف" onclick="confirmDeleteMember(${member.id}, '${member.name}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    function getRoleText(role) {
+        const roleTexts = {
+            'admin': 'مدير',
+            'member': 'عضو',
+            'writer': 'كاتب'
+        };
+        return roleTexts[role] || role;
+    }
+
+    function getStatusText(status) {
+        const statusTexts = {
+            'active': 'نشط',
+            'inactive': 'غير نشط'
+        };
+        return statusTexts[status] || status;
+    }
+
+    function updateMembersStats(members) {
+        const totalMembers = members.length;
+        const activeMembers = members.filter(m => m.status === 'active').length;
+
+        const totalMembersElement = document.getElementById('totalMembers');
+        const activeMembersElement = document.getElementById('activeMembers');
+
+        if (totalMembersElement) totalMembersElement.textContent = totalMembers;
+        if (activeMembersElement) activeMembersElement.textContent = activeMembers;
+    }
+
+    function updateArticleStats(articles) {
+        console.log('Updating article stats:', articles);
+
+        const totalArticles = articles.length;
+        const pendingArticles = articles.filter(a => a.status === 'pending').length;
+
+        const totalArticlesElement = document.getElementById('totalArticles');
+        const pendingArticlesElement = document.getElementById('pendingArticles');
+
+        if (totalArticlesElement) totalArticlesElement.textContent = totalArticles;
+        if (pendingArticlesElement) pendingArticlesElement.textContent = pendingArticles;
+    }
+
+    function confirmDeleteMember(memberId, memberName) {
+        if (confirm(`هل أنت متأكد من حذف العضو "${memberName}"؟`)) {
+            deleteMember(memberId);
+        }
+    }
+
+    function editMember(memberId) {
+        showNotification('ميزة تعديل الأعضاء ستكون متاحة قريباً', 'info');
+    }
+
+    function loadRecentActivities() {
+        // This function will load recent activities when implemented
+        console.log('Loading recent activities...');
+    }
+
+    function showExportOptions() {
+        showNotification('ميزة تصدير البيانات ستكون متاحة قريباً', 'info');
+    }
+
+    function loadArticles(status) {
+        const articlesList = document.getElementById('articlesList');
+        if (!articlesList) return;
+
+        articlesList.innerHTML = '<p>جاري تحميل المقالات...</p>';
+
+        setTimeout(() => {
+            articlesList.innerHTML = '<p>لا توجد مقالات متاحة حالياً</p>';
+        }, 1000);
+    }
+
+    function loadPublishedNews() {
+        console.log('Loading published news...');
+    }
+
+    function loadCurrentStats() {
+        console.log('Loading current stats...');
+    }
+
+    function loadCurrentPartners() {
+        console.log('Loading current partners...');
+    }
+
+    function hideAllSections() {
+        const sections = ['statsManagement', 'partnersManagement', 'contentManagement', 'siteSettings'];
+        sections.forEach(sectionId => {
+            const section = document.getElementById(sectionId);
+            if (section) section.style.display = 'none';
+        });
+
+        const membersSection = document.querySelector('.members-section');
+        if (membersSection) membersSection.style.display = 'block';
+    }
+
+    // Global functions for window scope
+    window.confirmDeleteMember = confirmDeleteMember;
+    window.editMember = editMember;
+    window.deleteMember = deleteMember;
+
 });
