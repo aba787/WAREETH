@@ -2,34 +2,38 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize IndexedDB for data storage
     let db;
     const dbRequest = indexedDB.open('WarithMembersDB', 1);
-    
+
     dbRequest.onerror = function(event) {
         console.error('Database error:', event.target.errorCode);
     };
-    
+
     dbRequest.onsuccess = function(event) {
         db = event.target.result;
         loadMembersFromDB();
         loadStatisticsFromDB();
     };
-    
+
     dbRequest.onupgradeneeded = function(event) {
         db = event.target.result;
-        
+
         // Create object stores
         if (!db.objectStoreNames.contains('members')) {
             const membersStore = db.createObjectStore('members', { keyPath: 'id', autoIncrement: true });
             membersStore.createIndex('email', 'email', { unique: true });
             membersStore.createIndex('role', 'role', { unique: false });
         }
-        
+
         if (!db.objectStoreNames.contains('articles')) {
             const articlesStore = db.createObjectStore('articles', { keyPath: 'id', autoIncrement: true });
             articlesStore.createIndex('status', 'status', { unique: false });
         }
-        
+
         if (!db.objectStoreNames.contains('activities')) {
             db.createObjectStore('activities', { keyPath: 'id', autoIncrement: true });
+        }
+        // Add a store for news articles
+        if (!db.objectStoreNames.contains('news')) {
+            db.createObjectStore('news', { keyPath: 'id', autoIncrement: true });
         }
     };
 
@@ -51,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Session management
     let currentSession = null;
-    
+
     // Check for existing session
     const savedSession = localStorage.getItem('warithSession');
     if (savedSession) {
@@ -104,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Show enhanced welcome message
                 showNotification(`مرحباً ${fullName}! تم تسجيل الدخول بنجاح`, 'success');
-                
+
                 // Update last login
                 updateLastLogin(username);
 
@@ -112,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Failed login
                 logActivity('failed_login', `محاولة دخول فاشلة: ${username}`);
                 showNotification('اسم المستخدم أو كلمة المرور غير صحيحة', 'error');
-                
+
                 // Add security delay
                 setTimeout(() => {
                     loginForm.querySelector('[type="submit"]').disabled = false;
@@ -126,11 +130,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function autoLogin(sessionData) {
         currentSession = sessionData;
         performLogin(sessionData);
-        
+
         // Show appropriate buttons for auto-login
         const logoutHeaderBtn = document.getElementById('logoutHeaderBtn');
         const joinHeaderBtn = document.getElementById('joinHeaderBtn');
-        
+
         if (logoutHeaderBtn) {
             logoutHeaderBtn.style.display = 'flex';
         }
@@ -144,21 +148,21 @@ document.addEventListener('DOMContentLoaded', function() {
         loginSection.style.display = 'none';
         adminDashboard.style.display = 'block';
         document.getElementById('adminName').textContent = sessionData.fullName;
-        
+
         // Show logout button and hide join button after login
         const logoutHeaderBtn = document.getElementById('logoutHeaderBtn');
         const joinHeaderBtn = document.getElementById('joinHeaderBtn');
-        
+
         if (logoutHeaderBtn) {
             logoutHeaderBtn.style.display = 'flex';
         }
         if (joinHeaderBtn) {
             joinHeaderBtn.style.display = 'none';
         }
-        
+
         // Start session timer
         startSessionTimer();
-        
+
         // Load dashboard data
         loadDashboardData();
     }
@@ -220,10 +224,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         `;
-        
+
         document.body.appendChild(confirmModal);
         confirmModal.style.display = 'block';
-        
+
         // Add event listener for confirm button
         window.confirmLogout = function() {
             performLogout();
@@ -234,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function performLogout() {
         // Show loading state
         const loadingNotification = showNotification('جاري تسجيل الخروج...', 'info');
-        
+
         setTimeout(() => {
             if (currentSession) {
                 // Log activity only if db is available
@@ -242,54 +246,54 @@ document.addEventListener('DOMContentLoaded', function() {
                     logActivity('logout', `تسجيل خروج المستخدم: ${currentSession.fullName}`);
                 }
             }
-            
+
             // Clear session data
             const userName = currentSession ? currentSession.fullName : 'المستخدم';
             currentSession = null;
             localStorage.removeItem('warithSession');
-            
+
             // Reset UI
             if (loginSection && adminDashboard && loginForm) {
                 loginSection.style.display = 'block';
                 adminDashboard.style.display = 'none';
                 loginForm.reset();
             }
-            
+
             // Show join button and hide logout button after logout
             const logoutHeaderBtn = document.getElementById('logoutHeaderBtn');
             const joinHeaderBtn = document.getElementById('joinHeaderBtn');
-            
+
             if (logoutHeaderBtn) {
                 logoutHeaderBtn.style.display = 'none';
             }
             if (joinHeaderBtn) {
                 joinHeaderBtn.style.display = 'flex';
             }
-            
+
             // Clear sensitive data
             clearDashboardData();
-            
+
             // Remove loading notification
             if (loadingNotification && loadingNotification.parentNode) {
                 loadingNotification.remove();
             }
-            
+
             // Show success message
             showNotification(`وداعاً ${userName}! تم تسجيل الخروج بنجاح`, 'success');
-            
+
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            
+
         }, 1000); // Small delay for better UX
     }
 
     // Activity logging function
     function logActivity(type, description) {
         if (!db) return;
-        
+
         const transaction = db.transaction(['activities'], 'readwrite');
         const store = transaction.objectStore('activities');
-        
+
         const activity = {
             type: type,
             description: description,
@@ -297,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
             user: currentSession ? currentSession.fullName : 'غير معروف',
             sessionId: currentSession ? currentSession.sessionId : null
         };
-        
+
         store.add(activity);
     }
 
@@ -444,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!field) return;
 
         const formGroup = field.parentNode;
-        
+
         // Remove existing error
         const existingError = formGroup.querySelector('.error-message');
         if (existingError) {
@@ -520,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const siteSettings = document.getElementById('siteSettings');
 
     const closeNewsModal = document.getElementById('closeNewsModal');
-    
+
     if (manageNewsBtn && newsModal) {
         manageNewsBtn.addEventListener('click', function() {
             newsModal.style.display = 'block';
@@ -614,14 +618,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         `;
-        
+
         document.body.appendChild(exportModal);
         exportModal.style.display = 'block';
     }
 
     // Enhanced search functionality
     let searchTimeout;
-    
+
     function initializeSearchAndFilter() {
         const memberSearch = document.getElementById('memberSearch');
         const roleFilter = document.getElementById('roleFilter');
@@ -649,7 +653,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const rows = document.querySelectorAll('#membersTableBody tr');
 
         let visibleCount = 0;
-        
+
         rows.forEach(row => {
             const name = row.cells[0].textContent.toLowerCase();
             const email = row.cells[1].textContent.toLowerCase();
@@ -676,10 +680,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function highlightSearchTerms(row, searchTerm) {
         if (!searchTerm) return;
-        
+
         const nameCell = row.cells[0];
         const emailCell = row.cells[1];
-        
+
         [nameCell, emailCell].forEach(cell => {
             const originalText = cell.textContent;
             const highlightedText = originalText.replace(
@@ -705,7 +709,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadPublishedNews() {
         const publishedNewsList = document.getElementById('publishedNewsList');
         const savedNews = JSON.parse(localStorage.getItem('warithNews') || '[]');
-        
+
         if (publishedNewsList) {
             publishedNewsList.innerHTML = savedNews.map(news => `
                 <div class="news-admin-item" data-news-id="${news.id}">
@@ -774,7 +778,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
 
             const formData = new FormData(e.target);
-            
+
             // Validate form data
             if (!validateNewsForm(formData)) {
                 return;
@@ -803,11 +807,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Save to localStorage
                 const existingNews = JSON.parse(localStorage.getItem('warithNews') || '[]');
-                existingNews.unshift(newsData);
+                
+                // Check if we are editing an existing news item
+                const editId = submitBtn.getAttribute('data-edit-id');
+                if (editId) {
+                    const newsIndex = existingNews.findIndex(news => news.id == editId);
+                    if (newsIndex !== -1) {
+                        // Update existing news
+                        newsData.id = parseInt(editId); // Keep original ID
+                        newsData.createdAt = existingNews[newsIndex].createdAt; // Preserve creation date
+                        existingNews[newsIndex] = newsData;
+                        logActivity('news_updated', `تم تحديث الخبر: ${newsData.title}`);
+                    } else {
+                        // Should not happen if editId is set correctly, but as fallback add as new
+                        existingNews.unshift(newsData);
+                        logActivity('news_published', `تم نشر خبر جديد: ${newsData.title}`);
+                    }
+                    submitBtn.removeAttribute('data-edit-id'); // Remove edit ID
+                } else {
+                    // Add as new news item
+                    existingNews.unshift(newsData);
+                    logActivity('news_published', `تم نشر خبر جديد: ${newsData.title}`);
+                }
+                
                 localStorage.setItem('warithNews', JSON.stringify(existingNews));
 
-                // Log activity
-                logActivity('news_published', `تم نشر خبر جديد: ${newsData.title}`);
+                // Save to IndexedDB
+                if (db) {
+                    const transaction = db.transaction(['news'], 'readwrite');
+                    const store = transaction.objectStore('news');
+                    if (editId) {
+                        store.put(newsData); // Update existing
+                    } else {
+                        store.add(newsData); // Add new
+                    }
+                }
 
                 // Reset form
                 e.target.reset();
@@ -818,10 +852,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.disabled = false;
 
                 // Show success message
-                showNotification('تم نشر الخبر بنجاح!', 'success');
+                showNotification(`تم ${editId ? 'تحديث' : 'نشر'} الخبر بنجاح!`, 'success');
 
                 // Refresh published news display
                 loadPublishedNews();
+
+                // Sync with other tabs (if implemented)
+                syncWithServer();
             };
 
             // Handle image upload with validation
@@ -853,7 +890,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
                 reader.readAsDataURL(imageFile);
             } else {
-                processNewsData();
+                // If no new image, process with existing image data if editing
+                const editId = submitBtn.getAttribute('data-edit-id');
+                if (editId) {
+                    const existingNews = JSON.parse(localStorage.getItem('warithNews') || '[]');
+                    const newsToEdit = existingNews.find(n => n.id == editId);
+                    if (newsToEdit && newsToEdit.image) {
+                        processNewsData(newsToEdit.image); // Keep existing image
+                    } else {
+                        processNewsData(); // No existing image
+                    }
+                } else {
+                    processNewsData(); // New news without image
+                }
             }
         });
     }
@@ -861,7 +910,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Validate news form
     function validateNewsForm(formData) {
         let isValid = true;
-        
+
         // Clear previous errors
         document.querySelectorAll('.error-message').forEach(msg => msg.remove());
 
@@ -892,11 +941,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // Enhanced database functions
 function saveMemberToDB(memberData) {
     if (!db) return Promise.reject('Database not available');
-    
+
     return new Promise((resolve, reject) => {
         const transaction = db.transaction(['members'], 'readwrite');
         const store = transaction.objectStore('members');
-        
+
         // Add timestamps and additional data
         memberData.createdAt = new Date().toISOString();
         memberData.updatedAt = new Date().toISOString();
@@ -904,15 +953,15 @@ function saveMemberToDB(memberData) {
         memberData.status = 'active';
         memberData.loginCount = 0;
         memberData.lastLogin = null;
-        
+
         const request = store.add(memberData);
-        
+
         request.onsuccess = function() {
             memberData.id = request.result;
             logActivity('member_added', `تم إضافة عضو جديد: ${memberData.name}`);
             resolve(memberData);
         };
-        
+
         request.onerror = function() {
             reject('Error adding member to database');
         };
@@ -926,17 +975,17 @@ function loadMembersFromDB() {
         loadSampleMembers();
         return;
     }
-    
+
     const transaction = db.transaction(['members'], 'readonly');
     const store = transaction.objectStore('members');
     const request = store.getAll();
-    
+
     request.onsuccess = function() {
         const members = request.result;
         displayMembersInTable(members);
         updateMemberStats(members);
     };
-    
+
     request.onerror = function() {
         console.error('Error loading members from database');
         loadSampleMembers();
@@ -983,7 +1032,7 @@ function loadSampleMembers() {
             createdBy: 'النظام'
         }
     ];
-    
+
     displayMembersInTable(sampleMembers);
     updateMemberStats(sampleMembers);
 }
@@ -991,7 +1040,7 @@ function loadSampleMembers() {
 function displayMembersInTable(members) {
     const tableBody = document.getElementById('membersTableBody');
     if (!tableBody) return;
-    
+
     const roleNames = {
         'admin': 'مدير',
         'member': 'عضو',
@@ -1045,11 +1094,11 @@ function displayMembersInTable(members) {
 // Enhanced member management functions
 function viewMemberDetails(memberId) {
     if (!db) return;
-    
+
     const transaction = db.transaction(['members'], 'readonly');
     const store = transaction.objectStore('members');
     const request = store.get(memberId);
-    
+
     request.onsuccess = function() {
         const member = request.result;
         if (member) {
@@ -1111,24 +1160,24 @@ function showMemberDetailsModal(member) {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(modal);
     modal.style.display = 'block';
 }
 
 function toggleMemberStatus(memberId) {
     if (!db) return;
-    
+
     const transaction = db.transaction(['members'], 'readwrite');
     const store = transaction.objectStore('members');
     const request = store.get(memberId);
-    
+
     request.onsuccess = function() {
         const member = request.result;
         if (member) {
             member.status = member.status === 'active' ? 'inactive' : 'active';
             member.updatedAt = new Date().toISOString();
-            
+
             const updateRequest = store.put(member);
             updateRequest.onsuccess = function() {
                 logActivity('member_status_changed', 
@@ -1144,23 +1193,23 @@ function toggleMemberStatus(memberId) {
 function updateMemberStats(members) {
     const totalMembers = document.getElementById('totalMembers');
     const activeMembers = document.getElementById('activeMembers');
-    
+
     const totalCount = members.length;
     const activeCount = members.filter(m => m.status === 'active').length;
-    
+
     if (totalMembers) totalMembers.textContent = totalCount;
     if (activeMembers) activeMembers.textContent = activeCount;
-    
+
     // Update role distribution
     updateRoleDistribution(members);
-    
+
     // Update activity chart
     updateActivityChart(members);
 }
 
 function loadStatisticsFromDB() {
     if (!db) return;
-    
+
     // Load members statistics
     const membersTransaction = db.transaction(['members'], 'readonly');
     const membersStore = membersTransaction.objectStore('members');
@@ -1168,7 +1217,7 @@ function loadStatisticsFromDB() {
         const members = event.target.result;
         updateMemberStats(members);
     };
-    
+
     // Load articles statistics
     const articlesTransaction = db.transaction(['articles'], 'readonly');
     const articlesStore = articlesTransaction.objectStore('articles');
@@ -1183,7 +1232,7 @@ function updateRoleDistribution(members) {
     members.forEach(member => {
         roleStats[member.role] = (roleStats[member.role] || 0) + 1;
     });
-    
+
     // Create or update role distribution chart
     createRoleChart(roleStats);
 }
@@ -1205,7 +1254,7 @@ function createRoleChart(roleStats) {
             dashboardStats.parentNode.insertBefore(chartSection, dashboardStats.nextSibling);
         }
     }
-    
+
     const chart = document.querySelector('.role-chart');
     if (chart) {
         const roleNames = {
@@ -1215,7 +1264,7 @@ function createRoleChart(roleStats) {
             'supervisor': 'مشرف',
             'coordinator': 'منسق'
         };
-        
+
         chart.innerHTML = Object.entries(roleStats).map(([role, count]) => `
             <div class="role-stat-item">
                 <div class="role-bar">
@@ -1237,7 +1286,7 @@ function updateActivityChart(members) {
             count: 0
         };
     }).reverse();
-    
+
     members.forEach(member => {
         if (member.createdAt) {
             const memberDate = new Date(member.createdAt).toISOString().split('T')[0];
@@ -1247,7 +1296,7 @@ function updateActivityChart(members) {
             }
         }
     });
-    
+
     createActivityChart(last30Days);
 }
 
@@ -1267,7 +1316,7 @@ function createActivityChart(data) {
             dashboardStats.parentNode.insertBefore(activitySection, dashboardStats.nextSibling);
         }
     }
-    
+
     const chart = document.querySelector('.activity-chart');
     if (chart) {
         const maxCount = Math.max(...data.map(d => d.count));
@@ -1282,16 +1331,16 @@ function createActivityChart(data) {
 
 function loadRecentActivities() {
     if (!db) return;
-    
+
     const transaction = db.transaction(['activities'], 'readonly');
     const store = transaction.objectStore('activities');
     const request = store.getAll();
-    
+
     request.onsuccess = function() {
         const activities = request.result
             .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
             .slice(0, 10); // Get last 10 activities
-        
+
         displayRecentActivities(activities);
     };
 }
@@ -1313,7 +1362,7 @@ function displayRecentActivities(activities) {
             dashboard.appendChild(activitiesSection);
         }
     }
-    
+
     const activitiesDiv = document.querySelector('.recent-activities');
     if (activitiesDiv) {
         activitiesDiv.innerHTML = activities.map(activity => `
@@ -1349,7 +1398,7 @@ function formatRelativeTime(timestamp) {
     const now = new Date();
     const then = new Date(timestamp);
     const diff = Math.floor((now - then) / 1000);
-    
+
     if (diff < 60) return 'منذ لحظات';
     if (diff < 3600) return `منذ ${Math.floor(diff/60)} دقيقة`;
     if (diff < 86400) return `منذ ${Math.floor(diff/3600)} ساعة`;
@@ -1428,35 +1477,101 @@ function filterMembers() {
 }
 
 // Function to edit member
-function editMember(row) {
-    const name = row.cells[0].textContent;
-    const email = row.cells[1].textContent;
+function editMember(memberId) {
+    if (!db) return;
 
-    showNotification(`تحرير العضو: ${name} (${email})`, 'info');
-    // Here you would open an edit modal with the member's data
+    const transaction = db.transaction(['members'], 'readonly');
+    const store = transaction.objectStore('members');
+    const request = store.get(memberId);
+
+    request.onsuccess = function() {
+        const member = request.result;
+        if (member) {
+            // Fill the add member form with member data for editing
+            document.getElementById('addMemberForm').elements['memberName'].value = member.name;
+            document.getElementById('addMemberForm').elements['memberEmail'].value = member.email;
+            document.getElementById('addMemberForm').elements['memberRole'].value = member.role;
+            document.getElementById('addMemberForm').elements['memberPhone'].value = member.phone || '';
+
+            // Change form title and submit button text/action
+            const modalTitle = document.querySelector('#addMemberModal .modal-header h3');
+            if (modalTitle) modalTitle.textContent = 'تعديل بيانات العضو';
+            const submitButton = document.querySelector('#addMemberForm [type="submit"]');
+            if (submitButton) {
+                submitButton.innerHTML = '<i class="fas fa-save"></i> تحديث العضو';
+                submitButton.setAttribute('data-member-id', memberId); // Store member ID for update
+            }
+
+            // Show the modal
+            document.getElementById('addMemberModal').style.display = 'block';
+            showNotification('تم تحميل بيانات العضو للتعديل', 'info');
+        }
+    };
+    request.onerror = function(event) {
+        console.error("Error fetching member for edit:", event);
+        showNotification('حدث خطأ أثناء تحميل بيانات العضو', 'error');
+    };
 }
 
-// Function to delete member
-function deleteMember(row) {
-    const name = row.cells[0].textContent;
+// Enhanced member deletion with confirmation
+function deleteMember(memberId) {
+    if (!db) return;
 
-    if (confirm(`هل أنت متأكد من حذف العضو: ${name}؟`)) {
-        row.remove();
-        updateStatsAfterDelete();
-        showNotification('تم حذف العضو بنجاح', 'success');
-    }
+    const transaction = db.transaction(['members'], 'readonly');
+    const store = transaction.objectStore('members');
+    const request = store.get(memberId);
+
+    request.onsuccess = function() {
+        const member = request.result;
+        if (!member) return;
+
+        const confirmModal = document.createElement('div');
+        confirmModal.className = 'modal confirm-modal';
+        confirmModal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>تأكيد الحذف</h3>
+                </div>
+                <div class="modal-body">
+                    <p>هل أنت متأكد من حذف العضو <strong>${member.name}</strong>؟</p>
+                    <p class="text-danger">هذا الإجراء لا يمكن التراجع عنه!</p>
+                    <div class="confirm-actions">
+                        <button class="btn danger" onclick="confirmDelete(${memberId})">نعم، احذف</button>
+                        <button class="btn secondary" onclick="this.closest('.modal').remove()">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(confirmModal);
+        confirmModal.style.display = 'block';
+    };
 }
 
-// Function to update stats after delete
-function updateStatsAfterDelete() {
-    const totalMembers = document.getElementById('totalMembers');
-    const activeMembers = document.getElementById('activeMembers');
+function confirmDelete(memberId) {
+    const deleteTransaction = db.transaction(['members'], 'readwrite');
+    const deleteStore = deleteTransaction.objectStore('members');
 
-    const currentTotal = parseInt(totalMembers.textContent);
-    const currentActive = parseInt(activeMembers.textContent);
+    // Get member name before deleting for logging
+    deleteStore.get(memberId).onsuccess = function(event) {
+        const member = event.target.result;
+        const memberName = member ? member.name : 'عضو';
 
-    totalMembers.textContent = Math.max(0, currentTotal - 1);
-    activeMembers.textContent = Math.max(0, currentActive - 1);
+        deleteStore.delete(memberId).onsuccess = function() {
+            logActivity('member_deleted', `تم حذف العضو: ${memberName}`);
+            loadMembersFromDB();
+            showNotification('تم حذف العضو بنجاح', 'success');
+            document.querySelector('.confirm-modal').remove();
+        };
+        deleteStore.delete(memberId).onerror = function(event) {
+            console.error("Error deleting member:", event);
+            showNotification('حدث خطأ أثناء حذف العضو', 'error');
+        };
+    };
+     deleteStore.get(memberId).onerror = function(event) {
+        console.error("Error fetching member before delete:", event);
+        showNotification('حدث خطأ أثناء التحقق من بيانات العضو للحذف', 'error');
+    };
 }
 
 // Enhanced export functions
@@ -1465,21 +1580,25 @@ function exportMembersData(format = 'csv') {
         showNotification('قاعدة البيانات غير متاحة', 'error');
         return;
     }
-    
+
     const transaction = db.transaction(['members'], 'readonly');
     const store = transaction.objectStore('members');
     const request = store.getAll();
-    
+
     request.onsuccess = function() {
         const members = request.result;
-        
+
         if (format === 'csv') {
             exportToCSV(members);
         } else if (format === 'json') {
             exportToJSON(members);
         }
-        
+
         logActivity('data_export', `تم تصدير بيانات الأعضاء بصيغة ${format.toUpperCase()}`);
+    };
+    request.onerror = function(event) {
+        console.error("Error exporting members:", event);
+        showNotification('حدث خطأ أثناء تصدير بيانات الأعضاء', 'error');
     };
 }
 
@@ -1488,7 +1607,7 @@ function exportToCSV(members) {
         'الرقم,الاسم,البريد الإلكتروني,الدور,رقم الهاتف,تاريخ الانضمام,الحالة,عدد تسجيلات الدخول,آخر دخول,أضيف بواسطة',
         ...members.map(member => [
             member.id,
-            member.name,
+            `"${member.name.replace(/"/g, '""')}"`, // Escape quotes in name
             member.email,
             member.role,
             member.phone || '',
@@ -1525,19 +1644,19 @@ function exportActivitiesData() {
         showNotification('قاعدة البيانات غير متاحة', 'error');
         return;
     }
-    
+
     const transaction = db.transaction(['activities'], 'readonly');
     const store = transaction.objectStore('activities');
     const request = store.getAll();
-    
+
     request.onsuccess = function() {
         const activities = request.result;
-        
+
         const csvContent = [
             'النوع,الوصف,التاريخ والوقت,المستخدم,معرف الجلسة',
             ...activities.map(activity => [
                 activity.type,
-                activity.description,
+                `"${activity.description.replace(/"/g, '""')}"`, // Escape quotes in description
                 new Date(activity.timestamp).toLocaleString('ar-SA'),
                 activity.user,
                 activity.sessionId || ''
@@ -1547,6 +1666,10 @@ function exportActivitiesData() {
         downloadFile(csvContent, 'warith_activities.csv', 'text/csv;charset=utf-8;');
         showNotification('تم تصدير سجل الأنشطة', 'success');
     };
+     request.onerror = function(event) {
+        console.error("Error exporting activities:", event);
+        showNotification('حدث خطأ أثناء تصدير سجل الأنشطة', 'error');
+    };
 }
 
 function exportStatisticsReport() {
@@ -1554,17 +1677,21 @@ function exportStatisticsReport() {
         showNotification('قاعدة البيانات غير متاحة', 'error');
         return;
     }
-    
+
     // Collect all data for comprehensive report
     const membersTransaction = db.transaction(['members'], 'readonly');
     const membersStore = membersTransaction.objectStore('members');
-    
+
     membersStore.getAll().onsuccess = function(event) {
         const members = event.target.result;
-        
+
         const report = generateStatisticsReport(members);
         downloadFile(report, 'warith_statistics_report.html', 'text/html;charset=utf-8;');
         showNotification('تم إنشاء التقرير الإحصائي', 'success');
+    };
+    membersTransaction.onerror = function(event) {
+        console.error("Error accessing members for statistics report:", event);
+        showNotification('حدث خطأ أثناء تحميل بيانات الأعضاء للتقرير', 'error');
     };
 }
 
@@ -1573,14 +1700,14 @@ function generateStatisticsReport(members) {
     const roleStats = {};
     const statusStats = {};
     const monthlyJoins = {};
-    
+
     members.forEach(member => {
         // Role distribution
         roleStats[member.role] = (roleStats[member.role] || 0) + 1;
-        
+
         // Status distribution
         statusStats[member.status] = (statusStats[member.status] || 0) + 1;
-        
+
         // Monthly joins
         const joinMonth = new Date(member.createdAt).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' });
         monthlyJoins[joinMonth] = (monthlyJoins[joinMonth] || 0) + 1;
@@ -1643,68 +1770,88 @@ function downloadFile(content, filename, mimeType) {
     const blob = new Blob([content], { type: mimeType });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
-    
+
     link.setAttribute('href', url);
     link.setAttribute('download', filename);
     link.style.visibility = 'hidden';
-    
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    
+
     URL.revokeObjectURL(url);
 }
 
-// Enhanced member deletion with confirmation
-function deleteMember(memberId) {
-    if (!db) return;
-    
-    const transaction = db.transaction(['members'], 'readonly');
-    const store = transaction.objectStore('members');
-    const request = store.get(memberId);
-    
-    request.onsuccess = function() {
-        const member = request.result;
-        if (!member) return;
-        
-        const confirmModal = document.createElement('div');
-        confirmModal.className = 'modal confirm-modal';
-        confirmModal.innerHTML = `
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>تأكيد الحذف</h3>
-                </div>
-                <div class="modal-body">
-                    <p>هل أنت متأكد من حذف العضو <strong>${member.name}</strong>؟</p>
-                    <p class="text-danger">هذا الإجراء لا يمكن التراجع عنه!</p>
-                    <div class="confirm-actions">
-                        <button class="btn danger" onclick="confirmDelete(${memberId})">نعم، احذف</button>
-                        <button class="btn secondary" onclick="this.closest('.modal').remove()">إلغاء</button>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(confirmModal);
-        confirmModal.style.display = 'block';
-    };
+// Enhanced news management functions
+function deleteNews(newsId) {
+    if (!confirm('هل أنت متأكد من حذف هذا الخبر؟')) return;
+
+    const savedNews = JSON.parse(localStorage.getItem('warithNews') || '[]');
+    const newsIndex = savedNews.findIndex(news => news.id == newsId);
+
+    if (newsIndex !== -1) {
+        const deletedNews = savedNews[newsIndex];
+        savedNews.splice(newsIndex, 1);
+        localStorage.setItem('warithNews', JSON.stringify(savedNews));
+
+        // Remove from database if available
+        if (db) {
+            try {
+                const transaction = db.transaction(['news'], 'readwrite');
+                const store = transaction.objectStore('news');
+                store.delete(parseInt(newsId));
+            } catch (error) {
+                console.log('News delete from IndexedDB failed', error);
+            }
+        }
+
+        // Log activity
+        logActivity('news_deleted', `تم حذف الخبر: ${deletedNews.title}`);
+
+        // Refresh display
+        loadPublishedNews();
+
+        // Sync with other tabs (if implemented)
+        // syncWithServer(); 
+
+        showNotification('تم حذف الخبر بنجاح', 'success');
+    }
 }
 
-function confirmDelete(memberId) {
-    const deleteTransaction = db.transaction(['members'], 'readwrite');
-    const deleteStore = deleteTransaction.objectStore('members');
-    
-    deleteStore.get(memberId).onsuccess = function(event) {
-        const member = event.target.result;
-        
-        deleteStore.delete(memberId).onsuccess = function() {
-            logActivity('member_deleted', `تم حذف العضو: ${member.name}`);
-            loadMembersFromDB();
-            showNotification('تم حذف العضو بنجاح', 'success');
-            document.querySelector('.confirm-modal').remove();
-        };
-    };
+function editNews(newsId) {
+    const savedNews = JSON.parse(localStorage.getItem('warithNews') || '[]');
+    const news = savedNews.find(n => n.id == newsId);
+
+    if (news) {
+        // Fill form with news data
+        document.getElementById('newsTitle').value = news.title;
+        document.getElementById('newsSummary').value = news.summary;
+        document.getElementById('newsContent').value = news.content;
+        document.getElementById('newsCategory').value = news.category;
+        document.getElementById('newsDate').value = news.date;
+
+        // Show image preview if exists
+        if (news.image && imagePreview && previewImg) {
+            previewImg.src = news.image;
+            imagePreview.style.display = 'block';
+        }
+
+        // Change form to edit mode
+        const submitBtn = newsForm.querySelector('[type="submit"]');
+        if (submitBtn) {
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> تحديث الخبر';
+            submitBtn.setAttribute('data-edit-id', newsId);
+        }
+
+        showNotification('تم تحميل بيانات الخبر للتعديل', 'info');
+    }
 }
+
+// Dummy function for syncWithServer (to be implemented if needed)
+function syncWithServer() {
+    console.log("syncWithServer called - implementation needed.");
+}
+
 
 // Function to show notifications
 function showNotification(message, type) {
@@ -1716,108 +1863,117 @@ function showNotification(message, type) {
     notification.className = `notification ${type}`;
     notification.innerHTML = `
         <div class="notification-content">
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : type === 'info' ? 'fa-info-circle' : 'fa-exclamation-triangle'}"></i>
             <span>${message}</span>
         </div>
     `;
 
-    // Add notification styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            color: white;
-            z-index: 10000;
-            animation: slideIn 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            min-width: 300px;
-        }
-
-        .notification.success {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        }
-
-        .notification.error {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-        }
-
-        .notification.info {
-            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-        }
-
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logout-warning {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        .confirm-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
-
-        .btn.danger {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn.danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
-        }
-
-        .btn.secondary {
-            background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn.secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-    `;
-
-    if (!document.querySelector('#notification-styles')) {
+    // Add notification styles if not already present
+    if (!document.getElementById('notification-styles')) {
+        const style = document.createElement('style');
         style.id = 'notification-styles';
+        style.textContent = `
+            .notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                color: white;
+                z-index: 10000;
+                animation: slideIn 0.3s ease forwards;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                min-width: 300px;
+                opacity: 0;
+            }
+
+            .notification.success {
+                background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            }
+
+            .notification.error {
+                background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            }
+
+            .notification.info {
+                background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            }
+             .notification.warning {
+                background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+            }
+
+            .notification-content {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .logout-warning {
+                color: #666;
+                font-size: 0.9rem;
+                margin-top: 0.5rem;
+            }
+
+            .confirm-actions {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                margin-top: 1.5rem;
+            }
+
+            .btn.danger {
+                background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .btn.danger:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+            }
+
+            .btn.secondary {
+                background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .btn.secondary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+        `;
         document.head.appendChild(style);
     }
-    
+
     document.body.appendChild(notification);
+
+    // Trigger the animation
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateX(0)';
+    }, 10);
 
     // Auto remove after 3 seconds (except for loading notifications)
     if (type !== 'info' || !message.includes('جاري')) {
@@ -1833,8 +1989,15 @@ function showNotification(message, type) {
 
 // Management functions
 function hideAllSections() {
-    membersSection.style.display = 'none';
-    articlesManagement.style.display = 'none';
+    const membersSection = document.querySelector('.members-section');
+    const articlesManagement = document.getElementById('articlesManagement');
+    const statsManagement = document.getElementById('statsManagement');
+    const partnersManagement = document.getElementById('partnersManagement');
+    const contentManagement = document.getElementById('contentManagement');
+    const siteSettings = document.getElementById('siteSettings');
+
+    if (membersSection) membersSection.style.display = 'none';
+    if (articlesManagement) articlesManagement.style.display = 'none';
     if (statsManagement) statsManagement.style.display = 'none';
     if (partnersManagement) partnersManagement.style.display = 'none';
     if (contentManagement) contentManagement.style.display = 'none';
@@ -1843,13 +2006,14 @@ function hideAllSections() {
 
 function showMainDashboard() {
     hideAllSections();
-    membersSection.style.display = 'block';
+    const membersSection = document.querySelector('.members-section');
+    if (membersSection) membersSection.style.display = 'block';
 }
 
 // Statistics Management
 function loadCurrentStats() {
     const savedStats = JSON.parse(localStorage.getItem('warithStats') || '{}');
-    
+
     document.getElementById('volunteersCount').value = savedStats.volunteersCount || 200;
     document.getElementById('volunteerHours').value = savedStats.volunteerHours || 3200;
     document.getElementById('placesCount').value = savedStats.placesCount || 600;
@@ -1859,7 +2023,7 @@ function loadCurrentStats() {
 // Statistics form handler
 document.getElementById('statsForm')?.addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
     const statsData = {
         volunteersCount: document.getElementById('volunteersCount').value,
         volunteerHours: document.getElementById('volunteerHours').value,
@@ -1867,27 +2031,18 @@ document.getElementById('statsForm')?.addEventListener('submit', function(e) {
         beneficiariesCount: document.getElementById('beneficiariesCount').value,
         lastUpdated: new Date().toISOString()
     };
-    
+
     localStorage.setItem('warithStats', JSON.stringify(statsData));
     updateMainPageStats(statsData);
-    
+
     showNotification('تم تحديث الإحصائيات بنجاح!', 'success');
     logActivity('stats_updated', 'تم تحديث إحصائيات الموقع');
 });
 
 function updateMainPageStats(stats) {
-    // Update statistics on main page
-    const script = document.createElement('script');
-    script.textContent = `
-        if (window.parent && window.parent !== window) {
-            window.parent.postMessage({
-                type: 'updateStats',
-                data: ${JSON.stringify(stats)}
-            }, '*');
-        }
-    `;
-    document.head.appendChild(script);
-    setTimeout(() => document.head.removeChild(script), 100);
+    // Update statistics on main page (if exists)
+    // This part might need a more robust implementation depending on how the main page is structured
+    console.log("Updating main page stats:", stats);
 }
 
 // Partners Management
@@ -1919,69 +2074,125 @@ function displayPartnersList(partners) {
 // Partners form handler
 document.getElementById('partnersForm')?.addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
     const partnerName = document.getElementById('partnerName').value;
     const partnerIcon = document.getElementById('partnerIcon').value;
-    
+
     if (!partnerName || !partnerIcon) {
         showNotification('يرجى ملء جميع الحقول', 'error');
         return;
     }
-    
+
     const savedPartners = JSON.parse(localStorage.getItem('warithPartners') || '[]');
     const newPartner = {
         name: partnerName,
         icon: partnerIcon,
         id: Date.now()
     };
-    
+
     savedPartners.push(newPartner);
     localStorage.setItem('warithPartners', JSON.stringify(savedPartners));
-    
+
     displayPartnersList(savedPartners);
     this.reset();
-    
+
     showNotification('تم إضافة الشريك بنجاح!', 'success');
     logActivity('partner_added', `تم إضافة شريك جديد: ${partnerName}`);
-    
+
     updateMainPagePartners(savedPartners);
 });
 
 function deletePartner(index) {
     if (!confirm('هل أنت متأكد من حذف هذا الشريك؟')) return;
-    
+
     const savedPartners = JSON.parse(localStorage.getItem('warithPartners') || '[]');
     const partnerName = savedPartners[index].name;
-    
+
     savedPartners.splice(index, 1);
     localStorage.setItem('warithPartners', JSON.stringify(savedPartners));
-    
+
     displayPartnersList(savedPartners);
     updateMainPagePartners(savedPartners);
-    
+
     showNotification('تم حذف الشريك بنجاح', 'success');
     logActivity('partner_deleted', `تم حذف الشريك: ${partnerName}`);
 }
 
-function updateMainPagePartners(partners) {
-    // Update partners on main page
-    const script = document.createElement('script');
-    script.textContent = `
-        if (window.parent && window.parent !== window) {
-            window.parent.postMessage({
-                type: 'updatePartners',
-                data: ${JSON.stringify(partners)}
-            }, '*');
+// Function to edit partner (Add this function)
+function editPartner(index) {
+    const savedPartners = JSON.parse(localStorage.getItem('warithPartners') || '[]');
+    const partner = savedPartners[index];
+
+    if (partner) {
+        document.getElementById('partnerName').value = partner.name;
+        document.getElementById('partnerIcon').value = partner.icon;
+
+        // Change form behavior to update instead of add
+        const partnersForm = document.getElementById('partnersForm');
+        const submitButton = partnersForm.querySelector('[type="submit"]');
+        if (submitButton) {
+            submitButton.innerHTML = '<i class="fas fa-save"></i> تحديث الشريك';
+            submitButton.setAttribute('data-partner-index', index); // Store index for update
         }
-    `;
-    document.head.appendChild(script);
-    setTimeout(() => document.head.removeChild(script), 100);
+        showNotification('تم تحميل بيانات الشريك للتعديل', 'info');
+    }
+}
+
+// Modify partnersForm submit handler to handle both add and edit
+document.getElementById('partnersForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const partnerNameInput = document.getElementById('partnerName');
+    const partnerIconInput = document.getElementById('partnerIcon');
+    const partnerName = partnerNameInput.value;
+    const partnerIcon = partnerIconInput.value;
+
+    if (!partnerName || !partnerIcon) {
+        showNotification('يرجى ملء جميع الحقول', 'error');
+        return;
+    }
+
+    const savedPartners = JSON.parse(localStorage.getItem('warithPartners') || '[]');
+    const editIndex = parseInt(e.target.querySelector('[data-partner-index]')?.value); // Get index if editing
+
+    if (!isNaN(editIndex) && editIndex >= 0 && editIndex < savedPartners.length) {
+        // Update existing partner
+        const oldName = savedPartners[editIndex].name;
+        savedPartners[editIndex].name = partnerName;
+        savedPartners[editIndex].icon = partnerIcon;
+        logActivity('partner_updated', `تم تحديث الشريك: ${oldName}`);
+        showNotification('تم تحديث الشريك بنجاح!', 'success');
+    } else {
+        // Add new partner
+        const newPartner = { name: partnerName, icon: partnerIcon, id: Date.now() };
+        savedPartners.push(newPartner);
+        logActivity('partner_added', `تم إضافة شريك جديد: ${partnerName}`);
+        showNotification('تم إضافة الشريك بنجاح!', 'success');
+    }
+
+    localStorage.setItem('warithPartners', JSON.stringify(savedPartners));
+    displayPartnersList(savedPartners);
+    this.reset();
+
+    // Reset submit button text and remove edit index attribute
+    const submitButton = e.target.querySelector('[type="submit"]');
+    if (submitButton) {
+        submitButton.innerHTML = '<i class="fas fa-plus"></i> إضافة شريك';
+        submitButton.removeAttribute('data-partner-index');
+    }
+    updateMainPagePartners(savedPartners);
+});
+
+
+function updateMainPagePartners(partners) {
+    // Update partners on main page (if exists)
+    console.log("Updating main page partners:", partners);
 }
 
 // Content Management
 function loadCurrentContent() {
     const savedContent = JSON.parse(localStorage.getItem('warithContent') || '{}');
-    
+
     document.getElementById('aboutTitle').value = savedContent.aboutTitle || 'وريث';
     document.getElementById('aboutText').value = savedContent.aboutText || 'انطلقت مسيرة فريقنا منذ عام 2021 م...';
     document.getElementById('visionText').value = savedContent.visionText || 'أن نكون الفريق الرائد...';
@@ -1996,12 +2207,12 @@ contentTabs.forEach(tab => {
         // Remove active class from all tabs
         contentTabs.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
-        
+
         // Hide all content
         document.querySelectorAll('.content-tab-content').forEach(content => {
             content.style.display = 'none';
         });
-        
+
         // Show selected content
         const tabId = this.getAttribute('data-content-tab');
         document.getElementById(tabId + 'Content').style.display = 'block';
@@ -2010,91 +2221,84 @@ contentTabs.forEach(tab => {
 
 // Content forms handlers
 ['about', 'vision', 'mission', 'hero'].forEach(section => {
-    document.getElementById(section + 'Form')?.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const savedContent = JSON.parse(localStorage.getItem('warithContent') || '{}');
-        
-        if (section === 'about') {
-            savedContent.aboutTitle = document.getElementById('aboutTitle').value;
-            savedContent.aboutText = document.getElementById('aboutText').value;
-        } else if (section === 'vision') {
-            savedContent.visionText = document.getElementById('visionText').value;
-        } else if (section === 'mission') {
-            savedContent.missionText = document.getElementById('missionText').value;
-        } else if (section === 'hero') {
-            savedContent.heroText = document.getElementById('heroText').value;
-        }
-        
-        savedContent.lastUpdated = new Date().toISOString();
-        localStorage.setItem('warithContent', JSON.stringify(savedContent));
-        
-        updateMainPageContent(savedContent);
-        
-        showNotification(`تم تحديث ${section === 'about' ? 'معلومات الفريق' : section === 'vision' ? 'الرؤية' : section === 'mission' ? 'الرسالة' : 'النص الترحيبي'} بنجاح!`, 'success');
-        logActivity('content_updated', `تم تحديث محتوى: ${section}`);
-    });
+    const form = document.getElementById(section + 'Form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const savedContent = JSON.parse(localStorage.getItem('warithContent') || '{}');
+
+            if (section === 'about') {
+                savedContent.aboutTitle = document.getElementById('aboutTitle').value;
+                savedContent.aboutText = document.getElementById('aboutText').value;
+            } else if (section === 'vision') {
+                savedContent.visionText = document.getElementById('visionText').value;
+            } else if (section === 'mission') {
+                savedContent.missionText = document.getElementById('missionText').value;
+            } else if (section === 'hero') {
+                savedContent.heroText = document.getElementById('heroText').value;
+            }
+
+            savedContent.lastUpdated = new Date().toISOString();
+            localStorage.setItem('warithContent', JSON.stringify(savedContent));
+
+            updateMainPageContent(savedContent);
+
+            showNotification(`تم تحديث ${section === 'about' ? 'معلومات الفريق' : section === 'vision' ? 'الرؤية' : section === 'mission' ? 'الرسالة' : 'النص الترحيبي'} بنجاح!`, 'success');
+            logActivity('content_updated', `تم تحديث محتوى: ${section}`);
+        });
+    }
 });
 
 function updateMainPageContent(content) {
-    // Update content on main page
-    const script = document.createElement('script');
-    script.textContent = `
-        if (window.parent && window.parent !== window) {
-            window.parent.postMessage({
-                type: 'updateContent',
-                data: ${JSON.stringify(content)}
-            }, '*');
-        }
-    `;
-    document.head.appendChild(script);
-    setTimeout(() => document.head.removeChild(script), 100);
+    // Update content on main page (if exists)
+    console.log("Updating main page content:", content);
 }
 
 // Site Settings
 function loadSiteSettings() {
     const savedSettings = JSON.parse(localStorage.getItem('warithSettings') || '{}');
-    
+
     document.getElementById('siteTitle').value = savedSettings.siteTitle || 'وريث - فريق تطوعي';
     document.getElementById('siteSubtitle').value = savedSettings.siteSubtitle || 'إرث باقٍ وتاريخ حي';
     document.getElementById('contactEmail').value = savedSettings.contactEmail || 'Wareethofficial@gmail.com';
     document.getElementById('contactPhone').value = savedSettings.contactPhone || '+966 59 511 4884';
-    document.getElementById('maintenanceMode').value = savedSettings.maintenanceMode || 'false';
+    // Assuming maintenanceMode is a select or radio button, handle accordingly. For simplicity, using 'false' as default.
+    const maintenanceModeSelect = document.getElementById('maintenanceMode');
+    if (maintenanceModeSelect) {
+        maintenanceModeSelect.value = savedSettings.maintenanceMode || 'false';
+    }
 }
 
 // Settings form handler
 document.getElementById('settingsForm')?.addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
+    const siteTitleInput = document.getElementById('siteTitle');
+    const siteSubtitleInput = document.getElementById('siteSubtitle');
+    const contactEmailInput = document.getElementById('contactEmail');
+    const contactPhoneInput = document.getElementById('contactPhone');
+    const maintenanceModeSelect = document.getElementById('maintenanceMode');
+
     const settingsData = {
-        siteTitle: document.getElementById('siteTitle').value,
-        siteSubtitle: document.getElementById('siteSubtitle').value,
-        contactEmail: document.getElementById('contactEmail').value,
-        contactPhone: document.getElementById('contactPhone').value,
-        maintenanceMode: document.getElementById('maintenanceMode').value,
+        siteTitle: siteTitleInput ? siteTitleInput.value : '',
+        siteSubtitle: siteSubtitleInput ? siteSubtitleInput.value : '',
+        contactEmail: contactEmailInput ? contactEmailInput.value : '',
+        contactPhone: contactPhoneInput ? contactPhoneInput.value : '',
+        maintenanceMode: maintenanceModeSelect ? maintenanceModeSelect.value : 'false',
         lastUpdated: new Date().toISOString()
     };
-    
+
     localStorage.setItem('warithSettings', JSON.stringify(settingsData));
     updateMainPageSettings(settingsData);
-    
+
     showNotification('تم حفظ إعدادات الموقع بنجاح!', 'success');
     logActivity('settings_updated', 'تم تحديث إعدادات الموقع');
 });
 
 function updateMainPageSettings(settings) {
-    // Update settings on main page
-    const script = document.createElement('script');
-    script.textContent = `
-        if (window.parent && window.parent !== window) {
-            window.parent.postMessage({
-                type: 'updateSettings',
-                data: ${JSON.stringify(settings)}
-            }, '*');
-        }
-    `;
-    document.head.appendChild(script);
-    setTimeout(() => document.head.removeChild(script), 100);
+    // Update settings on main page (if exists)
+    console.log("Updating main page settings:", settings);
 }
 
 // Dummy functions to avoid errors if they are not defined elsewhere
