@@ -163,6 +163,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Header logout button functionality
+    const logoutHeaderBtn = document.getElementById('logoutHeaderBtn');
+    if (logoutHeaderBtn) {
+        logoutHeaderBtn.addEventListener('click', function() {
+            if (confirm('هل تريد تسجيل الخروج؟')) {
+                performLogout();
+            }
+        });
+    }
+
     function performLogout() {
         if (currentSession) {
             logActivity('logout', `تسجيل خروج المستخدم: ${currentSession.fullName}`);
