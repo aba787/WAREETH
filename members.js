@@ -126,6 +126,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function autoLogin(sessionData) {
         currentSession = sessionData;
         performLogin(sessionData);
+        
+        // Show appropriate buttons for auto-login
+        const logoutHeaderBtn = document.getElementById('logoutHeaderBtn');
+        const joinHeaderBtn = document.getElementById('joinHeaderBtn');
+        
+        if (logoutHeaderBtn) {
+            logoutHeaderBtn.style.display = 'flex';
+        }
+        if (joinHeaderBtn) {
+            joinHeaderBtn.style.display = 'none';
+        }
     }
 
     // Perform login actions
@@ -133,6 +144,17 @@ document.addEventListener('DOMContentLoaded', function() {
         loginSection.style.display = 'none';
         adminDashboard.style.display = 'block';
         document.getElementById('adminName').textContent = sessionData.fullName;
+        
+        // Show logout button and hide join button after login
+        const logoutHeaderBtn = document.getElementById('logoutHeaderBtn');
+        const joinHeaderBtn = document.getElementById('joinHeaderBtn');
+        
+        if (logoutHeaderBtn) {
+            logoutHeaderBtn.style.display = 'flex';
+        }
+        if (joinHeaderBtn) {
+            joinHeaderBtn.style.display = 'none';
+        }
         
         // Start session timer
         startSessionTimer();
@@ -231,6 +253,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 loginSection.style.display = 'block';
                 adminDashboard.style.display = 'none';
                 loginForm.reset();
+            }
+            
+            // Show join button and hide logout button after logout
+            const logoutHeaderBtn = document.getElementById('logoutHeaderBtn');
+            const joinHeaderBtn = document.getElementById('joinHeaderBtn');
+            
+            if (logoutHeaderBtn) {
+                logoutHeaderBtn.style.display = 'none';
+            }
+            if (joinHeaderBtn) {
+                joinHeaderBtn.style.display = 'flex';
             }
             
             // Clear sensitive data
