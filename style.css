@@ -728,7 +728,7 @@ body.english {
 /* Hero Section */
 .hero {
   background: url('https://i.ibb.co/8DKcxkjG/image.jpg') no-repeat center center;
-  background-color: #2F4F4F;
+  background-color: #2F4F4F; /* لون احتياطي يطابق الألوان التراثية */
   color: white;
   padding: 150px 0 100px;
   text-align: center;
@@ -738,10 +738,11 @@ body.english {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* إعدادات محسنة لتغطية كامل المنطقة */
+  
+  /* إعدادات جديدة تضمن ظهور الصورة كاملة بدون ألوان غير مرغوبة */
   background-size: cover;
   background-attachment: scroll;
+  background-repeat: no-repeat;
   background-position: center center;
 }
 
@@ -789,7 +790,7 @@ body.english {
   line-height: 1.2;
   color: white;
   position: absolute;
-  top: 5%;
+  top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
@@ -826,7 +827,7 @@ body.english .hero-content h1 {
   line-height: 1.3;
   color: #fff;
   position: absolute;
-  top: 5%;
+  top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
@@ -838,22 +839,22 @@ body.english .hero-content h1 {
 @media screen and (max-width: 768px) {
   .hero-content .centered-text {
     font-size: 2rem;
-    top: 8%; /* رفع أكثر للهاتف */
+    top: 12%; /* رفع أكثر للهاتف */
   }
   
   .hero-content h1 {
-    top: 8%;
+    top: 12%;
   }
 }
 
 @media screen and (max-width: 480px) {
   .hero-content .centered-text {
     font-size: 1.8rem;
-    top: 10%; /* رفع أكثر للهواتف الصغيرة */
+    top: 15%; /* رفع أكثر للهواتف الصغيرة */
   }
   
   .hero-content h1 {
-    top: 10%;
+    top: 15%;
   }
 }
 
