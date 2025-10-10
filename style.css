@@ -2,15 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-  /* ألوان وريث الرسمية */
-  --wareeth-primary: #8B4513;     /* البني الداكن الرئيسي */
-  --wareeth-secondary: #D2B48C;   /* البني الفاتح الثانوي */
-  --wareeth-accent: #B8860B;      /* الذهبي للتمييز */
-  --wareeth-dark: #654321;        /* البني الداكن جداً */
-  --wareeth-light: #F5DEB3;       /* البيج الفاتح */
-  --wareeth-white: #FFFEF7;       /* الأبيض المكسور */
-  --wareeth-text: #2F2F2F;        /* لون النص الرئيسي */
-  --wareeth-text-light: #666666;  /* لون النص الثانوي */
+  /* الألوان التراثية الأنيقة - وريث */
+  --wareeth-primary: #8B4513;     /* بني ترابي - الأصالة */
+  --wareeth-secondary: #DAA520;   /* ذهبي دافئ - الفخامة */
+  --wareeth-accent: #2F4F4F;      /* رمادي أزرق - الجدية */
+  --wareeth-light: #F5F5DC;       /* بيج كريمي - الخلفيات */
+  --wareeth-white: #FFFFFF;       /* الأبيض النقي */
+  --wareeth-text: #2F4F4F;        /* رمادي أزرق للنصوص */
+  --wareeth-text-light: #8B4513;  /* بني ترابي للنصوص الثانوية */
 
   /* الخطوط الرسمية */
   --wareeth-font-primary: 'Tajawal', sans-serif;     /* الخط الرئيسي للعناوين */

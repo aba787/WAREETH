@@ -73,12 +73,12 @@
   /* الألوان التراثية الأنيقة - وريث */
   --wareeth-primary: #8B4513;     /* بني ترابي - الأصالة */
   --wareeth-secondary: #DAA520;   /* ذهبي دافئ - الفخامة */
-  --wareeth-accent: #2F4F4F;     /* رمادي أزرق - الجدية */
-  --wareeth-light: #F5F5DC;      /* بيج كريمي - الخلفيات */
-  --wareeth-red: #DC143C;        /* أحمر ثانوي فقط */
-  --wareeth-white: #FFFFFF;      /* الأبيض النقي */
-  --wareeth-text: #2F4F4F;       /* رمادي أزرق للنصوص */
-  --wareeth-text-light: #8B4513; /* بني ترابي للنصوص الثانوية */
+  --wareeth-accent: #2F4F4F;      /* رمادي أزرق - الجدية */
+  --wareeth-light: #F5F5DC;       /* بيج كريمي - الخلفيات */
+  --wareeth-white: #FFFFFF;       /* الأبيض النقي */
+  --wareeth-text: #2F4F4F;        /* رمادي أزرق للنصوص */
+  --wareeth-text-light: #8B4513;  /* بني ترابي للنصوص الثانوية */
+  --wareeth-red: #DC143C;         /* أحمر للحالات الخاصة */
 
   /* الخطوط الرسمية */
   --wareeth-font-primary: 'Tajawal', sans-serif;

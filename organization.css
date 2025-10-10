@@ -1,4 +1,3 @@
-
 /* Organization Page Styles */
 .organization-main {
     margin-top: 80px;
@@ -47,13 +46,13 @@
 /* Introduction Section */
 .intro-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.8) 100%);
+    background: linear-gradient(135deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.8) 100%);
     text-align: center;
 }
 
 .intro-content h2 {
     font-size: 2.5rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     margin-bottom: 2rem;
     font-weight: 700;
     position: relative;
@@ -93,7 +92,7 @@
 }
 
 .department-card {
-    background: linear-gradient(135deg, #fff 0%, #F5F5DC 100%);
+    background: linear-gradient(135deg, #fff 0%, var(--wareeth-light) 100%);
     border-radius: 20px;
     padding: 2.5rem;
     box-shadow: 0 15px 35px rgba(139, 69, 19, 0.1);
@@ -171,7 +170,7 @@
 
 .department-header h3 {
     font-size: 2rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     margin: 0;
     font-weight: 700;
 }
@@ -256,12 +255,12 @@
 /* Cooperation Section */
 .cooperation-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.8) 100%);
+    background: linear-gradient(135deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.8) 100%);
 }
 
 .cooperation-section h2 {
     font-size: 2.5rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     text-align: center;
     margin-bottom: 3rem;
     font-weight: 700;
@@ -490,68 +489,68 @@
     .organization-hero {
         padding: 80px 0;
     }
-    
+
     .organization-hero h1 {
         font-size: 2.5rem;
     }
-    
+
     .organization-hero p {
         font-size: 1.1rem;
         padding: 0 1rem;
     }
-    
+
     .departments-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .department-card {
         padding: 2rem;
     }
-    
+
     .department-header {
         flex-direction: column;
         text-align: center;
         gap: 1rem;
     }
-    
+
     .department-header h3 {
         font-size: 1.5rem;
     }
-    
+
     .cooperation-content {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .cooperation-diagram {
         width: 280px;
         height: 280px;
     }
-    
+
     .center-circle {
         width: 100px;
         height: 100px;
     }
-    
+
     .department-circle {
         width: 70px;
         height: 70px;
     }
-    
+
     .department-circle i {
         font-size: 1.2rem;
     }
-    
+
     .department-circle span {
         font-size: 0.7rem;
     }
-    
+
     .join-buttons {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .join-btn {
         width: 250px;
         justify-content: center;
@@ -565,61 +564,61 @@
     .join-department-section {
         padding: 60px 0;
     }
-    
+
     .intro-content h2,
     .cooperation-section h2 {
         font-size: 2rem;
     }
-    
+
     .department-card {
         padding: 1.5rem;
     }
-    
+
     .department-icon {
         width: 60px;
         height: 60px;
         font-size: 2rem;
     }
-    
+
     .department-header h3 {
         font-size: 1.3rem;
     }
-    
+
     .cooperation-diagram {
         width: 250px;
         height: 250px;
     }
-    
+
     .center-circle {
         width: 80px;
         height: 80px;
     }
-    
+
     .center-circle i {
         font-size: 1.5rem;
     }
-    
+
     .center-circle span {
         font-size: 0.8rem;
     }
-    
+
     .department-circle {
         width: 60px;
         height: 60px;
     }
-    
+
     .department-circle i {
         font-size: 1rem;
     }
-    
+
     .department-circle span {
         font-size: 0.6rem;
     }
-    
+
     .join-department-section h2 {
         font-size: 2.2rem;
     }
-    
+
     .join-btn {
         padding: 1rem 2rem;
         font-size: 1rem;

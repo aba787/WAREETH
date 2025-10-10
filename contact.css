@@ -5,11 +5,11 @@
 
 :root {
   /* ألوان وريث الرسمية */
-  --wareeth-primary: #8B4513;
-  --wareeth-secondary: #D2B48C;
-  --wareeth-accent: #B8860B;
+  --wareeth-primary: #8B4513; /* بنى ترابي */
+  --wareeth-secondary: #DAA520; /* ذهبي دافئ */
+  --wareeth-accent: #2F4F4F; /* رمادي أزرق */
   --wareeth-dark: #654321;
-  --wareeth-light: #F5DEB3;
+  --wareeth-light: #F5F5DC; /* بيج كريمي */
   --wareeth-white: #FFFEF7;
   --wareeth-text: #2F2F2F;
   --wareeth-text-light: #666666;
@@ -63,7 +63,7 @@
 /* Contact Information Cards */
 .contact-info {
     padding: 80px 0;
-    background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.8) 100%);
+    background: linear-gradient(135deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.8) 100%);
 }
 
 .contact-grid {
@@ -90,7 +90,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #8B4513 0%, #DAA520 100%);
+    background: linear-gradient(90deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
     border-radius: 20px 20px 0 0;
 }
 
@@ -100,15 +100,15 @@
 }
 
 .contact-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    background: linear-gradient(135deg, var(--wareeth-secondary) 0%, var(--wareeth-primary) 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
     box-shadow: 0 10px 25px rgba(139, 69, 19, 0.2);
+    width: 80px;
+    height: 80px;
 }
 
 .contact-icon i {
@@ -118,13 +118,13 @@
 
 .contact-card h3 {
     font-size: 1.5rem;
-    color: #8B4513;
+    color: var(--wareeth-primary);
     margin-bottom: 1rem;
     font-weight: 700;
 }
 
 .contact-card p {
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     font-size: 1rem;
     margin-bottom: 0.5rem;
     font-weight: 500;
@@ -148,7 +148,7 @@
 
 .form-header h2 {
     font-size: 2.5rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     margin-bottom: 1rem;
     font-weight: 700;
     position: relative;
@@ -162,12 +162,12 @@
     transform: translateX(-50%);
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #8B4513 0%, #DAA520 100%);
+    background: linear-gradient(90deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
     border-radius: 2px;
 }
 
 .form-header p {
-    color: #666;
+    color: var(--wareeth-text-light);
     font-size: 1.1rem;
     max-width: 500px;
     margin: 0 auto;
@@ -176,7 +176,7 @@
 
 /* Form Styles */
 .contact-form {
-    background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.5) 100%);
+    background: linear-gradient(135deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.5) 100%);
     padding: 3rem;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(139, 69, 19, 0.1);
@@ -200,7 +200,7 @@
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     font-weight: 600;
     font-size: 1rem;
 }
@@ -213,7 +213,7 @@
     border: 2px solid rgba(218, 165, 32, 0.3);
     border-radius: 10px;
     font-size: 1rem;
-    font-family: 'Cairo', sans-serif;
+    font-family: var(--wareeth-font-secondary);
     background: white;
     transition: all 0.3s ease;
     direction: rtl;
@@ -228,7 +228,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #DAA520;
+    border-color: var(--wareeth-secondary);
     box-shadow: 0 0 10px rgba(218, 165, 32, 0.2);
     transform: translateY(-2px);
 }
@@ -247,7 +247,7 @@
     display: flex;
     align-items: flex-start;
     cursor: pointer;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     line-height: 1.6;
 }
 
@@ -259,7 +259,7 @@
 .checkmark {
     width: 20px;
     height: 20px;
-    border: 2px solid #DAA520;
+    border: 2px solid var(--wareeth-secondary);
     border-radius: 4px;
     margin-left: 10px;
     margin-top: 2px;
@@ -269,7 +269,7 @@
 }
 
 .checkbox-label input[type="checkbox"]:checked + .checkmark {
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    background: linear-gradient(135deg, var(--wareeth-secondary) 0%, var(--wareeth-primary) 100%);
 }
 
 .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
@@ -285,7 +285,7 @@
 
 .privacy-link,
 .terms-link {
-    color: #DAA520;
+    color: var(--wareeth-secondary);
     text-decoration: none;
     font-weight: 600;
 }
@@ -297,7 +297,7 @@
 
 /* Submit Button */
 .submit-btn {
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    background: linear-gradient(135deg, var(--wareeth-secondary) 0%, var(--wareeth-primary) 100%);
     color: white;
     padding: 1.2rem 3rem;
     border: none;
@@ -318,7 +318,7 @@
 .submit-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 35px rgba(139, 69, 19, 0.4);
-    background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+    background: linear-gradient(135deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
 }
 
 .submit-btn i {
@@ -328,7 +328,7 @@
 /* Social Media Section */
 .social-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 100%);
+    background: linear-gradient(135deg, var(--wareeth-accent) 0%, var(--wareeth-primary) 100%);
     color: white;
     text-align: center;
 }
@@ -380,14 +380,14 @@
 /* FAQ Section */
 .faq-section {
     padding: 80px 0;
-    background: #F5F5DC;
+    background: var(--wareeth-light);
 }
 
 .faq-section h2 {
     font-size: 2.5rem;
     text-align: center;
     margin-bottom: 3rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     font-weight: 700;
     position: relative;
 }
@@ -400,7 +400,7 @@
     transform: translateX(-50%);
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #8B4513 0%, #DAA520 100%);
+    background: linear-gradient(90deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
     border-radius: 2px;
 }
 
@@ -430,18 +430,18 @@
     align-items: center;
     font-size: 1.2rem;
     font-weight: 600;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     transition: all 0.3s ease;
-    font-family: 'Cairo', sans-serif;
+    font-family: var(--wareeth-font-secondary);
 }
 
 .faq-question:hover {
-    background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.8) 100%);
+    background: linear-gradient(135deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.8) 100%);
 }
 
 .faq-question i {
     transition: transform 0.3s ease;
-    color: #DAA520;
+    color: var(--wareeth-secondary);
     font-size: 1rem;
 }
 
@@ -453,7 +453,7 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease, padding 0.3s ease;
-    background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.3) 100%);
+    background: linear-gradient(135deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.3) 100%);
 }
 
 .faq-item.active .faq-answer {
@@ -462,14 +462,14 @@
 }
 
 .faq-answer p {
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     line-height: 1.7;
     margin: 0;
 }
 
 /* Active Navigation Link */
 .nav-link.active {
-    color: #DAA520 !important;
+    color: var(--wareeth-secondary) !important;
     font-weight: 700;
 }
 

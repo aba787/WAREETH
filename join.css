@@ -1,4 +1,3 @@
-
 /* Join Page Styles */
 .join-main {
     margin-top: 70px;
@@ -6,11 +5,11 @@
 
 :root {
   /* ألوان وريث الرسمية */
-  --wareeth-primary: #8B4513;
-  --wareeth-secondary: #D2B48C;
-  --wareeth-accent: #B8860B;
-  --wareeth-dark: #654321;
-  --wareeth-light: #F5DEB3;
+  --wareeth-primary: #8B4513; /* بنى ترابي */
+  --wareeth-secondary: #DAA520; /* ذهبي دافئ */
+  --wareeth-accent: #2F4F4F; /* رمادي أزرق */
+  --wareeth-dark: #654321; /* داكن */
+  --wareeth-light: #F5F5DC; /* بيج كريمي */
   --wareeth-white: #FFFEF7;
   --wareeth-text: #2F2F2F;
   --wareeth-text-light: #666666;
@@ -23,7 +22,7 @@
 
 /* Join Hero Section */
 .join-hero {
-    background: linear-gradient(135deg, var(--black) 0%, var(--dark-brown) 50%, var(--brick-red) 100%);
+    background: linear-gradient(135deg, var(--wareeth-primary) 0%, var(--wareeth-dark) 50%, var(--wareeth-accent) 100%);
     color: white;
     padding: 100px 0;
     text-align: center;
@@ -64,7 +63,7 @@
 /* Benefits Section */
 .benefits-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.8) 100%);
+    background: linear-gradient(135deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.8) 100%);
     position: relative;
 }
 
@@ -81,7 +80,7 @@
 .benefits-section h2 {
     text-align: center;
     font-size: 2.5rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     margin-bottom: 3rem;
     font-weight: 700;
     position: relative;
@@ -96,7 +95,7 @@
     transform: translateX(-50%);
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #8B4513 0%, #DAA520 100%);
+    background: linear-gradient(90deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
     border-radius: 2px;
 }
 
@@ -109,7 +108,7 @@
 }
 
 .benefit-card {
-    background: linear-gradient(135deg, white 0%, #F5F5DC 100%);
+    background: linear-gradient(135deg, white 0%, var(--wareeth-light) 100%);
     padding: 2.5rem 2rem;
     border-radius: 20px;
     text-align: center;
@@ -127,7 +126,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #8B4513 0%, #DAA520 100%);
+    background: linear-gradient(90deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
 }
 
 .benefit-card:hover {
@@ -143,13 +142,13 @@
 
 .benefit-card h3 {
     font-size: 1.5rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     margin-bottom: 1rem;
     font-weight: 700;
 }
 
 .benefit-card p {
-    color: #666;
+    color: var(--wareeth-text-light);
     line-height: 1.7;
     font-size: 1.05rem;
 }
@@ -157,7 +156,7 @@
 /* Application Section */
 .application-section {
     padding: 80px 0;
-    background: #fff;
+    background: var(--wareeth-white);
 }
 
 .form-container {
@@ -172,7 +171,7 @@
 
 .form-header h2 {
     font-size: 2.5rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     margin-bottom: 1rem;
     font-weight: 700;
     position: relative;
@@ -186,18 +185,18 @@
     transform: translateX(-50%);
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #8B4513 0%, #DAA520 100%);
+    background: linear-gradient(90deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
     border-radius: 2px;
 }
 
 .form-header p {
-    color: #666;
+    color: var(--wareeth-text-light);
     font-size: 1.1rem;
 }
 
 /* Form Styles */
 .join-form {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 245, 220, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, var(--wareeth-light) 100%);
     padding: 3rem;
     border-radius: 25px;
     box-shadow: 0 20px 60px rgba(139, 69, 19, 0.15);
@@ -228,7 +227,7 @@
 .form-group label {
     display: block;
     margin-bottom: 0.8rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     font-weight: 600;
     font-size: 1.1rem;
     transition: color 0.3s ease;
@@ -241,11 +240,11 @@
     border: 2px solid rgba(218, 165, 32, 0.3);
     border-radius: 50px;
     font-size: 1.1rem;
-    font-family: 'Cairo', sans-serif;
+    font-family: var(--wareeth-font-secondary);
     background: rgba(255, 255, 255, 0.9);
     transition: all 0.4s ease;
     direction: rtl;
-    color: #2F4F4F;
+    color: var(--wareeth-text);
     box-shadow: 0 5px 15px rgba(139, 69, 19, 0.08);
 }
 
@@ -259,7 +258,7 @@
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #DAA520;
+    border-color: var(--wareeth-secondary);
     box-shadow: 0 0 20px rgba(218, 165, 32, 0.25);
     transform: translateY(-3px);
     background: rgba(255, 255, 255, 1);
@@ -272,7 +271,7 @@
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 50%, #2F4F4F 100%);
+    background: linear-gradient(135deg, var(--wareeth-secondary) 0%, var(--wareeth-primary) 50%, var(--wareeth-accent) 100%);
     color: white;
     padding: 20px 50px;
     border: none;
@@ -312,7 +311,7 @@
 .submit-btn:hover {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 25px 50px rgba(139, 69, 19, 0.5);
-    background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 50%, #DAA520 100%);
+    background: linear-gradient(135deg, var(--wareeth-accent) 0%, var(--wareeth-primary) 50%, var(--wareeth-secondary) 100%);
 }
 
 .submit-btn:active {
@@ -326,7 +325,7 @@
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     font-weight: 600;
     font-size: 1rem;
 }
@@ -339,7 +338,7 @@
     border: 2px solid rgba(218, 165, 32, 0.3);
     border-radius: 10px;
     font-size: 1rem;
-    font-family: 'Cairo', sans-serif;
+    font-family: var(--wareeth-font-secondary);
     background: white;
     transition: all 0.3s ease;
     direction: rtl;
@@ -349,7 +348,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #DAA520;
+    border-color: var(--wareeth-secondary);
     box-shadow: 0 0 10px rgba(218, 165, 32, 0.2);
     transform: translateY(-2px);
 }
@@ -371,7 +370,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    color: #2F4F4F;
+    color: var(--wareeth-accent);
     font-weight: 500;
 }
 
@@ -383,7 +382,7 @@
 .checkbox-item .checkmark {
     width: 20px;
     height: 20px;
-    border: 2px solid #DAA520;
+    border: 2px solid var(--wareeth-secondary);
     border-radius: 4px;
     margin-left: 10px;
     position: relative;
@@ -392,7 +391,7 @@
 }
 
 .checkbox-item input[type="checkbox"]:checked + .checkmark {
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    background: linear-gradient(135deg, var(--wareeth-secondary) 0%, var(--wareeth-primary) 100%);
 }
 
 .checkbox-item input[type="checkbox"]:checked + .checkmark::after {
@@ -414,7 +413,7 @@
 }
 
 .terms-link {
-    color: #DAA520;
+    color: var(--wareeth-secondary);
     text-decoration: none;
     font-weight: 600;
 }
@@ -425,7 +424,7 @@
 
 /* Submit Button */
 .submit-btn {
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    background: linear-gradient(135deg, var(--wareeth-secondary) 0%, var(--wareeth-primary) 100%);
     color: white;
     padding: 1.2rem 3rem;
     border: none;
@@ -446,13 +445,13 @@
 .submit-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 35px rgba(139, 69, 19, 0.4);
-    background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+    background: linear-gradient(135deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
 }
 
 /* Process Section */
 .process-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 100%);
+    background: linear-gradient(135deg, var(--wareeth-accent) 0%, var(--wareeth-primary) 100%);
     color: white;
 }
 
@@ -479,7 +478,7 @@
 .step-number {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    background: linear-gradient(135deg, var(--wareeth-secondary) 0%, var(--wareeth-primary) 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -493,11 +492,11 @@
 .step-content h3 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
-    color: #DAA520;
+    color: var(--wareeth-secondary);
 }
 
 .step-content p {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--wareeth-white);
     line-height: 1.6;
 }
 
@@ -555,56 +554,56 @@
     .join-hero h1 {
         font-size: 2.2rem;
     }
-    
+
     .join-hero p {
         font-size: 1.1rem;
         padding: 0 1rem;
     }
-    
+
     .benefits-section h2 {
         font-size: 2rem;
     }
-    
+
     .benefits-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .benefit-card {
         padding: 2rem 1.5rem;
     }
-    
+
     .form-container {
         padding: 0 1rem;
     }
-    
+
     .join-form {
         padding: 2rem 1.5rem;
     }
-    
+
     .form-section {
         padding: 1.5rem;
     }
-    
+
     .form-row {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     .checkbox-grid {
         grid-template-columns: 1fr;
         gap: 0.8rem;
     }
-    
+
     .process-steps {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .form-header h2 {
         font-size: 2rem;
     }
-    
+
     .submit-btn {
         padding: 1rem 2rem;
         font-size: 1.1rem;
@@ -616,38 +615,38 @@
     .join-hero {
         padding: 60px 0;
     }
-    
+
     .join-hero h1 {
         font-size: 1.8rem;
     }
-    
+
     .join-hero p {
         font-size: 1rem;
         padding: 0 1rem;
     }
-    
+
     .benefits-section,
     .application-section,
     .process-section {
         padding: 60px 0;
     }
-    
+
     .join-form {
         padding: 2rem 1rem;
     }
-    
+
     .form-section {
         padding: 1rem;
     }
-    
+
     .checkbox-item {
         font-size: 0.9rem;
     }
-    
+
     .benefit-card {
         padding: 1.5rem 1rem;
     }
-    
+
     .benefit-icon {
         font-size: 3rem;
     }
