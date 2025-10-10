@@ -566,7 +566,49 @@
 .members-table {
     width: 100%;
     border-collapse: collapse;
-    font-family: var(--wareeth-font-secondary);
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* تحسين الجداول للأجهزة المحمولة */
+@media screen and (max-width: 768px) {
+    .table-container {
+        position: relative;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: var(--wareeth-secondary) transparent;
+    }
+
+    .table-container::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .table-container::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+        background: var(--wareeth-secondary);
+        border-radius: 3px;
+    }
+
+    .table-container::before {
+        content: 'اسحب يميناً لرؤية المزيد ←';
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: var(--wareeth-secondary);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.7rem;
+        border-radius: 0 0 8px 0;
+        z-index: 10;
+        opacity: 0.9;
+    }
 }
 
 .members-table th {
@@ -676,13 +718,80 @@
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* تحسين المودال للأجهزة المحمولة */
+@media screen and (max-width: 768px) {
+    .modal {
+        align-items: stretch;
+        padding: 0;
+    }
+
+    .modal-content {
+        position: relative;
+        background: white;
+        border-radius: 20px 20px 0 0;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: 95vh;
+        margin: auto 0 0 0;
+        animation: slideUpModal 0.3s ease;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @keyframes slideUpModal {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .modal-body {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 1rem;
+    }
+
+    .close-modal {
+        position: sticky;
+        top: 0;
+        right: 1rem;
+        z-index: 10;
+        background: var(--wareeth-secondary);
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+        background: var(--wareeth-primary);
+        transform: scale(1.1);
+    }
 }
 
 .modal-content {
@@ -774,6 +883,29 @@
     border-color: var(--wareeth-secondary);
     box-shadow: 0 0 15px rgba(218, 165, 32, 0.2);
     transform: translateY(-2px);
+}
+
+/* تحسين النماذج للأجهزة المحمولة */
+@media screen and (max-width: 480px) {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* منع الزووم في iOS */
+        padding: 1rem;
+        border-radius: 8px;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: var(--wareeth-accent);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-actions .btn {
+        min-height: 48px; /* حد أدنى لسهولة اللمس */
+        font-size: 1rem;
+        font-weight: 600;
+    }
 }
 
 .form-row {
