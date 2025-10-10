@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            
+
             // Handle internal anchors
             if (href && href.startsWith('#')) {
                 e.preventDefault();
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load and display saved content on initial load
     loadSavedContent();
-    
+
     // Initialize CTA and other buttons
     initializeCTAButtons();
 });
@@ -620,7 +620,7 @@ function initializeCTAButtons() {
             }
         });
     });
-    
+
     // Handle view all news button
     const viewAllBtn = document.querySelector('.view-all-btn');
     if (viewAllBtn) {
@@ -628,7 +628,7 @@ function initializeCTAButtons() {
             window.location.href = 'articles.html';
         });
     }
-    
+
     // Handle read more links
     const readMoreLinks = document.querySelectorAll('.read-more');
     readMoreLinks.forEach(link => {
@@ -637,7 +637,7 @@ function initializeCTAButtons() {
             showNotification('ستتم إضافة تفاصيل المقال قريباً', 'info');
         });
     });
-    
+
     // Handle social links
     const socialLinks = document.querySelectorAll('.social-link');
     socialLinks.forEach(link => {
@@ -712,7 +712,7 @@ function showNotification(message, type = 'info') {
     // Remove existing notifications
     const existingNotifications = document.querySelectorAll('.notification');
     existingNotifications.forEach(notification => notification.remove());
-    
+
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
@@ -722,7 +722,7 @@ function showNotification(message, type = 'info') {
             <button class="notification-close">&times;</button>
         </div>
     `;
-    
+
     // Style the notification
     notification.style.cssText = `
         position: fixed;
@@ -737,13 +737,13 @@ function showNotification(message, type = 'info') {
         max-width: 300px;
         animation: slideInRight 0.3s ease;
     `;
-    
+
     document.body.appendChild(notification);
-    
+
     // Close button functionality
     const closeBtn = notification.querySelector('.notification-close');
     closeBtn.addEventListener('click', () => notification.remove());
-    
+
     // Auto remove after 5 seconds
     setTimeout(() => {
         if (notification.parentNode) {
@@ -760,19 +760,19 @@ notificationStyle.textContent = `
         from { transform: translateX(100%); opacity: 0; }
         to { transform: translateX(0); opacity: 1; }
     }
-    
+
     @keyframes slideOutRight {
         from { transform: translateX(0); opacity: 1; }
         to { transform: translateX(100%); opacity: 0; }
     }
-    
+
     .notification-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
     }
-    
+
     .notification-close {
         background: none;
         border: none;
