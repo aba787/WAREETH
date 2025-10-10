@@ -1,17 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize IndexedDB for data storage
+    // Initialize storage system with fallback
     let db;
-    const dbRequest = indexedDB.open('WarithMembersDB', 1);
+    let useLocalStorage = false;
+    
+    // Try to initialize IndexedDB
+    if (typeof indexedDB !== 'undefined') {
+        const dbRequest = indexedDB.open('WarithMembersDB', 1);
 
-    dbRequest.onerror = function(event) {
-        console.error('Database error:', event.target.errorCode);
-    };
+        dbRequest.onerror = function(event) {
+            console.warn('IndexedDB not available, falling back to localStorage');
+            useLocalStorage = true;
+            initializeWithLocalStorage();
+        };
 
-    dbRequest.onsuccess = function(event) {
-        db = event.target.result;
+        dbRequest.onsuccess = function(event) {
+            db = event.target.result;
+            console.log('IndexedDB initialized successfully');
+            loadMembersFromDB();
+            loadStatisticsFromDB();
+        };
+    } else {
+        console.warn('IndexedDB not supported, using localStorage');
+        useLocalStorage = true;
+        initializeWithLocalStorage();
+    }
+
+    function initializeWithLocalStorage() {
+        // Initialize with localStorage only
         loadMembersFromDB();
         loadStatisticsFromDB();
-    };
+    }
 
     dbRequest.onupgradeneeded = function(event) {
         db = event.target.result;
@@ -627,24 +645,27 @@ document.addEventListener('DOMContentLoaded', function() {
     let searchTimeout;
 
     function initializeSearchAndFilter() {
-        const memberSearch = document.getElementById('memberSearch');
-        const roleFilter = document.getElementById('roleFilter');
+        // Wait for DOM to be fully loaded
+        setTimeout(() => {
+            const memberSearch = document.getElementById('memberSearch');
+            const roleFilter = document.getElementById('roleFilter');
 
-        if (memberSearch) {
-            memberSearch.addEventListener('input', function() {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    performAdvancedSearch();
-                }, 300);
-                filterMembers();
-            });
-        }
+            if (memberSearch) {
+                memberSearch.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        performAdvancedSearch();
+                    }, 300);
+                    filterMembers();
+                });
+            }
 
-        if (roleFilter) {
-            roleFilter.addEventListener('change', function() {
-                filterMembers();
-            });
-        }
+            if (roleFilter) {
+                roleFilter.addEventListener('change', function() {
+                    filterMembers();
+                });
+            }
+        }, 1000);
     }
 
     function performAdvancedSearch() {
@@ -940,12 +961,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Enhanced database functions
 function saveMemberToDB(memberData) {
-    if (!db) return Promise.reject('Database not available');
-
     return new Promise((resolve, reject) => {
-        const transaction = db.transaction(['members'], 'readwrite');
-        const store = transaction.objectStore('members');
-
         // Add timestamps and additional data
         memberData.createdAt = new Date().toISOString();
         memberData.updatedAt = new Date().toISOString();
@@ -953,43 +969,86 @@ function saveMemberToDB(memberData) {
         memberData.status = 'active';
         memberData.loginCount = 0;
         memberData.lastLogin = null;
+        memberData.id = Date.now(); // Generate unique ID
 
-        const request = store.add(memberData);
+        // Try IndexedDB first
+        if (db && db.objectStoreNames && db.objectStoreNames.contains('members')) {
+            try {
+                const transaction = db.transaction(['members'], 'readwrite');
+                const store = transaction.objectStore('members');
+                const request = store.add(memberData);
 
-        request.onsuccess = function() {
-            memberData.id = request.result;
-            logActivity('member_added', `تم إضافة عضو جديد: ${memberData.name}`);
-            resolve(memberData);
-        };
+                request.onsuccess = function() {
+                    // Also save to localStorage as backup
+                    saveMemberToLocalStorage(memberData);
+                    logActivity('member_added', `تم إضافة عضو جديد: ${memberData.name}`);
+                    resolve(memberData);
+                };
 
-        request.onerror = function() {
-            reject('Error adding member to database');
-        };
+                request.onerror = function() {
+                    // Fallback to localStorage
+                    saveMemberToLocalStorage(memberData);
+                    resolve(memberData);
+                };
+                return;
+            } catch (error) {
+                console.warn('IndexedDB error, using localStorage:', error);
+            }
+        }
+
+        // Fallback to localStorage
+        saveMemberToLocalStorage(memberData);
+        resolve(memberData);
     });
 }
 
+function saveMemberToLocalStorage(memberData) {
+    const existingMembers = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+    existingMembers.push(memberData);
+    localStorage.setItem('warithMembers', JSON.stringify(existingMembers));
+    logActivity('member_added', `تم إضافة عضو جديد: ${memberData.name}`);
+}
+
 function loadMembersFromDB() {
-    // Check if db is available
-    if (typeof db === 'undefined' || !db) {
-        console.log('Database not available, loading sample data');
-        loadSampleMembers();
-        return;
+    // Check if IndexedDB is available and initialized
+    if (db && db.objectStoreNames && db.objectStoreNames.contains('members')) {
+        try {
+            const transaction = db.transaction(['members'], 'readonly');
+            const store = transaction.objectStore('members');
+            const request = store.getAll();
+
+            request.onsuccess = function() {
+                const members = request.result || [];
+                if (members.length === 0) {
+                    loadSampleMembers();
+                } else {
+                    displayMembersInTable(members);
+                    updateMemberStats(members);
+                }
+            };
+
+            request.onerror = function() {
+                console.warn('Error loading members from IndexedDB, using localStorage');
+                loadMembersFromLocalStorage();
+            };
+            return;
+        } catch (error) {
+            console.warn('IndexedDB error:', error);
+        }
     }
+    
+    // Fallback to localStorage or sample data
+    loadMembersFromLocalStorage();
+}
 
-    const transaction = db.transaction(['members'], 'readonly');
-    const store = transaction.objectStore('members');
-    const request = store.getAll();
-
-    request.onsuccess = function() {
-        const members = request.result;
-        displayMembersInTable(members);
-        updateMemberStats(members);
-    };
-
-    request.onerror = function() {
-        console.error('Error loading members from database');
+function loadMembersFromLocalStorage() {
+    const savedMembers = JSON.parse(localStorage.getItem('warithMembers') || '[]');
+    if (savedMembers.length > 0) {
+        displayMembersInTable(savedMembers);
+        updateMemberStats(savedMembers);
+    } else {
         loadSampleMembers();
-    };
+    }
 }
 
 function loadSampleMembers() {
