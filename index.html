@@ -122,42 +122,95 @@
     <section id="news" class="news-section">
       <div class="container">
         <h2>الأخبار والإعلانات</h2>
-        <div class="news-grid" id="newsGrid">
-          <!-- News items will be loaded dynamically -->
-          <div class="news-item">
-            <div class="news-image">
-              <img src="https://via.placeholder.com/400x250/8B4513/F5F5DC?text=مبادرة+حفظ+التراث" alt="مبادرة حفظ التراث" loading="lazy">
-            </div>
-            <div class="news-content">
-              <div class="news-date">15 ديسمبر 2023</div>
-              <h3>إطلاق مبادرة جديدة لحفظ التراث</h3>
-              <p>أعلن فريق وريث التطوعي عن إطلاق مبادرة جديدة تهدف إلى جمع وتوثيق التراث الشعبي السعودي...</p>
-              <a href="#" class="read-more">اقرأ المزيد</a>
+        <div class="news-slider-container">
+          <button class="news-nav-btn prev-btn" id="prevNewsBtn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          
+          <div class="news-slider" id="newsSlider">
+            <div class="news-track" id="newsTrack">
+              <!-- News items will be loaded dynamically -->
+              <div class="news-slide">
+                <div class="news-item">
+                  <div class="news-image">
+                    <img src="https://via.placeholder.com/400x250/8B4513/F5F5DC?text=مبادرة+حفظ+التراث" alt="مبادرة حفظ التراث" loading="lazy">
+                  </div>
+                  <div class="news-content">
+                    <div class="news-date">15 ديسمبر 2023</div>
+                    <h3>إطلاق مبادرة جديدة لحفظ التراث</h3>
+                    <p>أعلن فريق وريث التطوعي عن إطلاق مبادرة جديدة تهدف إلى جمع وتوثيق التراث الشعبي السعودي...</p>
+                    <a href="#" class="read-more">اقرأ المزيد</a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="news-slide">
+                <div class="news-item">
+                  <div class="news-image">
+                    <img src="https://via.placeholder.com/400x250/DAA520/2F4F4F?text=ورشة+الحرف+اليدوية" alt="ورشة الحرف اليدوية" loading="lazy">
+                  </div>
+                  <div class="news-content">
+                    <div class="news-date">12 ديسمبر 2023</div>
+                    <h3>ورشة عمل الحرف اليدوية التقليدية</h3>
+                    <p>تدعو الجمعية جميع المهتمين للمشاركة في ورشة عمل تفاعلية حول الحرف اليدوية...</p>
+                    <a href="#" class="read-more">اقرأ المزيد</a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="news-slide">
+                <div class="news-item">
+                  <div class="news-image">
+                    <img src="https://via.placeholder.com/400x250/2F4F4F/DAA520?text=تكريم+المتطوعين" alt="تكريم المتطوعين" loading="lazy">
+                  </div>
+                  <div class="news-content">
+                    <div class="news-date">10 ديسمبر 2023</div>
+                    <h3>تكريم المتطوعين المميزين</h3>
+                    <p>احتفل الفريق بتكريم المتطوعين المميزين الذين ساهموا في إنجاح فعاليات الفريق...</p>
+                    <a href="#" class="read-more">اقرأ المزيد</a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="news-slide">
+                <div class="news-item">
+                  <div class="news-image">
+                    <img src="https://via.placeholder.com/400x250/8B4513/F5DEB3?text=فعالية+تراثية" alt="فعالية تراثية" loading="lazy">
+                  </div>
+                  <div class="news-content">
+                    <div class="news-date">8 ديسمبر 2023</div>
+                    <h3>فعالية تراثية كبرى بالرياض</h3>
+                    <p>نظم فريق وريث فعالية تراثية كبرى شارك فيها المئات من محبي التراث والثقافة...</p>
+                    <a href="#" class="read-more">اقرأ المزيد</a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="news-slide">
+                <div class="news-item">
+                  <div class="news-image">
+                    <img src="https://via.placeholder.com/400x250/B8860B/FFFFFF?text=شراكة+جديدة" alt="شراكة جديدة" loading="lazy">
+                  </div>
+                  <div class="news-content">
+                    <div class="news-date">5 ديسمبر 2023</div>
+                    <h3>شراكة استراتيجية مع وزارة الثقافة</h3>
+                    <p>وقع فريق وريث اتفاقية شراكة استراتيجية مع وزارة الثقافة لتعزيز جهود حفظ التراث...</p>
+                    <a href="#" class="read-more">اقرأ المزيد</a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="news-item">
-            <div class="news-image">
-              <img src="https://via.placeholder.com/400x250/DAA520/2F4F4F?text=ورشة+الحرف+اليدوية" alt="ورشة الحرف اليدوية" loading="lazy">
-            </div>
-            <div class="news-content">
-              <div class="news-date">12 ديسمبر 2023</div>
-              <h3>ورشة عمل الحرف اليدوية التقليدية</h3>
-              <p>تدعو الجمعية جميع المهتمين للمشاركة في ورشة عمل تفاعلية حول الحرف اليدوية...</p>
-              <a href="#" class="read-more">اقرأ المزيد</a>
-            </div>
-          </div>
-          <div class="news-item">
-            <div class="news-image">
-              <img src="https://via.placeholder.com/400x250/2F4F4F/DAA520?text=تكريم+المتطوعين" alt="تكريم المتطوعين" loading="lazy">
-            </div>
-            <div class="news-content">
-              <div class="news-date">10 ديسمبر 2023</div>
-              <h3>تكريم المتطوعين المميزين</h3>
-              <p>احتفل الفريق بتكريم المتطوعين المميزين الذين ساهموا في إنجاح فعاليات الفريق...</p>
-              <a href="#" class="read-more">اقرأ المزيد</a>
-            </div>
-          </div>
+          
+          <button class="news-nav-btn next-btn" id="nextNewsBtn">
+            <i class="fas fa-chevron-left"></i>
+          </button>
         </div>
+        
+        <div class="news-indicators" id="newsIndicators">
+          <!-- Indicators will be generated dynamically -->
+        </div>
+        
         <div class="view-all-news">
           <button class="view-all-btn" onclick="loadMoreNews()">عرض جميع الأخبار</button>
         </div>

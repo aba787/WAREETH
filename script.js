@@ -333,4 +333,140 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load news
     loadNews();
+    
+    // Initialize news slider
+    initializeNewsSlider();
 });
+
+// News Slider Functionality
+let currentNewsSlide = 0;
+let totalNewsSlides = 0;
+
+function initializeNewsSlider() {
+    const newsTrack = document.getElementById('newsTrack');
+    const prevBtn = document.getElementById('prevNewsBtn');
+    const nextBtn = document.getElementById('nextNewsBtn');
+    const indicatorsContainer = document.getElementById('newsIndicators');
+
+    if (!newsTrack) return;
+
+    // Count total slides
+    const slides = newsTrack.querySelectorAll('.news-slide');
+    totalNewsSlides = slides.length;
+
+    // Create indicators
+    createNewsIndicators(indicatorsContainer);
+
+    // Event listeners for navigation buttons
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentNewsSlide > 0) {
+                currentNewsSlide--;
+                updateNewsSlider();
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentNewsSlide < totalNewsSlides - 1) {
+                currentNewsSlide++;
+                updateNewsSlider();
+            }
+        });
+    }
+
+    // Auto-slide functionality (optional)
+    startNewsAutoSlide();
+
+    // Touch/swipe support for mobile
+    addSwipeSupport(newsTrack);
+
+    // Initial update
+    updateNewsSlider();
+}
+
+function createNewsIndicators(container) {
+    if (!container) return;
+    
+    container.innerHTML = '';
+    for (let i = 0; i < totalNewsSlides; i++) {
+        const indicator = document.createElement('div');
+        indicator.className = 'news-indicator';
+        indicator.addEventListener('click', () => {
+            currentNewsSlide = i;
+            updateNewsSlider();
+        });
+        container.appendChild(indicator);
+    }
+}
+
+function updateNewsSlider() {
+    const newsTrack = document.getElementById('newsTrack');
+    const prevBtn = document.getElementById('prevNewsBtn');
+    const nextBtn = document.getElementById('nextNewsBtn');
+    const indicators = document.querySelectorAll('.news-indicator');
+
+    if (!newsTrack) return;
+
+    // Move the track
+    const translateX = -currentNewsSlide * 100;
+    newsTrack.style.transform = `translateX(${translateX}%)`;
+
+    // Update button states
+    if (prevBtn) {
+        prevBtn.disabled = currentNewsSlide === 0;
+    }
+    if (nextBtn) {
+        nextBtn.disabled = currentNewsSlide === totalNewsSlides - 1;
+    }
+
+    // Update indicators
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentNewsSlide);
+    });
+}
+
+function startNewsAutoSlide() {
+    const autoSlideInterval = 5000; // 5 seconds
+
+    setInterval(() => {
+        if (currentNewsSlide < totalNewsSlides - 1) {
+            currentNewsSlide++;
+        } else {
+            currentNewsSlide = 0;
+        }
+        updateNewsSlider();
+    }, autoSlideInterval);
+}
+
+function addSwipeSupport(element) {
+    let startX = 0;
+    let endX = 0;
+
+    element.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    });
+
+    element.addEventListener('touchend', (e) => {
+        endX = e.changedTouches[0].clientX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0 && currentNewsSlide < totalNewsSlides - 1) {
+                // Swipe left - next slide
+                currentNewsSlide++;
+                updateNewsSlider();
+            } else if (diff < 0 && currentNewsSlide > 0) {
+                // Swipe right - previous slide
+                currentNewsSlide--;
+                updateNewsSlider();
+            }
+        }
+    }
+}
