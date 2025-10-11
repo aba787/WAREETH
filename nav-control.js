@@ -5,25 +5,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const navDropdown = document.getElementById('navDropdown');
 
     if (navArrow && navDropdown) {
+        console.log('✅ تم تحميل سهم القائمة بنجاح');
+        
         // Toggle dropdown
         navArrow.addEventListener('click', function(e) {
             e.stopPropagation();
-            const isActive = this.classList.contains('active');
+            console.log('🟡 تم الضغط على السهم');
             
-            // إغلاق جميع القوائم المنسدلة الأخرى أولاً
-            closeAllDropdowns();
+            // تبديل الحالة بطريقة بسيطة
+            this.classList.toggle('active');
+            navDropdown.classList.toggle('active');
             
-            // تبديل حالة السهم والقائمة
-            if (!isActive) {
-                this.classList.add('active');
-                navDropdown.classList.add('active');
-            }
+            console.log('الحالة الجديدة:', this.classList.contains('active') ? 'مفتوح' : 'مغلق');
         });
 
         // Close dropdown when clicking outside
         document.addEventListener('click', function(e) {
             if (!navArrow.contains(e.target) && !navDropdown.contains(e.target)) {
-                closeAllDropdowns();
+                navArrow.classList.remove('active');
+                navDropdown.classList.remove('active');
+                console.log('🔴 تم إغلاق القائمة (نقر خارجي)');
             }
         });
 
@@ -35,15 +36,24 @@ document.addEventListener('DOMContentLoaded', function() {
         // Close dropdown when clicking on a link
         document.querySelectorAll('.dropdown-item').forEach(item => {
             item.addEventListener('click', function() {
-                closeAllDropdowns();
+                navArrow.classList.remove('active');
+                navDropdown.classList.remove('active');
+                console.log('🔴 تم إغلاق القائمة (نقر على رابط)');
             });
         });
 
         // Close dropdown when pressing Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                closeAllDropdowns();
+                navArrow.classList.remove('active');
+                navDropdown.classList.remove('active');
+                console.log('🔴 تم إغلاق القائمة (مفتاح Escape)');
             }
+        });
+    } else {
+        console.error('❌ لم يتم العثور على السهم أو القائمة:', {
+            navArrow: !!navArrow,
+            navDropdown: !!navDropdown
         });
     }
 
