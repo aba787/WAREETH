@@ -1,5 +1,5 @@
 /* استيراد الخطوط الرسمية لوريث */
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&family=Scheherazade+New:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&family=Scheherazade+New:wght@400;500;600;700&display=swap');
 
 :root {
   /* الألوان التراثية الأنيقة - وريث */
@@ -2250,7 +2250,6 @@ body.english .join-form textarea {
     }
 }
 
-/* Responsive Design */
 @media screen and (max-width: 768px) {
   .nav-container {
     height: 75px;
@@ -2771,5 +2770,116 @@ body.english .join-form textarea {
     padding: 12px 25px;
     font-size: 1rem;
     gap: 8px;
+  }
+}
+
+/* Vision Section */
+.vision-section {
+  padding: 120px 0;
+  background: linear-gradient(135deg, #F5F5DC 0%, #e8e8d0 100%);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.vision-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%238B4513" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+}
+
+.vision-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(139, 69, 19, 0.1);
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.vision-content h2 {
+  font-family: 'Scheherazade New', serif;
+  font-size: 3.5rem;
+  color: #8B4513;
+  margin-bottom: 30px;
+  font-weight: 700;
+  position: relative;
+}
+
+.vision-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #8B4513, #DAA520);
+  border-radius: 2px;
+}
+
+.vision-text {
+  font-family: 'El Messiri', sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.8;
+  color: #2F4F4F;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+/* الاستجابة للشاشات الصغيرة */
+@media screen and (max-width: 768px) {
+  .vision-section {
+    padding: 80px 0;
+    min-height: 50vh;
+  }
+
+  .vision-content {
+    padding: 40px 20px;
+    margin: 0 15px;
+  }
+
+  .vision-content h2 {
+    font-size: 2.5rem;
+  }
+
+  .vision-text {
+    font-size: 1.4rem;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .vision-section {
+    padding: 60px 0;
+  }
+
+  .vision-content {
+    padding: 30px 15px;
+  }
+
+  .vision-content h2 {
+    font-size: 2rem;
+  }
+
+  .vision-text {
+    font-size: 1.2rem;
+    line-height: 1.5;
   }
 }
