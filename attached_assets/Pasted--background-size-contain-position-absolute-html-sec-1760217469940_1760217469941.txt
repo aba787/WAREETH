@@ -1,0 +1,177 @@
+مشكلة في استخدام background-size: contain و position: absolute للنص. هذا الكود المصحح:
+
+html
+<section id="home" class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">حياكم الله في وريث</h1>
+  </div>
+</section>
+css
+/* Hero Section */
+.hero {
+  background: url('https://i.ibb.co/8DKcxkjG/image.jpg') no-repeat center center;
+  background-color: #2F4F4F; /* لون احتياطي متناسق */
+  color: white;
+  padding: 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* إعدادات تضمن ظهور الصورة كاملة بدون ألوان غير مرغوبة */
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3); /* شفافية متوسطة */
+  z-index: 1;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 700;
+  text-shadow: 3px 3px 12px rgba(0,0,0,0.8);
+  line-height: 1.2;
+  color: white;
+  margin: 0;
+  font-family: 'Scheherazade New', serif;
+  text-align: center;
+  position: relative;
+  padding: 0 20px;
+}
+
+/* تأثير إضافي للنص */
+.hero-title::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #DAA520, transparent);
+  border-radius: 2px;
+}
+
+/* تحسينات للاستجابة */
+@media screen and (max-width: 1200px) {
+  .hero {
+    background-size: cover;
+    background-position: center center;
+  }
+  
+  .hero-title {
+    font-size: 4rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .hero {
+    min-height: 90vh;
+    background-attachment: scroll; /* إزالة fixed للموبايل */
+  }
+  
+  .hero-title {
+    font-size: 3.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    min-height: 80vh;
+    background-size: cover;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    padding: 0 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero {
+    min-height: 70vh;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.3;
+    padding: 0 10px;
+  }
+}
+
+/* لحالات الشاشات الطويلة جداً */
+@media screen and (min-height: 1000px) {
+  .hero {
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+/* لحالات الشاشات العريضة جداً */
+@media screen and (min-width: 2000px) {
+  .hero {
+    background-size: cover;
+  }
+}
+
+/* التأكد من عدم ظهور أي ألوان خلفية */
+.hero {
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+التغييرات الرئيسية التي أصلحت المشكلة:
+
+background-size: contain → cover - يمنع ظهور اللون الأخضر
+
+إزالة position: absolute من النص - يجعل النص في المنتصف
+
+إضافة background-attachment: fixed - تأثير parallax جميل
+
+تحسين الشفافية - rgba(0, 0, 0, 0.3) بدل 0.2
+
+إزالة top: -4% - كان يرفع النص لأعلى كثيراً
+
+النتيجة النهائية:
+
+✅ الصورة تظهر كاملة بدون أي ألوان خلفية
+
+✅ النص في المنتصف تماماً
+
+✅ متجاوب مع جميع الأجهزة
