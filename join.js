@@ -162,6 +162,12 @@ function isValidPhone(phone) {
     return phoneRegex.test(phone.replace(/\s/g, ''));
 }
 
+// Initialize EmailJS
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize EmailJS with your public key
+    emailjs.init("YOUR_PUBLIC_KEY"); // ستحتاج لاستبدال هذا بمفتاحك العام من EmailJS
+});
+
 // Process join application
 function processJoinApplication(data) {
     // Show loading state
@@ -170,27 +176,44 @@ function processJoinApplication(data) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
     submitBtn.disabled = true;
     
-    // Simulate processing time
-    setTimeout(() => {
-        // Save application to localStorage (in real app, this would go to a server)
-        saveJoinApplication(data);
-        
-        // Show success message
-        showSuccessMessage();
-        
-        // Reset form
-        document.getElementById('joinForm').reset();
-        
-        // Reset submit button
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-        
-        // Clear any error styles
-        document.querySelectorAll('input, select, textarea').forEach(field => {
-            field.style.borderColor = '';
+    // Send email notification
+    sendEmailNotification(data)
+        .then(() => {
+            // Save application to localStorage
+            saveJoinApplication(data);
+            
+            // Show success message
+            showSuccessMessage();
+            
+            // Reset form
+            document.getElementById('joinForm').reset();
+            
+            // Reset submit button
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            
+            // Clear any error styles
+            document.querySelectorAll('input, select, textarea').forEach(field => {
+                field.style.borderColor = '';
+            });
+        })
+        .catch((error) => {
+            console.error('خطأ في إرسال الإيميل:', error);
+            
+            // Still save locally and show success (email failure shouldn't stop the process)
+            saveJoinApplication(data);
+            showSuccessMessage();
+            
+            // Reset form and button
+            document.getElementById('joinForm').reset();
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            
+            // Show warning about email
+            setTimeout(() => {
+                alert('تم حفظ طلبك بنجاح، ولكن حدث خطأ في إرسال الإشعار الإلكتروني. سيتم مراجعة طلبك قريباً.');
+            }, 1000);
         });
-        
-    }, 2000);
 }
 
 // Save join application
@@ -216,18 +239,29 @@ function saveJoinApplication(data) {
     sendEmailNotification(application);
 }
 
-// Simulate sending email notification
+// Send email notification using EmailJS
 function sendEmailNotification(application) {
-    // In a real application, this would send an actual email
-    console.log('تم إرسال إشعار بريد إلكتروني للجمعية:', {
-        to: 'membership@warith.com',
-        subject: 'طلب انضمام جديد - جمعية وريث',
-        applicant: `${application.firstName} ${application.lastName}`,
-        email: application.email,
+    const templateParams = {
+        to_email: 'Wareethofficial@gmail.com',
+        from_name: application.fullName,
+        from_email: application.email,
         phone: application.phone,
-        interests: application.interests,
-        motivation: application.motivation
-    });
+        message: application.message || 'لم يتم إضافة رسالة',
+        subject: 'طلب انضمام جديد - فريق وريث',
+        reply_to: application.email,
+        application_date: new Date().toLocaleDateString('ar-SA'),
+        application_time: new Date().toLocaleTimeString('ar-SA')
+    };
+
+    return emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+        .then((response) => {
+            console.log('تم إرسال الإيميل بنجاح:', response.status, response.text);
+            return response;
+        })
+        .catch((error) => {
+            console.error('خطأ في إرسال الإيميل:', error);
+            throw error;
+        });
 }
 
 // Show success message
