@@ -120,6 +120,8 @@ function setLanguage(language) {
 }
 
 function translateContent(language) {
+    console.log('Translating to:', language);
+    
     const translations = {
         en: {
             // Navigation
@@ -148,6 +150,7 @@ function translateContent(language) {
             'نعمل على توثيق التراث السعودي ونشره': 'We work to document and spread Saudi heritage',
             'انطلقت مسيرة فريقنا منذ عام 2021 م ولا تزال مستمرة إلى اليوم': 'Our team\'s journey began in 2021 and continues to this day',
             'تهدف إلى تعزيز الهوية السعودية والمساهمة في تسجيل الإرث وإعادة إحياء العادات والتقاليد': 'Aims to strengthen Saudi identity and contribute to recording heritage and reviving customs and traditions',
+            'يمثل فريق وريث مجموعة من الأفراد الذين استثمروا بعمق في تعزيز الهوية السعودية والمساهمة في تسجيل التراث وإحياء العادات والتقاليد ذات القيمة الثقافية الكبرى': 'Wareeth team represents a group of individuals who have invested deeply in strengthening Saudi identity and contributing to recording heritage and reviving customs and traditions of great cultural value',
 
             // News section
             'الأخبار والإعلانات': 'News & Announcements',
@@ -187,92 +190,7 @@ function translateContent(language) {
             'سياسة الخصوصية': 'Privacy Policy',
             'شروط الاستخدام': 'Terms of Use',
             'الدعم الفني': 'Technical Support',
-            'جميع الحقوق محفوظة - وريث': 'All rights reserved - Wareeth',
-
-            // Programs page
-            'برامج فريق وريث': 'Wareeth Team Programs',
-            'إرثنا وتقاليد حية': 'Our Heritage & Living Traditions',
-            'نعمل من خلال برامجنا المتنوعة على حفظ التراث ونشره بأساليب عصرية ومبتكرة': 'Through our diverse programs, we work to preserve and spread heritage using modern and innovative methods',
-            'إعداد المحتوى الرقمي والمسموع': 'Digital & Audio Content Creation',
-            'جلسة وريث': 'Wareeth Sessions',
-            'رعاية التكنولوجيا': 'Technology Sponsorship',
-            'انضم إلى برامجنا': 'Join Our Programs',
-            'انضم كمتطوع': 'Join as Volunteer',
-
-            // Organization page
-            'الهيكل التنظيمي': 'Organizational Structure',
-            'تنظيم العمل في فريق وريث': 'Work Organization in Wareeth Team',
-            'قسم التوثيق': 'Documentation Department',
-            'قسم الأبحاث': 'Research Department',
-            'قسم الفعاليات': 'Events Department',
-            'قسم التطوع': 'Volunteer Department',
-            'التعاون بين الأقسام': 'Cooperation Between Departments',
-            'انضم إلى أحد أقسامنا': 'Join One of Our Departments',
-
-            // Awards page
-            'التكريمات والجوائز': 'Awards & Recognition',
-            'فخر وريث بالإنجازات والتقديرات التي حصل عليها الفريق في مسيرته التطوعية': 'Wareeth\'s pride in the achievements and recognitions the team has received in its volunteer journey',
-            'التكريمات': 'Recognitions',
-            'جوائز ومبادرات': 'Awards & Initiatives',
-            'مشاركات مميزة': 'Distinguished Participations',
-            'إنجازاتنا بالأرقام': 'Our Achievements in Numbers',
-
-            // Articles page
-            'مقالات وريث': 'Wareeth Articles',
-            'المقالات المنشورة': 'Published Articles',
-            'الكل': 'All',
-            'التراث والثقافة': 'Heritage & Culture',
-            'التقنية والابتكار': 'Technology & Innovation',
-            'الحرف اليدوية': 'Handicrafts',
-            'التاريخ': 'History',
-            'المجتمع والتطوع': 'Society & Volunteering',
-
-            // Contact page
-            'تواصل معنا': 'Contact Us',
-            'نحن هنا للاستماع إليكم والإجابة على جميع استفساراتكم': 'We are here to listen to you and answer all your inquiries',
-            'البريد الإلكتروني': 'Email',
-            'الهاتف': 'Phone',
-            'العنوان': 'Address',
-            'أوقات العمل': 'Working Hours',
-            'الرياض، المملكة العربية السعودية': 'Riyadh, Saudi Arabia',
-            'الأحد - الخميس': 'Sunday - Thursday',
-            'أرسل لنا رسالة': 'Send us a message',
-            'سنكون سعداء للتواصل معك والإجابة على جميع استفساراتك': 'We will be happy to communicate with you and answer all your inquiries',
-            'الاسم الأول': 'First Name',
-            'الاسم الأخير': 'Last Name',
-            'رقم الهاتف': 'Phone Number',
-            'الموضوع': 'Subject',
-            'الرسالة': 'Message',
-            'إرسال الرسالة': 'Send Message',
-            'الأسئلة الشائعة': 'FAQ',
-
-            // Join page
-            'انضم إلى فريق وريث': 'Join Wareeth Team',
-            'الانضمام إلى الفريق التطوعي': 'Join the Volunteer Team',
-            'يرجى تسجيل معلوماتك لتقديم طلب الانضمام. سيتم مراجعة طلبك من قبل فريق وريث التطوعي.': 'Please register your information to submit a membership application. Your application will be reviewed by the Wareeth volunteer team.',
-            'الاسم الكامل': 'Full Name',
-            'رسالة مختصرة (اختياري)': 'Brief Message (Optional)',
-            'إرسال الطلب': 'Send Application',
-            'مميزات الانضمام لفريق وريث': 'Benefits of Joining Wareeth Team',
-            'المشاركة في البرامج': 'Participate in Programs',
-            'نشر المقالات': 'Publish Articles',
-            'الشبكة التراثية': 'Heritage Network',
-            'التطوير المهني': 'Professional Development',
-            'خطوات عملية الانضمام': 'Membership Process Steps',
-
-            // Members page
-            'إدارة الأعضاء': 'Members Management',
-            'تسجيل الدخول': 'Login',
-            'قم بتسجيل الدخول للوصول إلى لوحة إدارة الأعضاء': 'Login to access the members management panel',
-            'اسم المستخدم': 'Username',
-            'كلمة المرور': 'Password',
-            'لوحة إدارة الأعضاء': 'Members Management Dashboard',
-            'مرحباً': 'Welcome',
-            'تسجيل الخروج': 'Logout',
-            'إجمالي الأعضاء': 'Total Members',
-            'الأعضاء النشطين': 'Active Members',
-            'المقالات المنشورة': 'Published Articles',
-            'مقالات في الانتظار': 'Pending Articles'
+            'جميع الحقوق محفوظة - وريث': 'All rights reserved - Wareeth'
         },
         ar: {
             // English to Arabic translations
@@ -296,6 +214,11 @@ function translateContent(language) {
             'Mission': 'الرسالة',
 
             'News & Announcements': 'الأخبار والإعلانات',
+            'Launch of New Heritage Preservation Initiative': 'إطلاق مبادرة جديدة لحفظ التراث',
+            'Traditional Handicrafts Workshop': 'ورشة عمل الحرف اليدوية التقليدية',
+            'Honoring Outstanding Volunteers': 'تكريم المتطوعين المميزين',
+            'Major Heritage Event in Riyadh': 'فعالية تراثية كبرى بالرياض',
+            'Strategic Partnership with Ministry of Culture': 'شراكة استراتيجية مع وزارة الثقافة',
             'Read More': 'اقرأ المزيد',
             'View All News': 'عرض جميع الأخبار',
 
@@ -306,7 +229,15 @@ function translateContent(language) {
             'Program Beneficiaries': 'المستفيدون من البرامج والمساهمات',
 
             'Our Partners & Supporters': 'شركاؤنا والداعمون',
+            'Ministry of Culture': 'وزارة الثقافة',
+            'Heritage Authority': 'الهيئة العامة للتراث',
+            'Mohammed bin Salman Foundation': 'مؤسسة محمد بن سلمان',
+            'Riyadh Club': 'نادي الرياض',
+            'Watan Ambitious Association': 'جمعية وطن طموح',
+            'Hirfa Community': 'مجتمع حرفة',
+
             'Join Wareeth Volunteer Team': 'انضم إلى فريق وريث التطوعي',
+            'Be part of our journey in preserving heritage and spreading authentic Arab culture': 'كن جزءاً من رحلتنا في حفظ التراث ونشر الثقافة العربية الأصيلة',
             'Join the Team': 'الانضمام للفريق',
 
             'Contact Information': 'معلومات الاتصال',
@@ -315,49 +246,107 @@ function translateContent(language) {
             'Privacy Policy': 'سياسة الخصوصية',
             'Terms of Use': 'شروط الاستخدام',
             'Technical Support': 'الدعم الفني',
-            'All rights reserved - Wareeth': 'جميع الحقوق محفوظة - وريث'
+            'All rights reserved - Wareeth': 'جميع الحقوق محفوظة - وريث',
+
+            'To be the leading team in documenting and preserving Saudi heritage and spreading it to future generations through modern and innovative methods': 'أن نكون الفريق الرائد في توثيق وحفظ التراث السعودي ونشره للأجيال القادمة بأساليب عصرية ومبتكرة',
+            'The main goal and purpose of establishing the team': 'الهدف الرئيسي والغاية من إنشاء الفريق',
+            'We work to document and spread Saudi heritage': 'نعمل على توثيق التراث السعودي ونشره',
+            'Our team\'s journey began in 2021 and continues to this day': 'انطلقت مسيرة فريقنا منذ عام 2021 م ولا تزال مستمرة إلى اليوم',
+            'Aims to strengthen Saudi identity and contribute to recording heritage and reviving customs and traditions': 'تهدف إلى تعزيز الهوية السعودية والمساهمة في تسجيل الإرث وإعادة إحياء العادات والتقاليد',
+            'Wareeth team represents a group of individuals who have invested deeply in strengthening Saudi identity and contributing to recording heritage and reviving customs and traditions of great cultural value': 'يمثل فريق وريث مجموعة من الأفراد الذين استثمروا بعمق في تعزيز الهوية السعودية والمساهمة في تسجيل التراث وإحياء العادات والتقاليد ذات القيمة الثقافية الكبرى'
         }
     };
 
     const currentTranslations = translations[language] || {};
 
+    // Helper function to get clean text (removing extra spaces and icons)
+    function getCleanText(element) {
+        const clone = element.cloneNode(true);
+        const icons = clone.querySelectorAll('i');
+        icons.forEach(icon => icon.remove());
+        return clone.textContent.trim();
+    }
+
+    // Helper function to preserve icons while translating
+    function translateElementWithIcon(element, translation) {
+        const iconElement = element.querySelector('i');
+        if (iconElement) {
+            const iconHTML = iconElement.outerHTML;
+            element.innerHTML = `${iconHTML} ${translation}`;
+        } else {
+            element.textContent = translation;
+        }
+    }
+
     // ترجمة عناصر التنقل
     document.querySelectorAll('.dropdown-item').forEach(item => {
-        const text = item.textContent.trim();
-        const iconElement = item.querySelector('i');
-        const iconClass = iconElement ? iconElement.className : '';
-        
+        const cleanText = getCleanText(item);
+        if (currentTranslations[cleanText]) {
+            translateElementWithIcon(item, currentTranslations[cleanText]);
+        }
+    });
+
+    // ترجمة أزرار الهيدر
+    document.querySelectorAll('.join-header-btn, .user-menu-toggle').forEach(btn => {
+        const cleanText = getCleanText(btn);
+        if (currentTranslations[cleanText]) {
+            translateElementWithIcon(btn, currentTranslations[cleanText]);
+        }
+    });
+
+    // ترجمة العناوين الرئيسية
+    document.querySelectorAll('h1, h2, h3').forEach(element => {
+        const text = element.textContent.trim();
         if (currentTranslations[text]) {
-            item.innerHTML = iconElement ? `<i class="${iconClass}"></i> ${currentTranslations[text]}` : currentTranslations[text];
+            element.textContent = currentTranslations[text];
+        }
+    });
+
+    // ترجمة الفقرات
+    document.querySelectorAll('p').forEach(element => {
+        const text = element.textContent.trim();
+        if (currentTranslations[text]) {
+            element.textContent = currentTranslations[text];
         }
     });
 
     // ترجمة الأزرار
-    document.querySelectorAll('.join-header-btn, .user-menu-toggle').forEach(btn => {
-        const text = btn.textContent.trim();
-        const iconElement = btn.querySelector('i');
-        const iconClass = iconElement ? iconElement.className : '';
-        
-        if (currentTranslations[text]) {
-            btn.innerHTML = iconElement ? `<i class="${iconClass}"></i> ${currentTranslations[text]}` : currentTranslations[text];
+    document.querySelectorAll('button:not(.nav-arrow):not(.user-menu-toggle):not(.join-header-btn):not(.language-toggle), .btn, .join-btn, .view-all-btn').forEach(btn => {
+        const cleanText = getCleanText(btn);
+        if (currentTranslations[cleanText]) {
+            translateElementWithIcon(btn, currentTranslations[cleanText]);
         }
     });
 
-    // ترجمة العناوين والنصوص
-    document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, button, a').forEach(element => {
-        // تجنب العناصر التي تحتوي على عناصر فرعية أو أيقونات
-        if (element.children.length === 0 || (element.children.length === 1 && element.children[0].tagName === 'I')) {
-            const text = element.textContent.trim();
-            const iconElement = element.querySelector('i');
-            
-            if (currentTranslations[text]) {
-                if (iconElement) {
-                    const iconClass = iconElement.className;
-                    element.innerHTML = `<i class="${iconClass}"></i> ${currentTranslations[text]}`;
-                } else {
-                    element.textContent = currentTranslations[text];
-                }
-            }
+    // ترجمة الروابط
+    document.querySelectorAll('a:not(.dropdown-item):not(.social-link)').forEach(link => {
+        const cleanText = getCleanText(link);
+        if (currentTranslations[cleanText]) {
+            translateElementWithIcon(link, currentTranslations[cleanText]);
+        }
+    });
+
+    // ترجمة تسميات الإحصائيات
+    document.querySelectorAll('.stat-label').forEach(label => {
+        const text = label.textContent.trim();
+        if (currentTranslations[text]) {
+            label.textContent = currentTranslations[text];
+        }
+    });
+
+    // ترجمة أسماء الشركاء
+    document.querySelectorAll('.partner-name').forEach(partner => {
+        const text = partner.textContent.trim();
+        if (currentTranslations[text]) {
+            partner.textContent = currentTranslations[text];
+        }
+    });
+
+    // ترجمة عناوين الأخبار
+    document.querySelectorAll('.news-content h3').forEach(title => {
+        const text = title.textContent.trim();
+        if (currentTranslations[text]) {
+            title.textContent = currentTranslations[text];
         }
     });
 
@@ -376,6 +365,8 @@ function translateContent(language) {
             option.textContent = currentTranslations[text];
         }
     });
+
+    console.log('Translation completed for language:', language);
 }
 
 // دالة لإغلاق جميع القوائم المنسدلة
