@@ -1,23 +1,36 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle (same as main site)
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (hamburger) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+    // Navigation Arrow Control
+    const navArrow = document.getElementById('navArrow');
+    const navDropdown = document.getElementById('navDropdown');
+
+    if (navArrow && navDropdown) {
+        // Toggle dropdown
+        navArrow.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            navDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            navArrow.classList.remove('active');
+            navDropdown.classList.remove('active');
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        navDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Close dropdown when clicking on a link
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function() {
+                navArrow.classList.remove('active');
+                navDropdown.classList.remove('active');
+            });
         });
     }
-    
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-        if (hamburger) {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    }));
     
     // Header scroll effect
     window.addEventListener('scroll', function() {

@@ -16,78 +16,74 @@
 
 <body>
   <header class="header">
-    <nav class="navbar">
-      <div class="nav-container">
-        <div class="user-menu" id="userMenu">
-          <button class="user-menu-toggle" id="userMenuToggle">
-            <i class="fas fa-user"></i>
-            <i class="fas fa-chevron-down"></i>
-          </button>
-          <div class="user-menu-dropdown" id="userMenuDropdown">
-            <a href="join.html" class="user-menu-item join-btn">
-              <i class="fas fa-user-plus"></i>
-              انضم إلينا
-            </a>
-            <button class="user-menu-item" id="logoutBtn">
-              <i class="fas fa-sign-out-alt"></i>
-              تسجيل الخروج
-            </button>
-          </div>
-        </div>
-        <button class="language-toggle" id="languageToggle">English</button>
-        <div class="logo">
-          <div class="logo-container">
+        <nav class="navbar">
+            <div class="nav-container">
+                <!-- الشعار على اليسار -->
+                <div class="logo">
+                    <div class="logo-container">
+                        <h2>وريث</h2>
+                        <p class="logo-subtitle">إرث باقٍ وتاريخ حي</p>
+                    </div>
+                </div>
 
-            <h2>وريث</h2>
-            <p class="logo-subtitle">فريق تطوعي - إرث باقٍ وتاريخ حي</p>
-          </div>
-        </div>
-        <ul class="nav-menu">
-          <li class="nav-item">
-            <a href="#home" class="nav-link">الرئيسية</a>
-          </li>
-          <li class="nav-item">
-            <a href="#about" class="nav-link">من نحن</a>
-          </li>
-          <li class="nav-item">
-            <a href="#vision" class="nav-link">رؤيتنا</a>
-          </li>
-          <li class="nav-item">
-            <a href="#mission" class="nav-link">رسالتنا</a>
-          </li>
-          <li class="nav-item">
-            <a href="organization.html" class="nav-link">الهيكل التنظيمي</a>
-          </li>
-          <li class="nav-item">
-            <a href="programs.html" class="nav-link">البرامج</a>
-          </li>
-          <li class="nav-item">
-            <a href="awards.html" class="nav-link">التكريمات والجوائز</a>
-          </li>
-          <li class="nav-item">
-            <a href="#partners" class="nav-link">شركاؤنا</a>
-          </li>
-          <li class="nav-item">
-            <a href="articles.html" class="nav-link">المقالات</a>
-          </li>
-          <li class="nav-item">
-            <a href="members.html" class="nav-link">الأعضاء</a>
-          </li>
-          <li class="nav-item">
-            <a href="contact.html" class="nav-link">تواصل معنا</a>
-          </li>
-          <li class="nav-item">
-            <a href="join.html" class="nav-link join-btn">انضم إلينا</a>
-          </li>
-        </ul>
-        <div class="hamburger">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </div>
-      </div>
-    </nav>
-  </header>
+                <!-- السهم في المنتصف -->
+                <div class="nav-arrow-container">
+                    <button class="nav-arrow" id="navArrow">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="nav-dropdown" id="navDropdown">
+                        <a href="#hero" class="dropdown-item">
+                            <i class="fas fa-home"></i>
+                            الرئيسية
+                        </a>
+                        <a href="#about" class="dropdown-item">
+                            <i class="fas fa-info-circle"></i>
+                            من نحن
+                        </a>
+                        <a href="#programs" class="dropdown-item">
+                            <i class="fas fa-laptop-code"></i>
+                            البرامج
+                        </a>
+                        <a href="#achievements" class="dropdown-item">
+                            <i class="fas fa-trophy"></i>
+                            التكريمات والجوائز
+                        </a>
+                        <a href="#partners" class="dropdown-item">
+                            <i class="fas fa-handshake"></i>
+                            شركاؤنا
+                        </a>
+                        <a href="articles.html" class="dropdown-item">
+                            <i class="fas fa-newspaper"></i>
+                            المقالات
+                        </a>
+                        <a href="members.html" class="dropdown-item">
+                            <i class="fas fa-users"></i>
+                            الأعضاء
+                        </a>
+                        <a href="contact.html" class="dropdown-item">
+                            <i class="fas fa-envelope"></i>
+                            تواصل معنا
+                        </a>
+                    </div>
+                </div>
+
+                <!-- العناصر على اليمين -->
+                <div class="nav-right">
+                    <div class="user-menu" id="userMenu">
+                        <button class="user-menu-toggle" id="userMenuToggle">
+                            <i class="fas fa-user"></i>
+                            حسابي
+                        </button>
+                    </div>
+
+                    <button class="language-toggle" id="languageToggle">
+                        <i class="fas fa-globe"></i>
+                        EN
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
 
   <main>
     <section id="home" class="hero">
@@ -131,7 +127,7 @@
       </div>
     </section>
 
-    
+
 
     <!-- News/Announcements Section -->
     <section id="news" class="news-section">
@@ -141,7 +137,7 @@
           <button class="news-nav-btn prev-btn" id="prevNewsBtn">
             <i class="fas fa-chevron-right"></i>
           </button>
-          
+
           <div class="news-slider" id="newsSlider">
             <div class="news-track" id="newsTrack">
               <!-- News items will be loaded dynamically -->
@@ -158,7 +154,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="news-slide">
                 <div class="news-item">
                   <div class="news-image">
@@ -172,7 +168,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="news-slide">
                 <div class="news-item">
                   <div class="news-image">
@@ -186,7 +182,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="news-slide">
                 <div class="news-item">
                   <div class="news-image">
@@ -200,7 +196,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="news-slide">
                 <div class="news-item">
                   <div class="news-image">
@@ -216,16 +212,16 @@
               </div>
             </div>
           </div>
-          
+
           <button class="news-nav-btn next-btn" id="nextNewsBtn">
             <i class="fas fa-chevron-left"></i>
           </button>
         </div>
-        
+
         <div class="news-indicators" id="newsIndicators">
           <!-- Indicators will be generated dynamically -->
         </div>
-        
+
         <div class="view-all-news">
           <button class="view-all-btn" onclick="loadMoreNews()">عرض جميع الأخبار</button>
         </div>
@@ -267,12 +263,12 @@
       </div>
     </section>
 
-    
 
 
-    
 
-    
+
+
+
 
     <!-- Partners Section -->
     <section id="partners" class="partners-section">
@@ -372,7 +368,7 @@
   </footer>
 
   <script src="script.js"></script>
-  
+
 </body>
 
 </html>

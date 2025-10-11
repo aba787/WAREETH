@@ -212,6 +212,38 @@ document.addEventListener('DOMContentLoaded', function() {
         updateContentDisplay(content);
         console.log('Content updated from admin panel');
     });
+
+    // Navigation Arrow Control
+    const navArrow = document.getElementById('navArrow');
+    const navDropdown = document.getElementById('navDropdown');
+
+    if (navArrow && navDropdown) {
+        // Toggle dropdown
+        navArrow.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            navDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            navArrow.classList.remove('active');
+            navDropdown.classList.remove('active');
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        navDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Close dropdown when clicking on a link
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function() {
+                navArrow.classList.remove('active');
+                navDropdown.classList.remove('active');
+            });
+        });
+    }
 });
 
 // Dynamic content update functions
