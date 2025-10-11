@@ -2834,10 +2834,10 @@ body.english .join-form textarea {
 }
 
 .vision-text {
-  font-family: 'El Messiri', sans-serif;
+  font-family: var(--wareeth-font-secondary);
   font-size: 1.8rem;
   line-height: 1.8;
-  color: #2F4F4F;
+  color: var(--wareeth-text);
   font-weight: 600;
   margin: 0;
   text-align: center;
