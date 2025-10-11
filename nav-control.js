@@ -17,9 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isActive) {
                 this.classList.add('active');
                 navDropdown.classList.add('active');
-            } else {
-                this.classList.remove('active');
-                navDropdown.classList.remove('active');
             }
         });
 
