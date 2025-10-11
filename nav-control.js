@@ -114,6 +114,9 @@ function setLanguage(language) {
         }
         translateContent('ar');
     }
+    
+    // حفظ اللغة المختارة
+    localStorage.setItem('siteLanguage', language);
 }
 
 function translateContent(language) {
@@ -292,22 +295,22 @@ function translateContent(language) {
     });
 
     // ترجمة العناوين الرئيسية
-    document.querySelectorAll('h1, h2, h3').forEach(element => {
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(element => {
         const text = element.textContent.trim();
         if (currentTranslations[text]) {
             element.textContent = currentTranslations[text];
         }
     });
 
-    // ترجمة الفقرات
-    document.querySelectorAll('p').forEach(element => {
+    // ترجمة الفقرات بدقة أكثر
+    document.querySelectorAll('p:not(.logo-subtitle)').forEach(element => {
         const text = element.textContent.trim();
         if (currentTranslations[text]) {
             element.textContent = currentTranslations[text];
         }
     });
 
-    // ترجمة الأزرار
+    // ترجمة الأزرار والروابط
     document.querySelectorAll('button:not(.nav-arrow):not(.user-menu-toggle):not(.join-header-btn):not(.language-toggle), .btn, .join-btn, .view-all-btn').forEach(btn => {
         const cleanText = getCleanText(btn);
         if (currentTranslations[cleanText]) {
@@ -315,8 +318,8 @@ function translateContent(language) {
         }
     });
 
-    // ترجمة الروابط
-    document.querySelectorAll('a:not(.dropdown-item):not(.social-link)').forEach(link => {
+    // ترجمة الروابط العادية
+    document.querySelectorAll('a:not(.dropdown-item):not(.social-link):not(.join-header-btn)').forEach(link => {
         const cleanText = getCleanText(link);
         if (currentTranslations[cleanText]) {
             translateElementWithIcon(link, currentTranslations[cleanText]);
@@ -362,6 +365,17 @@ function translateContent(language) {
             option.textContent = currentTranslations[text];
         }
     });
+
+    // إضافة ترجمة للشعار الفرعي
+    const logoSubtitle = document.querySelector('.logo-subtitle');
+    if (logoSubtitle) {
+        const subtitleText = logoSubtitle.textContent.trim();
+        if (language === 'en' && subtitleText === 'إرث باقٍ وتاريخ حي') {
+            logoSubtitle.textContent = 'Living Heritage & Lasting History';
+        } else if (language === 'ar' && subtitleText === 'Living Heritage & Lasting History') {
+            logoSubtitle.textContent = 'إرث باقٍ وتاريخ حي';
+        }
+    }
 
     console.log('Translation completed for language:', language);
 }
