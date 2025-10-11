@@ -258,7 +258,7 @@ body.english {
     color: #DAA520;
 }
 
-/* العناصر على اليمين */
+/* عناصر على اليمين */
 .nav-right {
     display: flex;
     align-items: center;
@@ -400,6 +400,37 @@ body.english {
         font-size: 0.8rem;
     }
 }
+
+/* Join Button in Header */
+.join-header-btn {
+    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(218, 165, 32, 0.3);
+    white-space: nowrap;
+}
+
+.join-header-btn:hover {
+    background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(218, 165, 32, 0.4);
+    text-decoration: none;
+    color: white;
+}
+
+.join-header-btn i {
+    font-size: 0.85rem;
+}
+
+/* Join Button in Header */
 
 /* Hero Section */
 .hero {
