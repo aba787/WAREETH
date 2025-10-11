@@ -1,5 +1,4 @@
 
-
 // Navigation Arrow Control - ملف مشترك لجميع الصفحات
 document.addEventListener('DOMContentLoaded', function() {
     const navArrow = document.getElementById('navArrow');
@@ -74,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         languageToggle.addEventListener('click', function(e) {
             e.preventDefault();
+            console.log('Language toggle clicked');
             const currentLang = document.body.classList.contains('english') ? 'en' : 'ar';
             const newLang = currentLang === 'ar' ? 'en' : 'ar';
             setLanguage(newLang);
@@ -452,4 +452,3 @@ function initializeUserMenu() {
         }
     });
 }
-
