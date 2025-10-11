@@ -15,46 +15,68 @@
     <header class="header">
         <nav class="navbar">
             <div class="nav-container">
+                <!-- الشعار على اليسار -->
                 <div class="logo">
                     <div class="logo-container">
                         <h2>وريث</h2>
-                        <p class="logo-subtitle">فريق تطوعي - إرث باقٍ وتاريخ حي</p>
+                        <p class="logo-subtitle">إرث باقٍ وتاريخ حي</p>
                     </div>
                 </div>
-                <button class="language-toggle" id="languageToggle">English</button>
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="index.html" class="nav-link">الرئيسية</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="index.html#about" class="nav-link">من نحن</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="programs.html" class="nav-link">البرامج</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="organization.html" class="nav-link">الهيكل التنظيمي</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="awards.html" class="nav-link active">التكريمات والجوائز</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="index.html#partners" class="nav-link">شركاؤنا</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="articles.html" class="nav-link">المقالات</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="members.html" class="nav-link">الأعضاء</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="contact.html" class="nav-link">تواصل معنا</a>
-                    </li>
-                </ul>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
+                
+                <!-- السهم في المنتصف -->
+                <div class="nav-arrow-container">
+                    <button class="nav-arrow" id="navArrow">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="nav-dropdown" id="navDropdown">
+                        <a href="index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i>
+                            الرئيسية
+                        </a>
+                        <a href="index.html#about" class="dropdown-item">
+                            <i class="fas fa-info-circle"></i>
+                            من نحن
+                        </a>
+                        <a href="index.html#programs" class="dropdown-item">
+                            <i class="fas fa-laptop-code"></i>
+                            البرامج
+                        </a>
+                        <a href="index.html#achievements" class="dropdown-item">
+                            <i class="fas fa-trophy"></i>
+                            التكريمات والجوائز
+                        </a>
+                        <a href="index.html#partners" class="dropdown-item">
+                            <i class="fas fa-handshake"></i>
+                            شركاؤنا
+                        </a>
+                        <a href="articles.html" class="dropdown-item">
+                            <i class="fas fa-newspaper"></i>
+                            المقالات
+                        </a>
+                        <a href="members.html" class="dropdown-item">
+                            <i class="fas fa-users"></i>
+                            الأعضاء
+                        </a>
+                        <a href="contact.html" class="dropdown-item">
+                            <i class="fas fa-envelope"></i>
+                            تواصل معنا
+                        </a>
+                    </div>
+                </div>
+
+                <!-- العناصر على اليمين -->
+                <div class="nav-right">
+                    <div class="user-menu" id="userMenu">
+                        <button class="user-menu-toggle" id="userMenuToggle">
+                            <i class="fas fa-user"></i>
+                            حسابي
+                        </button>
+                    </div>
+                    
+                    <button class="language-toggle" id="languageToggle">
+                        <i class="fas fa-globe"></i>
+                        EN
+                    </button>
                 </div>
             </div>
         </nav>
@@ -264,5 +286,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="nav-control.js"></script>
 </body>
 </html>
