@@ -328,35 +328,10 @@ body.english .form-group {
     align-items: center;
     gap: 1rem;
     flex: 0 0 auto;
+    order: 1;
 }
 
-/* User Menu */
-.user-menu {
-    position: relative;
-    z-index: 1001;
-}
-
-.user-menu-toggle {
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
-    color: white;
-    border: none;
-    padding: 0.5rem 0.8rem;
-    border-radius: 10px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(218, 165, 32, 0.3);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    white-space: nowrap;
-}
-
-.user-menu-toggle:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(218, 165, 32, 0.4);
-}
+/* User Menu removed */
 
 /* Language Toggle removed */
 

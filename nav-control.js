@@ -79,80 +79,25 @@ function initializeNavigation() {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🔄 تهيئة الصفحة...');
     initializeNavigation();
-    initializeUserMenu();
 });
 
 // وإذا فشل DOMContentLoaded، جرب load
 window.addEventListener('load', function() {
     console.log('🔄 تهيئة الصفحة (بعد التحميل الكامل)...');
     initializeNavigation();
-    initializeUserMenu();
 });
 
 // Language functionality removed
 
-// User Menu Functionality
-function initializeUserMenu() {
-    const userMenu = document.getElementById('userMenu');
-    const userMenuToggle = document.getElementById('userMenuToggle');
-    const userMenuDropdown = document.getElementById('userMenuDropdown');
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    if (!userMenuToggle) return;
-
-    // إزالة المستمعات القديمة
-    userMenuToggle.replaceWith(userMenuToggle.cloneNode(true));
-    const newUserMenuToggle = document.getElementById('userMenuToggle');
-
-    // Toggle user menu dropdown
-    newUserMenuToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const isActive = userMenu.classList.contains('active');
-
-        // إغلاق القائمة الرئيسية أولاً
-        closeAllDropdowns();
-
-        // تبديل حالة قائمة المستخدم
-        if (!isActive) {
-            userMenu.classList.add('active');
-        } else {
-            userMenu.classList.remove('active');
-        }
-    });
-
-    // Close user menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!userMenu.contains(e.target)) {
-            userMenu.classList.remove('active');
-        }
-    });
-
-    // Handle logout button
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (confirm('هل تريد تسجيل الخروج؟')) {
-                localStorage.removeItem('userLoggedIn');
-                localStorage.removeItem('currentUser');
-                alert('تم تسجيل الخروج بنجاح');
-                userMenu.classList.remove('active');
-                window.location.href = 'index.html';
-            }
-        });
-    }
-}
+// User Menu Functionality removed
 
 // دالة لإغلاق جميع القوائم المنسدلة
 function closeAllDropdowns() {
     const navArrow = document.getElementById('navArrow');
     const navDropdown = document.getElementById('navDropdown');
-    const userMenu = document.getElementById('userMenu');
 
     if (navArrow) navArrow.classList.remove('active');
     if (navDropdown) navDropdown.classList.remove('active');
-    if (userMenu) userMenu.classList.remove('active');
 }
 
 // Language switching functions removed - using Google Translate instead
