@@ -5,13 +5,13 @@
 
 :root {
   /* الألوان التراثية الأنيقة - وريث */
-  --wareeth-primary: #8B4513;     /* بني ترابي - الأصالة */
-  --wareeth-secondary: #DAA520;   /* ذهبي دافئ - الفخامة */
+  --wareeth-primary: #b8743b;     /* برتقالي - الأصالة */
+  --wareeth-secondary: #b8743b;   /* برتقالي - الفخامة */
   --wareeth-accent: #2F4F4F;      /* رمادي أزرق - الجدية */
   --wareeth-light: #F5F5DC;       /* بيج كريمي - الخلفيات */
   --wareeth-white: #FFFFFF;       /* الأبيض النقي */
   --wareeth-text: #2F4F4F;        /* رمادي أزرق للنصوص */
-  --wareeth-text-light: #8B4513;  /* بني ترابي للنصوص الثانوية */
+  --wareeth-text-light: #b8743b;  /* برتقالي للنصوص الثانوية */
 
   /* الخطوط الرسمية */
   --wareeth-font-primary: 'Tajawal', sans-serif;

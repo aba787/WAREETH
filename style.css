@@ -3,13 +3,13 @@
 
 :root {
   /* الألوان التراثية الأنيقة - وريث */
-  --wareeth-primary: #8B4513;     /* بني ترابي - الأصالة */
-  --wareeth-secondary: #DAA520;   /* ذهبي دافئ - الفخامة */
+  --wareeth-primary: #b8743b;     /* برتقالي - الأصالة */
+  --wareeth-secondary: #b8743b;   /* برتقالي - الفخامة */
   --wareeth-accent: #2F4F4F;      /* رمادي أزرق - الجدية */
   --wareeth-light: #F5F5DC;       /* بيج كريمي - الخلفيات */
   --wareeth-white: #FFFFFF;       /* الأبيض النقي */
   --wareeth-text: #2F4F4F;        /* رمادي أزرق للنصوص */
-  --wareeth-text-light: #8B4513;  /* بني ترابي للنصوص الثانوية */
+  --wareeth-text-light: #b8743b;  /* برتقالي للنصوص الثانوية */
 
   /* الخطوط الرسمية */
   --wareeth-font-primary: 'Tajawal', sans-serif;     /* الخط الرئيسي للعناوين */
@@ -17,8 +17,8 @@
   --wareeth-font-decorative: 'Amiri', serif;          /* الخط الزخرفي للعناوين المميزة */
 
   /* الألوان الإضافية */
-  --light-brown: #D2B48C; /* بني فاتح */
-  --dark-brown: #5C4033;  /* بني داكن */
+  --light-brown: #b8743b; /* برتقالي */
+  --dark-brown: #b8743b;  /* برتقالي */
   --brick-red: #B22222;   /* أحمر طوبي */
   --black: #000000;       /* أسود */
 }
@@ -167,12 +167,11 @@ body.english .form-group {
     top: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%);
+    background: #b8743b;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     z-index: 1000;
-    border-bottom: 3px solid transparent;
-    border-image: linear-gradient(90deg, #8B4513 0%, #DAA520 50%, #8B4513 100%) 1;
+    border-bottom: 3px solid #b8743b;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
     height: 80px;
     transition: all 0.3s ease;
@@ -242,7 +241,7 @@ body.english .form-group {
 }
 
 .nav-arrow {
-    background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+    background: #b8743b;
     color: white;
     border: none;
     width: 45px;
@@ -250,7 +249,7 @@ body.english .form-group {
     border-radius: 50%;
     cursor: pointer;
     font-size: 1.2rem;
-    box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+    box-shadow: 0 4px 15px rgba(184, 116, 59, 0.4);
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
@@ -258,9 +257,9 @@ body.english .form-group {
 }
 
 .nav-arrow:hover {
-    background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+    background: #a0632f;
     transform: translateY(-2px) scale(1.1);
-    box-shadow: 0 6px 20px rgba(218, 165, 32, 0.6);
+    box-shadow: 0 6px 20px rgba(184, 116, 59, 0.6);
 }
 
 .nav-arrow.active {
@@ -640,7 +639,7 @@ body.english .hero-content h1 {
 }
 
 .cta-button {
-  background: linear-gradient(135deg, var(--light-brown) 0%, var(--dark-brown) 100%);
+  background: #b8743b;
   color: white;
   padding: 18px 40px;
   border: none;
@@ -651,13 +650,13 @@ body.english .hero-content h1 {
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
+  box-shadow: 0 8px 25px rgba(184, 116, 59, 0.3);
 }
 
 .cta-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(139, 69, 19, 0.4);
-  background: linear-gradient(135deg, var(--dark-brown) 0%, var(--light-brown) 100%);
+  box-shadow: 0 12px 35px rgba(184, 116, 59, 0.4);
+  background: #a0632f;
 }
 
 .hero-buttons {
@@ -700,7 +699,7 @@ section {
 /* News Section */
 .news-section {
   padding: 80px 0;
-  background: linear-gradient(135deg, var(--light-brown) 0%, #F5F5DC 100%); /* Light brown for background */
+  background: #b8743b; /* لون برتقالي للخلفية */
   position: relative;
 }
 
