@@ -1799,7 +1799,8 @@ body.english .partner-name {
 
 .footer-section h3 {
   margin-bottom: 1rem;
-  color: var(--dark-brown); /* Dark brown for footer headings */
+  color: #F5F5DC; /* لون فاتح للعناوين */
+  font-weight: 700;
 }
 
 body.english .footer-section h3 {
@@ -1816,12 +1817,19 @@ body.english .footer-section h3 {
 }
 
 .footer-section a {
-  color: #bdc3c7;
+  color: #E8E8E8; /* لون أفتح وأوضح للروابط */
   text-decoration: none;
+  font-weight: 500;
 }
 
 .footer-section a:hover {
-  color: white;
+  color: #DAA520; /* لون ذهبي عند التمرير */
+  text-decoration: underline;
+}
+
+.footer-section p {
+  color: #E8E8E8; /* لون أفتح للنصوص العادية */
+  font-weight: 500;
 }
 
 .social-links {
@@ -1855,8 +1863,9 @@ body.english .footer-section h3 {
   text-align: center;
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--dark-brown); /* Dark brown border */
-  color: var(--light-brown); /* Light brown for footer bottom text */
+  border-top: 1px solid rgba(245, 245, 220, 0.3); /* حدود فاتحة */
+  color: #F5F5DC; /* لون فاتح للنص السفلي */
+  font-weight: 500;
 }
 
 body.english .footer-bottom {
