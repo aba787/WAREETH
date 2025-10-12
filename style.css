@@ -215,7 +215,7 @@ body.english .form-group {
 .logo-image {
     width: 60px;
     height: 60px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect x="120" y="120" width="180" height="180" rx="30" fill="%23b8743b" /><rect x="212" y="212" width="180" height="180" rx="30" fill="%23b8743b" /></svg>') no-repeat center center;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 265 260"><path fill="%23b8743b" d="M93 0h82c18 0 33 15 33 33v82c0 18-15 33-33 33H93c-18 0-33-15-33-33V33C60 15 75 0 93 0z"/><path fill="%23b8743b" d="M147 112h82c18 0 33 15 33 33v82c0 18-15 33-33 33h-82c-18 0-33-15-33-33v-82c0-18 15-33 33-33z"/><path fill="%23000" d="M93 0h82c18 0 33 15 33 33v7c0 18-15 33-33 33H93c-18 0-33-15-33-33v-7C60 15 75 0 93 0z" opacity="0.75"/><path fill="%23000" d="M147 112h82c18 0 33 15 33 33v7c0 18-15 33-33 33h-82c-18 0-33-15-33-33v-7c0-18 15-33 33-33z" opacity="0.75"/></svg>') no-repeat center center;
     background-size: contain;
     border-radius: 0;
     flex-shrink: 0;
