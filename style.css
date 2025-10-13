@@ -2,14 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&family=Scheherazade+New:wght@400;500;600;700&display=swap');
 
 :root {
-  /* الألوان التراثية الأنيقة - وريث */
-  --wareeth-primary: #b8743b;     /* برتقالي - الأصالة */
-  --wareeth-secondary: #b8743b;   /* برتقالي - الفخامة */
+  /* الألوان التراثية الأنيقة - وريث - عكس الألوان */
+  --wareeth-primary: #F5F5DC;     /* بيج كريمي - كان الخلفية الآن الأساسي */
+  --wareeth-secondary: #F5F5DC;   /* بيج كريمي - كان الخلفية الآن الثانوي */
   --wareeth-accent: #2F4F4F;      /* رمادي أزرق - الجدية */
-  --wareeth-light: #F5F5DC;       /* بيج كريمي - الخلفيات */
+  --wareeth-light: #b8743b;       /* برتقالي - كان الأساسي الآن الخلفية */
   --wareeth-white: #FFFFFF;       /* الأبيض النقي */
   --wareeth-text: #2F4F4F;        /* رمادي أزرق للنصوص */
-  --wareeth-text-light: #b8743b;  /* برتقالي للنصوص الثانوية */
+  --wareeth-text-light: #F5F5DC;  /* بيج كريمي للنصوص الثانوية */
 
   /* الخطوط الرسمية */
   --wareeth-font-primary: 'Tajawal', sans-serif;     /* الخط الرئيسي للعناوين */
@@ -17,8 +17,8 @@
   --wareeth-font-decorative: 'Amiri', serif;          /* الخط الزخرفي للعناوين المميزة */
 
   /* الألوان الإضافية */
-  --light-brown: #b8743b; /* برتقالي */
-  --dark-brown: #b8743b;  /* برتقالي */
+  --light-brown: #F5F5DC; /* بيج كريمي - عكس */
+  --dark-brown: #F5F5DC;  /* بيج كريمي - عكس */
   --brick-red: #B22222;   /* أحمر طوبي */
   --black: #000000;       /* أسود */
 }
@@ -43,6 +43,7 @@ body {
   direction: rtl;
   text-align: right;
   transition: all 0.3s ease;
+  background: var(--wareeth-light); /* خلفية برتقالية للصفحة */
 }
 
 body.menu-open {
@@ -167,11 +168,11 @@ body.english .form-group {
     top: 0;
     left: 0;
     right: 0;
-    background: #b8743b;
+    background: var(--wareeth-primary);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     z-index: 1000;
-    border-bottom: 3px solid #b8743b;
+    border-bottom: 3px solid var(--wareeth-primary);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
     height: 80px;
     transition: all 0.3s ease;
@@ -245,7 +246,7 @@ body.english .form-group {
 }
 
 .nav-arrow {
-    background: #b8743b;
+    background: var(--wareeth-light);
     color: white;
     border: none;
     width: 45px;
