@@ -2,25 +2,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&family=Scheherazade+New:wght@400;500;600;700&display=swap');
 
 :root {
-  /* الألوان التراثية الأنيقة - وريث - عكس الألوان */
-  --wareeth-primary: #F5F5DC;     /* بيج كريمي - كان الخلفية الآن الأساسي */
-  --wareeth-secondary: #F5F5DC;   /* بيج كريمي - كان الخلفية الآن الثانوي */
-  --wareeth-accent: #2F4F4F;      /* رمادي أزرق - الجدية */
-  --wareeth-light: #b8743b;       /* برتقالي - كان الأساسي الآن الخلفية */
-  --wareeth-white: #FFFFFF;       /* الأبيض النقي */
-  --wareeth-text: #2F4F4F;        /* رمادي أزرق للنصوص */
-  --wareeth-text-light: #F5F5DC;  /* بيج كريمي للنصوص الثانوية */
+  /* ألوان أساسية محسّنة */
+  --wareeth-primary: #F5F5DC;   /* ترابي فاتح */
+  --wareeth-secondary: #E8E3C8; /* ترابي أغمق قليلًا */
+  --wareeth-accent: #b8743b;    /* برتقالي رئيسي */
+  --wareeth-light: #c98241;     /* برتقالي أفتح */
+  --wareeth-white: #FFFFFF;     /* أبيض */
+  --wareeth-text: #3b2a1a;      /* بني غامق للنصوص */
+  --wareeth-text-light: #5a3c23; /* بني متوسط للنصوص الثانوية */
+  --wareeth-dark: #1f140a;      /* غامق جدًا للعناوين */
 
   /* الخطوط الرسمية */
   --wareeth-font-primary: 'Tajawal', sans-serif;     /* الخط الرئيسي للعناوين */
   --wareeth-font-secondary: 'Cairo', sans-serif;      /* الخط الثانوي للنصوص */
   --wareeth-font-decorative: 'Amiri', serif;          /* الخط الزخرفي للعناوين المميزة */
 
-  /* الألوان الإضافية */
-  --light-brown: #F5F5DC; /* بيج كريمي - عكس */
-  --dark-brown: #F5F5DC;  /* بيج كريمي - عكس */
+  /* الألوان الإضافية للتوافق مع الكود القديم */
+  --light-brown: #c98241; /* برتقالي أفتح */
+  --dark-brown: #b8743b;  /* برتقالي رئيسي */
   --brick-red: #B22222;   /* أحمر طوبي */
-  --black: #000000;       /* أسود */
+  --black: #1f140a;       /* غامق جدًا */
 }
 
 * {
@@ -667,35 +668,45 @@ body.english .hero-content h1 {
   }
 }
 
-/* ===== تحسين النصوص بشكل عام ===== */
+/* ===== توحيد النصوص كلها بنغمة غامقة وواضحة ===== */
+
+/* كل النصوص الأساسية */
 body, p, span, a, h1, h2, h3, h4, h5, h6 {
   color: var(--wareeth-text);
   font-weight: 600;
+  line-height: 1.6;
 }
 
-/* النصوص الثانوية (داخل الأقسام الفاتحة) */
-section, .card, .box, .content {
-  color: var(--wareeth-text-light);
-}
-
-/* عناوين الأقسام */
+/* العناوين الرئيسية */
 h1, h2, h3 {
-  color: var(--wareeth-accent);
+  color: var(--wareeth-dark);
+  font-weight: 700;
+}
+
+/* النصوص الثانوية */
+small, .subtitle, .note {
+  color: var(--wareeth-text-light);
 }
 
 /* الروابط */
 a {
-  color: var(--wareeth-light);
+  color: var(--wareeth-accent);
   text-decoration: none;
+  transition: 0.2s ease;
 }
 
 a:hover {
-  color: var(--brick-red);
+  color: var(--wareeth-light);
 }
 
-/* النصوص داخل الخلفيات البرتقالية أو الداكنة */
-.bg-orange, .bg-dark, .hero, .stats, .message {
+/* النصوص داخل الخلفيات البرتقالية */
+.bg-orange, .message, .stats, .hero {
   color: var(--wareeth-white);
+}
+
+/* الفوتر */
+footer {
+  color: var(--wareeth-secondary);
 }
 
 .cta-button {
