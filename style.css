@@ -804,7 +804,7 @@ section {
   font-size: 3rem;
   text-align: center;
   margin-bottom: 4rem;
-  color: var(--wareeth-text);
+  color: white;
   font-weight: 700;
   position: relative;
 }
@@ -1085,7 +1085,7 @@ body.english .news-item p {
   font-size: 3rem;
   text-align: center;
   margin-bottom: 4rem;
-  color: var(--light-brown);
+  color: white;
   font-weight: 700;
   position: relative;
 }
@@ -1734,7 +1734,7 @@ body.english .content-card p {
 .partners-title {
   font-family: 'Cairo', sans-serif !important;
   font-size: 2.5em;
-  color: var(--wareeth-text);
+  color: white;
   margin-bottom: 50px;
   position: relative;
   z-index: 1;
@@ -2453,7 +2453,7 @@ body.english .join-form textarea {
   .services h2,
   .content h2 {
     font-size: 2.2rem;
-    color: var(--light-brown);
+    color: white;
   }
 
   .about-content {
@@ -2597,7 +2597,7 @@ body.english .join-form textarea {
 
   .partners-title {
     font-size: 2rem;
-    color: var(--dark-brown);
+    color: white;
   }
 
   .partners-marquee {
@@ -2641,7 +2641,7 @@ body.english .join-form textarea {
   .news-section h2 {
     font-size: 2.2rem;
     margin-bottom: 3rem;
-    color: var(--dark-brown);
+    color: white;
   }
 
   .news-slider {
