@@ -522,7 +522,6 @@ body.english .form-group {
 .hero-title {
   font-size: 4.5rem;
   font-weight: 700;
-  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8); /* ظل أسود قوي ليكون واضحاً على الصورة */
   line-height: 1.2;
   color: white; /* لون أبيض ليكون واضحاً على الصورة */
   margin: 0;
