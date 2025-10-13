@@ -538,20 +538,15 @@ body.english .hero-content h1 {
 }
 
 .hero-content p {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   margin-bottom: 2rem;
-  max-width: 600px;
-  line-height: 1.6;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8); /* ظل أسود قوي */
-  color: white; /* لون أبيض */
+  color: #1a1a1a;
   font-weight: 600;
-  position: relative;
-  z-index: 2;
-  font-family: 'El Messiri', sans-serif;
-  background: rgba(0, 0, 0, 0.3); /* خلفية سوداء شفافة للوضوح */
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.3); /* حدود بيضاء شفافة */
+  text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 /* النص الترحيبي في الأعلى */
@@ -596,7 +591,7 @@ body.english .hero-content h1 {
   .hero {
     background-size: contain;
   }
-  
+
   .hero-title {
     font-size: 4rem;
   }
@@ -607,7 +602,7 @@ body.english .hero-content h1 {
     min-height: 90vh;
     background-size: contain;
   }
-  
+
   .hero-title {
     font-size: 3.5rem;
   }
@@ -618,7 +613,7 @@ body.english .hero-content h1 {
     min-height: 80vh;
     background-size: contain;
   }
-  
+
   .hero-title {
     font-size: 3rem;
     padding: 0 15px;
@@ -630,7 +625,7 @@ body.english .hero-content h1 {
     min-height: 70vh;
     background-size: contain;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
     line-height: 1.3;
@@ -714,7 +709,7 @@ section {
 /* News Section */
 .news-section {
   padding: 80px 0;
-  background: #b8743b; /* لون برتقالي للخلفية */
+  background: var(--wareeth-light); /* لون برتقالي للخلفية */
   position: relative;
 }
 
@@ -784,7 +779,7 @@ body.english .news-section h2 {
 }
 
 .news-item {
-  background: linear-gradient(135deg, white 0%, #F5F5DC 100%);
+  background: linear-gradient(135deg, white 0%, var(--wareeth-primary) 100%);
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(139, 69, 19, 0.15);
   transition: all 0.3s ease;
@@ -940,7 +935,7 @@ body.english .news-item h3 {
 }
 
 .news-item p {
-  color: #666;
+  color: #1a1a1a; /* Dark text color */
   line-height: 1.7;
   margin-bottom: 1.5rem;
   font-size: 1.05rem;
@@ -1108,7 +1103,7 @@ body.english .about-text p {
 }
 
 .service-card {
-  background: linear-gradient(135deg, white 0%, #F5F5DC 100%);
+  background: linear-gradient(135deg, white 0%, var(--wareeth-primary) 100%);
   padding: 3rem 2rem;
   border-radius: 20px;
   text-align: center;
@@ -1157,14 +1152,14 @@ body.english .service-card h3 {
 }
 
 .service-card p {
-  color: var(--dark-brown); /* Dark brown for text */
+  color: #1a1a1a; /* Dark text color */
   line-height: 1.7;
   font-size: 1.1rem;
 }
 
 /* Achievements Section */
 .achievements {
-  background: var(--light-brown); /* Light brown background */
+  background: var(--wareeth-light); /* Light brown background */
   padding: 80px 0;
 }
 
@@ -1324,7 +1319,7 @@ body.english .programs-subtitle {
 }
 
 .program-card {
-  background: linear-gradient(135deg, white 0%, #F5F5DC 100%);
+  background: linear-gradient(135deg, white 0%, var(--wareeth-primary) 100%);
   padding: 3rem 2rem;
   border-radius: 20px;
   text-align: center;
@@ -1375,7 +1370,7 @@ body.english .program-title {
 }
 
 .program-description {
-  color: var(--dark-brown); /* Dark brown for descriptions */
+  color: #1a1a1a; /* Dark text color */
   line-height: 1.7;
   font-size: 1.1rem;
   font-weight: 500;
@@ -1401,7 +1396,7 @@ body.english .program-digital .program-title {
 .program-digital .program-description {
   font-family: 'El Messiri', sans-serif;
   font-size: 1.15em;
-  color: var(--dark-brown);
+  color: #1a1a1a; /* Dark text color */
   line-height: 1.7;
 }
 
@@ -1449,7 +1444,7 @@ body.english .program-technology .program-title {
 .program-technology .program-description {
   font-family: 'Markazi Text', serif;
   font-size: 1.15em;
-  color: var(--dark-brown);
+  color: #1a1a1a; /* Dark text color */
   line-height: 1.7;
 }
 
@@ -1585,7 +1580,7 @@ body.english .stat-label {
 
 /* Content Section */
 .content {
-  background: var(--light-brown); /* Light brown background */
+  background: var(--wareeth-light); /* Light brown background */
 }
 
 .content-grid {
@@ -1623,7 +1618,7 @@ body.english .date {
 }
 
 .content-card p {
-  color: #555;
+  color: #1a1a1a; /* Dark text color */
   margin-bottom: 1rem;
 }
 
@@ -1690,7 +1685,7 @@ body.english .partners-title {
 .partners-marquee {
   width: 100%;
   overflow: hidden;
-  background: linear-gradient(135deg, #fff 0%, #F5F5DC 100%);
+  background: linear-gradient(135deg, #fff 0%, var(--wareeth-primary) 100%);
   border-radius: 20px;
   padding: 25px 0;
   box-shadow: 0 15px 35px rgba(139, 69, 19, 0.15);
@@ -1740,7 +1735,7 @@ body.english .partners-title {
   justify-content: center;
   font-size: 2.2em;
   color: white;
-  border: 3px solid #F5F5DC;
+  border: 3px solid var(--wareeth-primary);
   box-shadow: 0 8px 20px rgba(139, 69, 19, 0.2);
   transition: all 0.3s ease;
 }
@@ -1904,7 +1899,7 @@ body.english .footer-bottom {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%238B4513" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
   opacity: 0.3;
 }
 
@@ -1925,12 +1920,13 @@ body.english .footer-bottom {
 .mission-text {
   font-size: 1.3rem;
   line-height: 1.8;
+  color: #1a1a1a; /* Dark text color */
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
 /* Organization Structure Section */
 .organization-section {
-  background: linear-gradient(135deg, #F5F5DC 0%, rgba(245, 245, 220, 0.9) 100%);
+  background: linear-gradient(135deg, var(--wareeth-primary) 0%, rgba(245, 245, 220, 0.9) 100%);
   padding: 80px 0;
   position: relative;
 }
@@ -1976,7 +1972,7 @@ body.english .footer-bottom {
 }
 
 .department-card {
-  background: linear-gradient(135deg, #fff 0%, #F5F5DC 100%);
+  background: linear-gradient(135deg, #fff 0%, var(--wareeth-primary) 100%);
   padding: 2.5rem;
   border-radius: 20px;
   text-align: center;
@@ -2016,7 +2012,7 @@ body.english .footer-bottom {
 }
 
 .department-card p {
-  color: #666;
+  color: #1a1a1a; /* Dark text color */
   line-height: 1.6;
   font-size: 1rem;
 }
@@ -2370,7 +2366,7 @@ body.english .join-form textarea {
   }
 
   .about-text p {
-    color: var(--dark-brown);
+    color: #1a1a1a; /* Dark text color */
   }
 
   .services-grid {
@@ -2387,7 +2383,7 @@ body.english .join-form textarea {
   }
 
   .service-card p {
-    color: var(--dark-brown);
+    color: #1a1a1a; /* Dark text color */
   }
 
   .programs-grid {
@@ -2405,7 +2401,7 @@ body.english .join-form textarea {
   }
 
   .program-description {
-    color: var(--dark-brown);
+    color: #1a1a1a; /* Dark text color */
   }
 
   .achievements-grid {
@@ -2763,7 +2759,7 @@ body.english .join-form textarea {
 /* Vision Section */
 .vision-section {
   padding: 120px 0;
-  background: linear-gradient(135deg, #F5F5DC 0%, #e8e8d0 100%);
+  background: linear-gradient(135deg, var(--wareeth-primary) 0%, #e8e8d0 100%);
   min-height: 60vh;
   display: flex;
   align-items: center;

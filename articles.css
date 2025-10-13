@@ -96,8 +96,9 @@
 }
 
 .form-header p {
-    color: #666;
+    color: #1a1a1a;
     font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .article-form {
@@ -296,8 +297,9 @@
 .category.society { background: #228B22; }
 
 .date {
-    color: #666;
+    color: #333333;
     font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .article-card h3 {
@@ -309,9 +311,10 @@
 }
 
 .article-summary {
-    color: #666;
+    color: #1a1a1a;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+    font-weight: 600;
 }
 
 .article-footer {
