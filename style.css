@@ -1,5 +1,5 @@
-/* استيراد الخطوط الرسمية لوريث */
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&family=Scheherazade+New:wght@400;500;600;700&display=swap');
+/* استيراد خط Cairo فقط */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
 
 :root {
   /* ألوان أساسية محسّنة */
@@ -12,10 +12,10 @@
   --wareeth-text-light: #5a3c23; /* بني متوسط للنصوص الثانوية */
   --wareeth-dark: #1f140a;      /* غامق جدًا للعناوين */
 
-  /* الخطوط الرسمية - موحدة */
-  --wareeth-font-primary: 'Cairo', sans-serif;       /* خط موحد لجميع العناوين */
-  --wareeth-font-secondary: 'Cairo', sans-serif;      /* خط موحد لجميع النصوص */
-  --wareeth-font-decorative: 'Cairo', sans-serif;     /* خط موحد للعناوين المميزة */
+  /* الخطوط الرسمية - موحدة على Cairo فقط */
+  --wareeth-font-primary: 'Cairo', sans-serif !important;
+  --wareeth-font-secondary: 'Cairo', sans-serif !important;
+  --wareeth-font-decorative: 'Cairo', sans-serif !important;
 
   /* الألوان الإضافية للتوافق مع الكود القديم */
   --light-brown: #c98241; /* برتقالي أفتح */
@@ -38,7 +38,7 @@ html {
 }
 
 body {
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Cairo', sans-serif !important;
   line-height: 1.6;
   color: var(--wareeth-text);
   direction: rtl;
@@ -65,12 +65,28 @@ body.menu-open {
 /* Smooth transitions for all interactive elements */
 a, button, input, textarea, select {
   transition: all 0.3s ease;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Cairo', sans-serif !important;
 }
 
-/* تطبيق الخط الموحد على جميع العناصر */
+/* تطبيق خط Cairo على جميع العناصر مع الحفاظ على الأيقونات */
 * {
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Cairo', sans-serif !important;
+}
+
+/* الحفاظ على خط الأيقونات الأصلي */
+i, .fas, .far, .fab, .fal, .fad, .fa {
+  font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Brands', 'Font Awesome 6 Pro' !important;
+}
+
+/* تطبيق Cairo على جميع العناصر النصية بوضوح */
+h1, h2, h3, h4, h5, h6,
+p, span, div, a, li, td, th, 
+label, input, textarea, select, button,
+.logo-subtitle, .hero-title, .hero-content,
+.about-text, .news-item, .stat-label, .stat-number,
+.partner-name, .footer-section, .join-section,
+.mission-text, .vision-text {
+  font-family: 'Cairo', sans-serif !important;
 }
 
 /* Fix for form inputs consistency */
