@@ -542,20 +542,21 @@ body.english .form-group {
   z-index: -1; /* وضع الصورة خلف الشريط العلوي */
 }
 
-/* طبقة التدرج اللوني التي تمتد من المقدمة إلى قسم قصة وريث */
+/* طبقة التدرج اللوني التي تمتد من المقدمة إلى قسم من نحن والأهداف */
 .hero::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: -150vh; /* تمديد التدرج أكثر للأسفل لتغطية قسم قصة وريث بالكامل */
+  bottom: -250vh; /* تمديد التدرج أكثر للأسفل لتغطية جميع الأقسام */
   background: linear-gradient(180deg, 
-    rgba(245, 245, 220, 0.1) 0%,    /* شفاف جداً في الأعلى */
-    rgba(245, 245, 220, 0.3) 25%,   /* تدرج تدريجي */
-    rgba(245, 245, 220, 0.5) 45%,   /* زيادة الشفافية تدريجياً */
-    rgba(245, 245, 220, 0.75) 70%,  /* شفافية متوسطة */
-    rgba(245, 245, 220, 0.9) 100%   /* شفافية عالية في النهاية */
+    rgba(139, 69, 19, 0.1) 0%,      /* بني ترابي شفاف جداً في الأعلى */
+    rgba(139, 69, 19, 0.2) 15%,     /* تدرج تدريجي بني */
+    rgba(232, 232, 208, 0.4) 30%,   /* كريمي فاتح */
+    rgba(232, 232, 208, 0.6) 50%,   /* زيادة الكريمي */
+    rgba(245, 245, 220, 0.8) 70%,   /* كريمي أكثر وضوحاً */
+    rgba(245, 245, 220, 0.95) 100%  /* كريمي كامل في النهاية */
   );
   z-index: 1;
 }
@@ -1140,10 +1141,10 @@ body.english .news-item p {
   right: 0;
   bottom: 0;
   background: linear-gradient(180deg, 
-    rgba(245, 245, 220, 0.9) 0%,    /* يكمل التدرج من قسم المقدمة بسلاسة */
-    rgba(245, 245, 220, 0.92) 30%,  /* تدرج تدريجي لطيف */
-    rgba(245, 245, 220, 0.95) 70%,  /* زيادة الشفافية تدريجياً */
-    rgba(245, 245, 220, 0.98) 100%  /* شفافية عالية في نهاية القسم */
+    rgba(245, 245, 220, 0.95) 0%,   /* يكمل التدرج من قسم المقدمة بسلاسة */
+    rgba(232, 232, 208, 0.9) 30%,   /* كريمي متوسط */
+    rgba(139, 69, 19, 0.15) 60%,    /* لمسة من البني الترابي */
+    rgba(139, 69, 19, 0.25) 100%    /* بني ترابي فاتح في النهاية */
   );
   z-index: 1;
 }
@@ -1537,12 +1538,16 @@ body.english .program-description {
 /* Objectives Section */
 .objectives-section {
   padding: 120px 0;
-  background: linear-gradient(135deg, rgba(245, 245, 220, 0.9) 0%, var(--wareeth-primary) 100%);
+  background: 
+    url('https://i.postimg.cc/RZxmKXQX/image.jpg') no-repeat center top;
+  background-size: cover;
+  background-attachment: fixed;
   min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  margin-top: -40px; /* ربط سلس مع القسم السابق */
 }
 
 .objectives-section::before {
@@ -1552,7 +1557,13 @@ body.english .program-description {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%238B4513" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  background: linear-gradient(180deg, 
+    rgba(139, 69, 19, 0.25) 0%,     /* يكمل من قسم من نحن */
+    rgba(139, 69, 19, 0.4) 30%,     /* بني ترابي متوسط */
+    rgba(232, 232, 208, 0.7) 60%,   /* كريمي واضح */
+    rgba(245, 245, 220, 0.9) 100%   /* كريمي فاتح في النهاية */
+  );
+  z-index: 1;
 }
 
 .objectives-content {
