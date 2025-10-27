@@ -44,7 +44,7 @@ body {
   direction: rtl;
   text-align: right;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.8) 100%); /* نفس خلفية قسم قصة وريث */
+  background: linear-gradient(180deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.9) 50%, rgba(245, 245, 220, 0.8) 100%); /* خلفية متدرجة تبدأ من المقدمة وتستمر لقسم قصة وريث */
 }
 
 body.menu-open {
@@ -1082,7 +1082,7 @@ body.english .news-item p {
 
 /* About Section */
 .about {
-  background: transparent; /* إزالة الخلفية المنفصلة لجعلها متصلة */
+  background: transparent; /* إزالة الخلفية المنفصلة لتكون متصلة مع الخلفية العامة */
   position: relative;
 }
 
@@ -1093,8 +1093,7 @@ body.english .news-item p {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.03) 0%, transparent 50%),
-              radial-gradient(circle at 80% 20%, rgba(218, 165, 32, 0.03) 0%, transparent 50%);
+  background: transparent; /* إزالة التدرجات الإضافية لتبقى الخلفية موحدة */
 }
 
 .about h2,
