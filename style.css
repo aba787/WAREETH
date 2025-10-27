@@ -1497,6 +1497,191 @@ body.english .program-description {
   font-size: 1.6em;
   color: var(--dark-brown);
   font-weight: 600;
+
+/* Objectives Section */
+.objectives-section {
+  padding: 120px 0;
+  background: linear-gradient(135deg, rgba(245, 245, 220, 0.9) 0%, var(--wareeth-primary) 100%);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.objectives-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%238B4513" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+}
+
+.objectives-content {
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(139, 69, 19, 0.1);
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+}
+
+.objectives-section h2 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 3.5rem;
+  color: #8B4513;
+  margin-bottom: 50px;
+  font-weight: 700;
+  position: relative;
+}
+
+.objectives-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #8B4513, #DAA520);
+  border-radius: 2px;
+}
+
+.objectives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.objective-item {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2rem 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(139, 69, 19, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(218, 165, 32, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.objective-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--wareeth-primary) 0%, var(--wareeth-accent) 100%);
+}
+
+.objective-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.objective-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--wareeth-primary);
+  filter: drop-shadow(0 4px 8px rgba(139, 69, 19, 0.3));
+}
+
+.objective-item h3 {
+  font-size: 1.5rem;
+  color: var(--wareeth-primary);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-family: 'Cairo', sans-serif;
+}
+
+.objective-item p {
+  color: var(--wareeth-text);
+  line-height: 1.6;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Cairo', sans-serif;
+}
+
+/* Responsive for Objectives */
+@media screen and (max-width: 768px) {
+  .objectives-section {
+    padding: 80px 0;
+    min-height: 50vh;
+  }
+
+  .objectives-content {
+    padding: 40px 20px;
+    margin: 0 15px;
+  }
+
+  .objectives-section h2 {
+    font-size: 2.5rem;
+  }
+
+  .objectives-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .objective-item {
+    padding: 1.5rem 1rem;
+  }
+
+  .objective-icon {
+    font-size: 2.5rem;
+  }
+
+  .objective-item h3 {
+    font-size: 1.3rem;
+  }
+
+  .objective-item p {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .objectives-section {
+    padding: 60px 0;
+  }
+
+  .objectives-content {
+    padding: 30px 15px;
+  }
+
+  .objectives-section h2 {
+    font-size: 2rem;
+  }
+
+  .objective-item {
+    padding: 1.2rem 0.8rem;
+  }
+
+  .objective-icon {
+    font-size: 2rem;
+  }
+
+  .objective-item h3 {
+    font-size: 1.2rem;
+  }
+
+  .objective-item p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+}
+
+
 }
 
 body.english .program-digital .program-title {
