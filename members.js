@@ -90,16 +90,10 @@ document.addEventListener('DOMContentLoaded', function() {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const fullName = document.getElementById('fullName').value;
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
             // Enhanced validation
-            if (!fullName.trim()) {
-                showNotification('يرجى إدخال الاسم الكامل', 'error');
-                return;
-            }
-
             if (!username.trim() || !password.trim()) {
                 showNotification('يرجى إدخال جميع البيانات المطلوبة', 'error');
                 return;
@@ -108,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (credentials[username] && credentials[username] === password) {
                 // Create session
                 const sessionData = {
-                    fullName: fullName,
+                    fullName: username, // استخدام اسم المستخدم كاسم عرض
                     username: username,
                     loginTime: new Date().toISOString(),
                     expires: Date.now() + (24 * 60 * 60 * 1000), // 24 hours
@@ -119,13 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('warithSession', JSON.stringify(sessionData));
 
                 // Log activity
-                logActivity('login', `تسجيل دخول المستخدم: ${fullName}`);
+                logActivity('login', `تسجيل دخول المستخدم: ${username}`);
 
                 // Successful login
                 performLogin(sessionData);
 
                 // Show enhanced welcome message
-                showNotification(`مرحباً ${fullName}! تم تسجيل الدخول بنجاح`, 'success');
+                showNotification(`مرحباً ${username}! تم تسجيل الدخول بنجاح`, 'success');
 
                 // Update last login
                 updateLastLogin(username);
