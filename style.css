@@ -252,11 +252,19 @@ body.english .form-group {
 }
 
 .logo-text h2 {
-    display: none;
+    font-size: 1.8rem;
+    color: var(--wareeth-white);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
 }
 
 .logo-subtitle {
-    display: none;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    margin: 0;
+    line-height: 1;
 }
 
 /* السهم في المنتصف */
