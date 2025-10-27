@@ -92,29 +92,96 @@
             <div class="container">
                 <div class="form-container">
                     <div class="form-header">
-                        <h2>الانضمام إلى فريق وريث</h2>
-                        <p>يرجى تسجيل معلوماتك لتقديم طلب الانضمام. سيتم مراجعة طلبك من قبل فريق وريث.</p>
+                        <h2>📝 نموذج الانضمام إلى فريق وريث</h2>
+                        <p>نرحّب برغبتك في الانضمام إلى فريق وريث، حيث نؤمن بأن الإبداع والعمل الجماعي هما جوهر الأثر الحقيقي.</p>
                     </div>
 
                     <form class="join-form" id="joinForm">
-                        <div class="form-group">
-                            <label for="fullName">الاسم الكامل:</label>
-                            <input type="text" id="fullName" name="fullName" required placeholder="أدخل اسمك الكامل">
+                        <!-- المعلومات الأساسية -->
+                        <div class="form-section">
+                            <h3>المعلومات الأساسية</h3>
+                            
+                            <div class="form-group">
+                                <label for="fullName">الاسم الثلاثي *</label>
+                                <input type="text" id="fullName" name="fullName" required placeholder="أدخل اسمك الثلاثي">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">رقم الجوال *</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="أدخل رقم جوالك">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">البريد الإلكتروني *</label>
+                                <input type="email" id="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="age">العمر *</label>
+                                <input type="number" id="age" name="age" required min="16" max="60" placeholder="أدخل عمرك">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="university">الجامعة *</label>
+                                <input type="text" id="university" name="university" required placeholder="اسم الجامعة">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="major">التخصص الجامعي *</label>
+                                <input type="text" id="major" name="major" required placeholder="التخصص الجامعي">
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="email">البريد الإلكتروني:</label>
-                            <input type="email" id="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
+                        <!-- الخبرات والتجارب -->
+                        <div class="form-section">
+                            <h3>الخبرات والتجارب</h3>
+                            
+                            <div class="form-group">
+                                <label for="volunteer_experience">هل سبق لك التطوع؟ *</label>
+                                <select id="volunteer_experience" name="volunteer_experience" required>
+                                    <option value="">اختر الإجابة</option>
+                                    <option value="yes">نعم</option>
+                                    <option value="no">لا</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="previous_volunteer_experience">حدّثنا عن أبرز تجاربك التطوعية السابقة</label>
+                                <textarea id="previous_volunteer_experience" name="previous_volunteer_experience" rows="4" placeholder="اكتب عن تجاربك التطوعية السابقة (إن وجدت)"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="skills">ما أبرز المهارات التي تمتلكها ويمكن أن تسهم بها في الفريق؟ *</label>
+                                <textarea id="skills" name="skills" rows="4" required placeholder="اذكر المهارات التي تمتلكها"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="why_join">لماذا ترغب بالانضمام إلى فريق وريث؟ *</label>
+                                <textarea id="why_join" name="why_join" rows="4" required placeholder="اشرح أسباب رغبتك في الانضمام للفريق"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="how_heard">كيف سمعت عن فريق وريث؟ *</label>
+                                <select id="how_heard" name="how_heard" required>
+                                    <option value="">اختر الطريقة</option>
+                                    <option value="social_media">وسائل التواصل الاجتماعي</option>
+                                    <option value="friends">من الأصدقاء</option>
+                                    <option value="university">الجامعة</option>
+                                    <option value="website">الموقع الإلكتروني</option>
+                                    <option value="events">الفعاليات والملتقيات</option>
+                                    <option value="other">أخرى</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="phone">رقم الهاتف:</label>
-                            <input type="tel" id="phone" name="phone" required placeholder="أدخل رقم هاتفك">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">رسالة مختصرة (اختياري):</label>
-                            <textarea id="message" name="message" rows="4" placeholder="اكتب رسالة مختصرة عن اهتماماتك ودوافع الانضمام"></textarea>
+                        <!-- ملاحظات إضافية -->
+                        <div class="form-section">
+                            <h3>ملاحظات إضافية</h3>
+                            
+                            <div class="form-group">
+                                <label for="additional_notes">أي ملاحظات أو إضافات ترغب في مشاركتها (اختياري)</label>
+                                <textarea id="additional_notes" name="additional_notes" rows="4" placeholder="أي ملاحظات أو إضافات أخرى"></textarea>
+                            </div>
                         </div>
 
                         <button type="submit" class="submit-btn">
@@ -126,8 +193,8 @@
                     <!-- Success Message -->
                     <div id="successMessage" class="success-message" style="display: none;">
                         <i class="fas fa-check-circle"></i>
-                        <h3>تم إرسال طلب الانضمام بنجاح!</h3>
-                        <p>شكراً لك على اهتمامك بالانضمام لفريق وريث. سيتم مراجعة طلبك من قبل الفريق وسنتواصل معك قريباً.</p>
+                        <h3>شكرًا لتقديمك!</h3>
+                        <p>تلقينا طلبك بنجاح وسيتواصل معك فريق وريث خلال الأيام القادمة.</p>
                     </div>
                 </div>
             </div>

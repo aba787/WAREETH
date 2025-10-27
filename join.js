@@ -97,9 +97,16 @@ function validateJoinForm(data) {
     
     // Check required fields
     const requiredFields = [
-        { field: 'fullName', message: 'الاسم الكامل مطلوب' },
+        { field: 'fullName', message: 'الاسم الثلاثي مطلوب' },
+        { field: 'phone', message: 'رقم الجوال مطلوب' },
         { field: 'email', message: 'البريد الإلكتروني مطلوب' },
-        { field: 'phone', message: 'رقم الهاتف مطلوب' }
+        { field: 'age', message: 'العمر مطلوب' },
+        { field: 'university', message: 'الجامعة مطلوبة' },
+        { field: 'major', message: 'التخصص الجامعي مطلوب' },
+        { field: 'volunteer_experience', message: 'يرجى اختيار إجابة حول التجربة التطوعية' },
+        { field: 'skills', message: 'يرجى ذكر المهارات التي تمتلكها' },
+        { field: 'why_join', message: 'يرجى ذكر أسباب رغبتك في الانضمام' },
+        { field: 'how_heard', message: 'يرجى اختيار كيف سمعت عن الفريق' }
     ];
     
     requiredFields.forEach(item => {
@@ -117,7 +124,13 @@ function validateJoinForm(data) {
     
     // Validate phone
     if (data.phone && !isValidPhone(data.phone)) {
-        showError('phone', 'رقم الهاتف غير صحيح');
+        showError('phone', 'رقم الجوال غير صحيح');
+        isValid = false;
+    }
+    
+    // Validate age
+    if (data.age && (data.age < 16 || data.age > 60)) {
+        showError('age', 'العمر يجب أن يكون بين 16 و 60 سنة');
         isValid = false;
     }
     
