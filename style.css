@@ -1557,8 +1557,8 @@ body.english .program-technology .program-description {
 .stats-section {
   text-align: center;
   padding: 80px 0;
-  background: #b8743b;
-  color: white;
+  background: #FFFFFF;
+  color: var(--wareeth-text);
   position: relative;
   overflow: hidden;
 }
@@ -1577,7 +1577,7 @@ body.english .program-technology .program-description {
   font-family: 'Cairo', sans-serif !important;
   font-size: 2.8rem;
   margin-bottom: 3rem;
-  color: var(--light-brown); /* Light brown for headings */
+  color: var(--wareeth-primary);
   font-weight: 600;
   position: relative;
   z-index: 1;
@@ -1613,13 +1613,14 @@ body.english .stats-section h2 {
 }
 
 .stat-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, var(--wareeth-light) 0%, rgba(245, 245, 220, 0.8) 100%);
   padding: 2rem 1.5rem;
   border-radius: 20px;
   backdrop-filter: blur(10px);
-  border: 2px solid var(--light-brown); /* Light brown border */
+  border: 2px solid var(--wareeth-primary);
   transition: all 0.3s ease;
   position: relative;
+  box-shadow: 0 8px 25px rgba(139, 69, 19, 0.15);
 }
 
 .stat-card:hover {
@@ -1632,10 +1633,10 @@ body.english .stats-section h2 {
   font-family: 'Cairo', sans-serif !important;
   font-size: 3.5rem;
   font-weight: bold;
-  color: var(--light-brown); /* Light brown for numbers */
+  color: var(--wareeth-primary);
   margin-bottom: 1rem;
   display: block;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.3);
 }
 
 body.english .stat-number {
@@ -1646,9 +1647,9 @@ body.english .stat-number {
 .stat-label {
   font-family: 'Cairo', sans-serif !important;
   font-size: 1.4rem;
-  color: white;
+  color: var(--wareeth-text);
   line-height: 1.5;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  text-shadow: none;
 }
 
 body.english .stat-label {
@@ -1659,7 +1660,7 @@ body.english .stat-label {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   display: block;
-  color: var(--wareeth-light);
+  color: var(--wareeth-primary);
   filter: drop-shadow(0 4px 8px rgba(139, 69, 19, 0.3));
 }
 
