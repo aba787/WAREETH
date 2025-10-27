@@ -103,6 +103,8 @@ function validateJoinForm(data) {
         { field: 'age', message: 'العمر مطلوب' },
         { field: 'university', message: 'الجامعة مطلوبة' },
         { field: 'major', message: 'التخصص الجامعي مطلوب' },
+        { field: 'gender', message: 'الجنس مطلوب' },
+        { field: 'nationality', message: 'الجنسية مطلوبة' },
         { field: 'volunteer_experience', message: 'يرجى اختيار إجابة حول التجربة التطوعية' },
         { field: 'skills', message: 'يرجى ذكر المهارات التي تمتلكها' },
         { field: 'why_join', message: 'يرجى ذكر أسباب رغبتك في الانضمام' },
