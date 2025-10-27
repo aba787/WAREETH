@@ -4,15 +4,15 @@
 }
 
 :root {
-  /* ألوان وريث الرسمية */
-  --wareeth-primary: #8B4513; /* بنى ترابي */
-  --wareeth-secondary: #DAA520; /* ذهبي دافئ */
-  --wareeth-accent: #2F4F4F; /* رمادي أزرق */
-  --wareeth-dark: #654321;
-  --wareeth-light: #F5F5DC; /* بيج كريمي */
-  --wareeth-white: #FFFEF7;
-  --wareeth-text: #2F2F2F;
-  --wareeth-text-light: #666666;
+  /* الألوان الترابية الموحدة - وريث */
+  --wareeth-primary: #8B4513; /* بني ترابي أساسي */
+  --wareeth-secondary: #A0522D; /* بني ترابي ثانوي */
+  --wareeth-accent: #D2691E; /* بني ترابي فاتح */
+  --wareeth-dark: #654321; /* بني ترابي غامق */
+  --wareeth-light: #DEB887; /* بني ترابي فاتح جداً */
+  --wareeth-white: #FFFFFF;
+  --wareeth-text: #3b2a1a;
+  --wareeth-text-light: #5a3c23;
 
   /* الخطوط الرسمية - موحدة */
   --wareeth-font-primary: 'Cairo', sans-serif;

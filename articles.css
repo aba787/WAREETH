@@ -4,14 +4,14 @@
 }
 
 :root {
-  /* الألوان التراثية الأنيقة - وريث */
-  --wareeth-primary: #b8743b;     /* برتقالي - الأصالة */
-  --wareeth-secondary: #b8743b;   /* برتقالي - الفخامة */
-  --wareeth-accent: #2F4F4F;      /* رمادي أزرق - الجدية */
-  --wareeth-light: #F5F5DC;       /* بيج كريمي - الخلفيات */
+  /* الألوان التراثية الموحدة - وريث */
+  --wareeth-primary: #8B4513;     /* بني ترابي أساسي */
+  --wareeth-secondary: #A0522D;   /* بني ترابي ثانوي */
+  --wareeth-accent: #D2691E;      /* بني ترابي فاتح */
+  --wareeth-light: #DEB887;       /* بني ترابي فاتح جداً */
   --wareeth-white: #FFFFFF;       /* الأبيض النقي */
-  --wareeth-text: #2F4F4F;        /* رمادي أزرق للنصوص */
-  --wareeth-text-light: #b8743b;  /* برتقالي للنصوص الثانوية */
+  --wareeth-text: #3b2a1a;        /* بني غامق للنصوص */
+  --wareeth-text-light: #5a3c23;  /* بني متوسط للنصوص الثانوية */
 
   /* الخطوط الرسمية - موحدة */
   --wareeth-font-primary: 'Cairo', sans-serif;
@@ -21,7 +21,7 @@
 
 /* Articles Hero Section */
 .articles-hero {
-    background: #b8743b;
+    background: linear-gradient(135deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
     color: white;
     padding: 100px 0;
     text-align: center;

@@ -2,15 +2,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* ألوان أساسية محسّنة */
-  --wareeth-primary: #F5F5DC;   /* ترابي فاتح */
-  --wareeth-secondary: #E8E3C8; /* ترابي أغمق قليلًا */
-  --wareeth-accent: #b8743b;    /* برتقالي رئيسي */
-  --wareeth-light: #c98241;     /* برتقالي أفتح */
+  /* الألوان الترابية الموحدة لهوية وريث */
+  --wareeth-primary: #8B4513;   /* بني ترابي أساسي */
+  --wareeth-secondary: #A0522D; /* بني ترابي ثانوي */
+  --wareeth-accent: #D2691E;    /* بني ترابي فاتح */
+  --wareeth-light: #DEB887;     /* بني ترابي فاتح جداً */
   --wareeth-white: #FFFFFF;     /* أبيض */
   --wareeth-text: #3b2a1a;      /* بني غامق للنصوص */
   --wareeth-text-light: #5a3c23; /* بني متوسط للنصوص الثانوية */
-  --wareeth-dark: #1f140a;      /* غامق جدًا للعناوين */
+  --wareeth-dark: #654321;      /* بني ترابي غامق */
 
   /* الخطوط الرسمية - موحدة على Cairo فقط */
   --wareeth-font-primary: 'Cairo', sans-serif !important;
@@ -18,10 +18,10 @@
   --wareeth-font-decorative: 'Cairo', sans-serif !important;
 
   /* الألوان الإضافية للتوافق مع الكود القديم */
-  --light-brown: #c98241; /* برتقالي أفتح */
-  --dark-brown: #b8743b;  /* برتقالي رئيسي */
-  --brick-red: #B22222;   /* أحمر طوبي */
-  --black: #1f140a;       /* غامق جدًا */
+  --light-brown: #D2691E; /* بني ترابي فاتح */
+  --dark-brown: #8B4513;  /* بني ترابي أساسي */
+  --brick-red: #A0522D;   /* بني ترابي ثانوي بدلاً من الأحمر */
+  --black: #654321;       /* بني ترابي غامق */
 }
 
 * {
@@ -191,12 +191,12 @@ body.english .form-group {
     top: 0;
     left: 0;
     right: 0;
-    background: var(--wareeth-primary);
+    background: linear-gradient(135deg, var(--wareeth-primary) 0%, var(--wareeth-secondary) 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     z-index: 1000;
     border-bottom: 3px solid var(--wareeth-primary);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 30px rgba(139, 69, 19, 0.4);
     height: 80px;
     transition: all 0.3s ease;
     width: 100%;
@@ -1225,11 +1225,11 @@ body.english .about-text p {
 .service-icon {
   font-size: 4rem;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, var(--light-brown) 0%, var(--dark-brown) 100%);
+  background: linear-gradient(135deg, var(--wareeth-primary) 0%, var(--wareeth-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+  filter: drop-shadow(2px 2px 4px rgba(139, 69, 19, 0.2));
 }
 
 .service-card h3 {
@@ -1651,7 +1651,8 @@ body.english .stat-label {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   display: block;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  color: var(--wareeth-light);
+  filter: drop-shadow(0 4px 8px rgba(139, 69, 19, 0.3));
 }
 
 /* Animation for counting numbers */

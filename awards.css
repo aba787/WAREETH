@@ -4,12 +4,12 @@
 }
 
 :root {
-    /* ألوان وريث الرسمية */
-    --wareeth-primary: #8B4513;
-    --wareeth-gold: #DAA520;
-    --wareeth-gray-blue: #2F4F4F;
-    --wareeth-cream: #F5F5DC;
-    --wareeth-accent: #B22222; /* This was the accent color, now updated to match the user's request for grey-blue */
+    /* الألوان الترابية الموحدة - وريث */
+    --wareeth-primary: #8B4513;    /* بني ترابي أساسي */
+    --wareeth-gold: #D2691E;       /* بني ترابي ذهبي */
+    --wareeth-gray-blue: #A0522D;  /* بني ترابي ثانوي */
+    --wareeth-cream: #DEB887;      /* بني ترابي كريمي */
+    --wareeth-accent: #D2691E;     /* بني ترابي فاتح */
 
     /* الخطوط الرسمية - موحدة */
     --wareeth-font-primary: 'Cairo', sans-serif;
