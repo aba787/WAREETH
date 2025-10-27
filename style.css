@@ -2384,13 +2384,14 @@ body.english .footer-bottom {
 
 /* Mission Section */
 .mission-section {
-  padding: 120px 0;
-  background: linear-gradient(135deg, var(--wareeth-primary) 0%, #e8e8d0 100%);
+  padding: 60px 0 120px 0;
+  background: linear-gradient(180deg, rgba(232, 232, 208, 0.8) 0%, rgba(232, 232, 208, 0.9) 30%, var(--wareeth-primary) 100%);
   min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  margin-top: -40px;
 }
 
 .mission-section::before {
@@ -3290,8 +3291,8 @@ body.english .join-form textarea {
 
 /* Vision Section */
 .vision-section {
-  padding: 120px 0;
-  background: linear-gradient(135deg, var(--wareeth-primary) 0%, #e8e8d0 100%);
+  padding: 120px 0 60px 0;
+  background: linear-gradient(180deg, var(--wareeth-primary) 0%, rgba(232, 232, 208, 0.9) 70%, rgba(232, 232, 208, 0.8) 100%);
   min-height: 60vh;
   display: flex;
   align-items: center;
