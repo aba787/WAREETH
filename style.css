@@ -487,11 +487,12 @@ body.english .form-group {
 
 /* Join Button in Header */
 
-/* Hero Section */
+/* Hero Section مع خلفية مستمرة */
 .hero {
   background: 
     url('https://i.postimg.cc/RZxmKXQX/image.jpg') no-repeat center top;
   background-size: cover;
+  background-attachment: fixed;
   color: var(--wareeth-primary);
   padding: 0;
   text-align: center;
@@ -1080,10 +1081,14 @@ body.english .news-item p {
   background: linear-gradient(135deg, var(--dark-brown) 0%, var(--light-brown) 100%);
 }
 
-/* About Section */
+/* About Section مع نفس خلفية المقدمة */
 .about {
-  background: transparent; /* إزالة الخلفية المنفصلة لتكون متصلة مع الخلفية العامة */
+  background: 
+    url('https://i.postimg.cc/RZxmKXQX/image.jpg') no-repeat center top;
+  background-size: cover;
+  background-attachment: fixed;
   position: relative;
+  padding: 80px 0;
 }
 
 .about::before {
@@ -1093,7 +1098,8 @@ body.english .news-item p {
   left: 0;
   right: 0;
   bottom: 0;
-  background: transparent; /* إزالة التدرجات الإضافية لتبقى الخلفية موحدة */
+  background: rgba(245, 245, 220, 0.85); /* طبقة بيضاء شفافة لضمان وضوح النص */
+  z-index: 1;
 }
 
 .about h2,
@@ -1102,9 +1108,11 @@ body.english .news-item p {
   font-size: 3rem;
   text-align: center;
   margin-bottom: 4rem;
-  color: white;
+  color: var(--wareeth-primary);
   font-weight: 700;
   position: relative;
+  z-index: 2;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
 }
 
 body.english .about h2,
@@ -1134,7 +1142,7 @@ body.english .content h2 {
   gap: 4rem;
   align-items: center;
   position: relative;
-  z-index: 1;
+  z-index: 2; /* رفع z-index ليظهر فوق طبقة الخلفية */
 }
 
 body.english .about-content {
