@@ -89,6 +89,27 @@ label, input, textarea, select, button,
   font-family: 'Cairo', sans-serif !important;
 }
 
+/* إصلاح عرض الأرقام في النصوص العربية */
+.phone-number, .contact-number, .stat-number, .date, 
+.footer-section p, .contact-card p, 
+.achievement-card .stat-number {
+  direction: ltr !important;
+  unicode-bidi: embed;
+}
+
+/* أرقام الإحصائيات */
+.stat-number {
+  direction: ltr !important;
+  display: inline-block;
+  unicode-bidi: embed;
+}
+
+/* أرقام التواريخ */
+.news-date, .date, .article-meta .date {
+  direction: ltr !important;
+  unicode-bidi: embed;
+}
+
 /* Fix for form inputs consistency */
 input, textarea, select {
   -webkit-appearance: none;
