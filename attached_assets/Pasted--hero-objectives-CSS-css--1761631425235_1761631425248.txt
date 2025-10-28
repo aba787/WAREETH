@@ -1,0 +1,133 @@
+فهمت! بدك خلفية واحدة متصلة من قسم hero إلى قسم objectives. إليك الحل:
+
+CSS المعدل:
+css
+/* إزالة الخلفيات المتكررة وجعلها خلفية واحدة مستمرة */
+
+/* Hero Section - الخلفية الأساسية */
+.hero {
+  background: 
+    url('https://i.postimg.cc/RZxmKXQX/image.jpg') no-repeat center top;
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--wareeth-primary);
+  padding: 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+
+/* طبقة التدرج اللوني التي تمتد من المقدمة إلى قسم الأهداف */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -300vh; /* تمديد التدرج ليشمل الأقسام */
+  background: linear-gradient(180deg, 
+    rgba(139, 69, 19, 0.1) 0%,
+    rgba(139, 69, 19, 0.15) 10%,
+    rgba(232, 232, 208, 0.3) 25%,
+    rgba(232, 232, 208, 0.5) 40%,
+    rgba(245, 245, 220, 0.7) 60%,
+    rgba(245, 245, 220, 0.9) 80%,
+    rgba(245, 245, 220, 0.95) 100%
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 20px 20px;
+}
+
+/* About Section - بدون خلفية منفصلة */
+.about {
+  position: relative;
+  padding: 120px 0 80px;
+  z-index: 2;
+}
+
+/* إزالة الخلفية والطبقة من about */
+.about::before {
+  display: none;
+}
+
+.about h2 {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 4rem;
+  color: var(--wareeth-primary);
+  font-weight: 700;
+  position: relative;
+  z-index: 2;
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.about-text {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(139, 69, 19, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(218, 165, 32, 0.3);
+}
+
+/* Objectives Section - بدون خلفية منفصلة */
+.objectives-section {
+  padding: 100px 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* إزالة الخلفية والطبقة من objectives-section */
+.objectives-section::before {
+  display: none;
+}
+
+.objectives-content {
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(139, 69, 19, 0.15);
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+}
+التعديلات التي قمت بها:
+✅ خلفية واحدة في قسم hero فقط
+
+✅ تمديد التدرج ليشمل كل الأقسام حتى objectives
+
+✅ إزالة الخلفيات المنفصلة من about و objectives
+
+✅ الحفاظ على التصميم الشفاف للأقسام
+
+✅ خلفية متصلة وسلسة بدون تقطيع
