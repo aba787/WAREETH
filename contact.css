@@ -200,7 +200,7 @@
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: var(--wareeth-accent);
+    color: var(--wareeth-text);
     font-weight: 600;
     font-size: 1rem;
 }
