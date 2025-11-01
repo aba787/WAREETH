@@ -18,9 +18,9 @@
   --wareeth-cream: #DEB887;     /* بني ترابي كريمي */
 
   /* الخطوط الرسمية - موحدة على Cairo فقط */
-  --wareeth-font-primary: 'Cairo', sans-serif !important;
-  --wareeth-font-secondary: 'Cairo', sans-serif !important;
-  --wareeth-font-decorative: 'Cairo', sans-serif !important;
+  --wareeth-font-primary: 'Cairo', sans-serif;
+  --wareeth-font-secondary: 'Cairo', sans-serif;
+  --wareeth-font-decorative: 'Cairo', sans-serif;
 
   /* الألوان الإضافية للتوافق مع الكود القديم */
   --light-brown: #D2691E; /* بني ترابي فاتح */
@@ -1521,6 +1521,7 @@ body.english .program-description {
   font-size: 1.6em;
   color: var(--dark-brown);
   font-weight: 600;
+}
 
 /* Objectives Section - بدون خلفية منفصلة، يعتمد على تدرج المقدمة */
 .objectives-section {

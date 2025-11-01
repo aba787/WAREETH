@@ -124,8 +124,18 @@ document.addEventListener('DOMContentLoaded', function() {
       const numberElements = document.querySelectorAll('.stat-number');
       console.log('🎯 بدء تحريك الإحصائيات:', numberElements.length, 'عنصر');
 
+      if (numberElements.length === 0) {
+        console.warn('⚠️ لم يتم العثور على عناصر الإحصائيات');
+        return;
+      }
+
       numberElements.forEach((element, index) => {
         const target = parseInt(element.getAttribute('data-target'));
+        if (isNaN(target)) {
+          console.warn(`⚠️ قيمة غير صحيحة للعنصر ${index + 1}`);
+          return;
+        }
+        
         console.log(`📊 تحريك الرقم ${index + 1}: من 0 إلى ${target}`);
         
         const duration = 2500; // مدة التحريك
@@ -290,34 +300,35 @@ function updateStatsDisplay(stats) {
     // Update statistics on main page
     const statNumbers = document.querySelectorAll('.stat-number');
     if (statNumbers.length >= 4) {
-        statNumbers[0].setAttribute('data-target', stats.volunteerHours);
-        statNumbers[1].setAttribute('data-target', stats.volunteersCount);
-        statNumbers[2].setAttribute('data-target', stats.placesCount);
-        statNumbers[3].setAttribute('data-target', stats.beneficiariesCount);
+        statNumbers[0].setAttribute('data-target', stats.volunteerHours || 3200);
+        statNumbers[1].setAttribute('data-target', stats.volunteersCount || 200);
+        statNumbers[2].setAttribute('data-target', stats.placesCount || 29);
+        statNumbers[3].setAttribute('data-target', stats.beneficiariesCount || 8040);
 
-        // Re-animate numbers
-        animateNumbers();
+        // Reset animation flag and re-animate numbers
+        statsAnimated = false;
+        setTimeout(() => animateNumbers(), 100);
     }
 }
 
 function updatePartnersDisplay(partners) {
-        const marqueeTrack = document.getElementById('marqueeTrack');
-        if (marqueeTrack && partners.length > 0) {
-            const partnersHTML = partners.map(partner => `
-                <div class="partner-item" ${partner.website ? `onclick="window.open('${partner.website}', '_blank')"` : ''} style="${partner.website ? 'cursor: pointer;' : ''}">
-                    <div class="partner-logo">
-                        ${partner.logo ? 
-                            `<img src="${partner.logo}" alt="${partner.name}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">` :
-                            partner.icon
-                        }
-                    </div>
-                    <div class="partner-name">${partner.name}</div>
+    const marqueeTrack = document.getElementById('marqueeTrack');
+    if (marqueeTrack && partners && partners.length > 0) {
+        const partnersHTML = partners.map(partner => `
+            <div class="partner-item" ${partner.website ? `onclick="window.open('${partner.website}', '_blank')"` : ''} style="${partner.website ? 'cursor: pointer;' : ''}">
+                <div class="partner-logo">
+                    ${partner.logo ? 
+                        `<img src="${partner.logo}" alt="${partner.name}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">` :
+                        (partner.icon || '🤝')
+                    }
                 </div>
-            `).join('');
+                <div class="partner-name">${partner.name || 'شريك'}</div>
+            </div>
+        `).join('');
 
-            marqueeTrack.innerHTML = partnersHTML + partnersHTML; // Duplicate for smooth scrolling
-        }
+        marqueeTrack.innerHTML = partnersHTML + partnersHTML; // Duplicate for smooth scrolling
     }
+}
 
 function updateContentDisplay(content) {
     // Update hero text
